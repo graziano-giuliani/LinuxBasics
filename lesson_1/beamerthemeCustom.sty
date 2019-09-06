@@ -1,0 +1,33 @@
+% Copyright 2007 by Till Tantau
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+% Modified by AA on 2016-05-04
+
+\mode<presentation>
+
+\newif\ifbeamer@secheader
+\beamer@secheaderfalse
+
+\DeclareOptionBeamer{secheader}{\beamer@secheadertrue}
+\ProcessOptionsBeamer
+
+\usecolortheme{whale}
+\usecolortheme{orchid}
+\useinnertheme[shadow]{rounded}
+\useoutertheme{default}
+
+\setbeamertemplate{navigation symbols}{}        % Removes the navigation symbols
+
+\definecolor{blue1}{RGB}{0,0,99}
+\setbeamercolor{palette primary}{bg=blue1, fg=white}
+
+\ifbeamer@secheader\else\setbeamertemplate{headline}[default]\fi
+
+\mode
+<all>

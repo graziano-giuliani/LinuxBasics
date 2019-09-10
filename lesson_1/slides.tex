@@ -1,7 +1,7 @@
 \documentclass[unknownkeysallowed, 10pt, a4 paper, handout]{beamer}
 
 % Custom beamer theme
-\usepackage{beamerthemeCustom}
+\usepackage{../style/beamerthemeCustom}
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}   %FOR TITLEPAGE
 
 \usepackage{changepage}       % adjustwidth
@@ -25,6 +25,7 @@
 
 \begin{document}
 
+
 \begin{frame}[label=outline]{Course Outline}
   \begin{itemize}
     \item UNIX/Linux Basics
@@ -35,6 +36,7 @@
   \end{itemize}
 \end{frame}
 
+
 \begin{frame}[label=pdp11]{The Origin of the OS}
   \begin{center}
     \includegraphics[scale=3.5]{pics/pdp11.jpg}
@@ -44,6 +46,7 @@
     PDP-11 Magnus Manske, CC BY-SA 2.0}
   \end{flushright}
 \end{frame}
+
 
 \begin{frame}[label=unix]{UNIX Philosophy}
   \begin{enumerate}
@@ -74,11 +77,13 @@
   \end{flushright}
 \end{frame}
 
+
 \begin{frame}[label=os]{The Linux OS - UNIX free}
   \begin{center}
     \includegraphics[scale=0.5]{pics/linux-first-announcement-email.png}
   \end{center}
 \end{frame}
+
 
 \begin{frame}[label=gnu]{The Free Software Movement}
   Free Software is not just Open Source or Gratis % Latin : as a kindness
@@ -99,6 +104,7 @@
     \end{column}
   \end{columns}
 \end{frame}
+
 
 \begin{frame}[label=architecture]{UNIX architecture}
   \begin{columns}[T]
@@ -121,6 +127,7 @@
   \end{columns}
 \end{frame}
 
+
 %\begin{frame}[label=file]{Everything is a file (descriptor)}
 %  All input/output resources such as documents, directories, hard-drives,
 %  screens, keyboards, printers and even some inter-process and network
@@ -139,31 +146,6 @@
 %  \end{itemize}
 %\end{frame}
 
-\begin{frame}[label=filesystem]{The file system}
-  \begin{columns}[T]
-    \begin{column}{.23\textwidth}
-      \includegraphics[scale=0.29]{pics/fs.png}
-    \end{column}
-    \hfill
-    \begin{column}{.73\textwidth}
-      \small{
-      The Filesystem Hierarchy Standard (FHS) defines the directory
-      structure and directory contents in Linux:
-      \begin{itemize}
-        \item The filesistem root is the "/" directory
-        \item All files and directories appear under the root directory /,
-          even if they are stored on different physical or virtual devices.
-        \item bin stands for binaries and contains system executables
-        \item lib stands for libraries and contains shared or static pieces of
-          code which are used by running executables or to create executables
-        \item tmp stands for temporary and is where scratch files are placed
-        \item etc stands for etcetera and is where configuration files are
-        \item home is where user files are placed
-      \end{itemize}
-    }
-    \end{column}
-  \end{columns}
-\end{frame}
 
 \begin{frame}[c]
   \begin{center}
@@ -192,21 +174,18 @@
 \end{frame}
 
 
-
 \begin{frame}[label=shell]{The command shell}
   \begin{columns}[T]
-    \begin{column}{.53\textwidth}
+    \begin{column}{.43\textwidth}
       \begin{center}
-        \includegraphics[scale=0.3]{pics/vt100.png}
+        \includegraphics[scale=0.4]{pics/vt100.png}
       \end{center}
-      \vfill
-      \includegraphics[scale=0.20]{pics/shell.png}
     \end{column}
     \hfill
-    \begin{column}{.46\textwidth}
+    \begin{column}{.56\textwidth}
     \small{
-      The terminal is THE interface to a UNIX system. The standard login
-      procedure is used to reach the shell:
+      The CLI is THE interface to a UNIX system. The standard login
+      procedure is used to reach a program called \focus{shell}:
       \begin{itemize}
         \item The user is authenticated by the system with a username/password
           couple challenge by a login program.
@@ -220,6 +199,61 @@
 \end{frame}
 
 
+
+\begin{frame}[label=program]{The Program}
+  \begin{columns}[T]
+    \begin{column}{.23\textwidth}
+      \includegraphics[scale=0.15]{pics/running.jpg}
+    \end{column}
+    \hfill
+    \begin{column}{.73\textwidth}
+      \small{
+      A program running in the system has:
+      \begin{itemize}
+        \item An executable file in binary format containing:
+        \begin{itemize}
+          \item The instruction for the processor
+          \item The data to be processed
+        \end{itemize}
+        \item The User credentials to access the system resources
+        \item An extendable set of system resources (CPU, Memory, Storage)
+        \item The capability to load system shared executable procedures
+          in the form of routines and functions in libraries.
+      \end{itemize}
+    }
+    \end{column}
+  \end{columns}
+\end{frame}
+
+
+\begin{frame}[label=program]{Running a program}
+  \begin{columns}[T]
+    \begin{column}{.33\textwidth}
+      \includegraphics[scale=0.99]{pics/bad_arguments.jpg}
+    \end{column}
+    \hfill
+    \begin{column}{.63\textwidth}
+      \small{
+      To run a program in the shell you must know in advance:
+      \begin{itemize}
+        \item The program path to the executable in the file system or the
+          program name if it is in a system path
+        \item The options that can modify its behavior to fit your requests
+        \item The type and number of arguments the program expects to
+          execute
+      \end{itemize}
+    }
+    \end{column}
+  \end{columns}
+  As an example, this are valid syntaxes to run a program:
+  \begin{center}
+  \code{ls -l Documents} \\
+  \code{cp theorem.tex Documents}
+  \end{center}
+  \begin{center}
+    \Large{What is a file path in UNIX ?}
+  \end{center}
+\end{frame}
 
 
 \begin{frame}[c]
@@ -241,16 +275,46 @@
     (for instance, \code{/home/docs/c.txt})
 
     Directories in a path are separated by \code{/}\\
-    directory names can end in \code{/}, files can have an extension (e.g., \code{.txt})
+    directory names can end in \code{/}, files can have an extension
+	  (e.g., \code{.txt})
 
   \end{center}
 \end{frame}
 
 
+\begin{frame}[label=filesystem]{The file system}
+  \begin{columns}[T]
+    \begin{column}{.23\textwidth}
+      \includegraphics[scale=0.29]{pics/fs.png}
+    \end{column}
+    \hfill
+    \begin{column}{.73\textwidth}
+      \small{
+      The Filesystem Hierarchy Standard (FHS) defines the directory
+      structure and directory contents in Linux:
+      \begin{itemize}
+        \item The filesistem root is the "/" directory
+        \item All files and directories appear under the root directory /,
+          even if they are stored on different physical or virtual devices.
+        \item bin stands for binaries and contains system executables
+        \item lib stands for libraries and contains shared or static pieces of
+          code which are used by running executables or to create executables
+        \item tmp stands for temporary and is where scratch files are placed
+        \item etc stands for etcetera and is where configuration files are
+        \item home is where user files are placed
+      \end{itemize}
+    }
+    \end{column}
+  \end{columns}
+\end{frame}
+
 
 \begin{frame}[c]
+  \frametitle{Commands I: Pathfinding}
+  Let us try to run the basic programs to navigate the Filesystem:
   \begin{center}
-    \frametitle{Commands I: Pathfinding}
+    \vspace{2pt}
+
     \code{pwd}: print the current directory path
     \vspace{-4mm}
 
@@ -269,6 +333,7 @@
     Example: \code{text/a.txt} if I am in \code{/home/documents/}
   \end{center}
 \end{frame}
+
 
 \begin{frame}[c]
   \begin{center}
@@ -302,7 +367,6 @@
 \end{frame}
 
 
-
 \begin{frame}[c]
   \begin{center}
     \frametitle{Commands III: Creating and removing}
@@ -331,16 +395,6 @@
   \end{center}
 \end{frame}
 
-\begin{frame}[c]
-  \begin{center}
-    \frametitle{Exercise I}
-    Using the commands you know, create these directories and files:
-
-    \begin{center}
-      \includegraphics[width=0.80\textwidth]{pics/exercise_1.eps}
-    \end{center}
-  \end{center}
-\end{frame}
 
 \begin{frame}[c]
   \begin{center}
@@ -366,4 +420,20 @@
     \code{mv}: same syntax, file is \focus{moved} (old file deleted)
   \end{center}
 \end{frame}
+
+
+\begin{frame}[c]
+  \begin{center}
+    \frametitle{Exercise I}
+    Using the commands you know, create these directories and files:
+
+    \begin{center}
+      \includegraphics[width=0.80\textwidth]{pics/exercise_1.eps}
+    \end{center}
+  \end{center}
+\end{frame}
+
+
 \end{document}
+
+% vim: tabstop=8 expandtab shiftwidth=2 softtabstop=2 spell spelllang=en_uk

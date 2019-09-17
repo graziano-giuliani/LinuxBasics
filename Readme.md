@@ -19,13 +19,12 @@ Linux basics lesson course for ICTP Diploma students
 ## Programming/advanced editors
 * What is a program/programming
 * Compiling
+* chmod (ua, +/-, rwx (search for dirs))
 * Brief introduction to makefiles
 * Brief introduction to vim (insert mode, saving/quitting, moving, visual/block, macros?)
-* exercise
-* Creating a bash script (opening handle) + how to execute it
+* [Creating a bash script (opening handle) + how to execute it][ok]
 
 ## Generally useful stuff
-* chmod (ua, +/-, rwx (search for dirs))
 * Create an archive (tar -cvzf, -xvzf)
 * ssh/scp into a cluster
 * Dealing with processes: ./..., ./... &, ps, top (P,M), kill, pkill

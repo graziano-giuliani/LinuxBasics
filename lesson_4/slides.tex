@@ -230,13 +230,13 @@
       \end{center}
     }
 
-    \vspace{4mm}
+    \vspace{6mm}
 
     Create a script which filters out commented lines (starting with
     \code{\#}), selects all lines where the index is 2, then selects only who
     sells tamarindos. Use redirection and/or piping.
 
-    \vspace{4mm}
+    \vspace{6mm}
 
     \focus{Hint}: the line begins with the index. Watch case.
     %grep -v '#' test | grep '^2 ' | grep -i 'tamarindo'
@@ -276,22 +276,26 @@
      \code{sed 's/<regexp>/<text>/g' <files>}\\
      replaces \focus{all} occurrence of \code{<regexp>} with \code{<text>} in all lines
 
-   \sidebyside{0.54}{
-     \begin{itemize}
-        \item Replacement and matching\\
-          will break words
-        \item Matching is case-sensitive
-        \item All regexp tools available
-        \item \code{sed -i} applies modifications\\
-          to the files: \focus{be careful!}
-      \end{itemize}
-    }{\hfill}{0.43}{
-      \begin{center}
-        \includegraphics[width=1.00\textwidth]{pics/sed-2.png}
-      \end{center}
-    }
+     \vspace{3mm}
 
-    Remember: \code{sed} can be used in pipes
+     \sidebyside{0.54}{
+       \begin{itemize}
+         \item Replacement and matching\\
+           will break words
+         \item Matching is case-sensitive
+         \item All regexp tools available
+         \item \code{sed -i} applies modifications\\
+           to the files: \focus{be careful!}
+       \end{itemize}
+     }{\hfill}{0.43}{
+       \begin{center}
+         \includegraphics[width=1.00\textwidth]{pics/sed-2.png}
+       \end{center}
+     }
+
+     \vspace{3mm}
+
+     Remember: \code{sed} can be used in pipes
   \end{center}
 \end{frame}
 
@@ -307,6 +311,8 @@
       \end{center}
     }
 
+    \vspace{2mm}
+
     Create a script which:
 
     \begin{itemize}
@@ -316,6 +322,8 @@
       \item Shows on screen the last two lines of the file replacing \code{,}
         with \code{.} (\focus{do not apply this last modification to the file})
     \end{itemize}
+
+    \vspace{2mm}
 
     \focus{Hint:} the use of \code{sed -i} and pipes is suggested. A copy of
     the original file is also handy to have at all times.
@@ -331,6 +339,8 @@
     \sidebyside{0.50}{
       \code{cut <options> <file>}:\\
       extract selected fields from file
+
+      \vspace{3mm}
 
       \begin{itemize}
         \item \code{-d}: specify field delimiter\\
@@ -400,6 +410,8 @@
       \end{center}
     }
 
+    \vspace{3mm}
+
     Write a script which:
 
     \begin{itemize}
@@ -408,6 +420,8 @@
       \item Prints out the 2nd column of the line\\
         with the highest value of the 3rd column
     \end{itemize}
+
+    \vspace{3mm}
 
     \focus{Hint}: Remember the options of \code{sort} (\code{-g} in
     particular).\\
@@ -422,10 +436,13 @@
     awk is a (simple) programming language for text operations\\
     mostly used to work on files as sets of columns
 
+    \vspace{1mm}
+
     An awk program can be structured in 3 blocks:
     \code{BEGIN \{ 1 \} \{ 2 \} END \{ 3 \}}
 
-    \normalsize
+    \vspace{1mm}
+
     \begin{itemize}
       \item \focus{Initial instructions} (1) are executed only once,\\
         before starting to read the file.
@@ -433,8 +450,12 @@
       \item \focus{Final instructions} (3) are executed once the file has been read.
     \end{itemize}
 
-    For very simple scripts, you can usually omit blocks (1), (3) and keywords\\
-    In block (2) you can access properties and columns of each line
+    \vspace{1mm}
+
+    Usually when launched in shell only block (2) is used:\\
+    \code{awk '\{ <commands> \}' <file>}
+
+    \vspace{2mm}
 
     Powerful tools available, like \focus{if...then...else}\\
     We will not see them here (\focus{stackoverflow} is always there though)
@@ -496,12 +517,16 @@
       \end{center}
     }
 
+    \vspace{4mm}
+
     Write a script which writes to a new file the row number, the difference
     and the squared difference of columns 1 and 2 of the starting file
     (neglecting the label row).
 
-    In awk you can perform operations between columns, with the usual operators
-    (\code{+, -, *, /, ()}).
+    \vspace{4mm}
+
+    In awk you can perform operations between columns,\\
+    with the usual operators (\code{+, -, *, /, ()}).
   \end{center}
 \end{frame}
 

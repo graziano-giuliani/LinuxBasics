@@ -22,6 +22,7 @@ Linux basics lesson course for ICTP Diploma students
 * Brief introduction to makefiles
 * Brief introduction to vim (insert mode, saving/quitting, moving, visual/block, macros?)
 * exercise
+* Creating a bash script (opening handle) + how to execute it
 
 ## Generally useful stuff
 * chmod (ua, +/-, rwx (search for dirs))
@@ -32,17 +33,22 @@ Linux basics lesson course for ICTP Diploma students
 * General practices of using clusters (slurm...)
 
 ## Text file manipulation
+* [stackoverflow][ok]
 * [cat, tail, head][ok]
+* [cat, tail, head exercises][ok]
+* [piping and redirection][ok]
 * [grep][ok]
+* [grep exercises][ok]
 * [regexp][ok]
 * [elements of sed (delete when occurrence, add when occurrence, replace, -i)][ok]
+* [sed exercises][ok]
 * [cut, paste][ok]
-* elements of awk (print only a field, manipulate a field, add row numbers...)
-* stackoverflow
+* [sort][ok]
+* [cut, paste, sort exercises ?][ok]
+* [elements of awk (print only a field, manipulate a field, add row numbers)][ok]
+* [awk exercises][ok]
 
 ## Basic bash scripting
-* Creating a script (opening handle) + how to execute it
 * Variables: you can cat them, assignment, accessing their values ($, ${})
 * read (-p), echo
 * Integrating shell commands: touching a file given by the user + date
-* Introduction to makefiles: targets, all, syntax, how to use them

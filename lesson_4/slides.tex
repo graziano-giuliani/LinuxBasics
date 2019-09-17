@@ -48,10 +48,23 @@
 
 \begin{frame}
   \begin{center}
+    Before we go, remember:\\
+    \focus{nobody knows everything (except the internet)}
+
+    \focus{Stackoverflow} and \focus{Google} will help you, use them
+
+    \begin{center}
+      \includegraphics[width=1.00\textwidth]{pics/stackoverflow.png}
+    \end{center}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \begin{center}
     \frametitle{Row Operations I - Listing}
 
     \sidebyside{0.53}{
-      \code{cat <file>} displays an entire file
+      \code{cat <files>}: displays entire files
       \begin{itemize}
         \item \code{-n}: numbers lines
       \end{itemize}
@@ -95,27 +108,61 @@
 
 \begin{frame}
   \begin{center}
-    \frametitle{Interlude I: Command piping}
+    \frametitle{Interlude I: Pipes and redirection}
 
-    \sidebyside{0.60}{
-      Output of a command \ra input to another\\
-      (like water in a pipe)
-    }{\hfill}{0.34}{
+    \sidebyside{0.56}{
+      \focus{Piping}:\\
+      output of command \ra input to another
+    }{\hfill}{0.40}{
       \begin{center}
-        \includegraphics[width=1.00\textwidth]{pics/pipe.jpg}
+        \includegraphics[width=0.60\textwidth]{pics/pipe.jpg}
       \end{center}
     }
 
-    Syntax:
-    \vspace{0.5mm}
-    \code{command\_1 <arguments> | command\_2 | ... | command\_N}
-
-    Trick: \focus{leftmost goes first}
+    \code{command\_1 <arguments> | command\_2 | ... | command\_N}\\
+    \vspace{2mm}
 
     Example: extract 3rd line of file\\
-    \code{head -n 3 file | tail -n 1}
+    \code{head -n 3 <file> | tail -n 1}
+
+    \vspace{6mm}
+
+    \sidebyside{0.58}{
+      \focus{Redirection}:\\
+      output of command \ra file
+      \vspace{4mm}
+
+      \code{command <options> <arguments> > <file>}\\
+      Use \code{>>} to append to existing file
+    }{\hspace{8mm}}{0.30}{
+      \begin{center}
+        \includegraphics[width=0.90\textwidth]{pics/redirection.png}
+      \end{center}
+    }
+
   \end{center}
 \end{frame}
+
+\begin{frame}
+  \begin{center}
+    \frametitle{Exercise I - cat, tail, head}
+
+    \sidebyside{0.40}{
+      Create the following 3 files:
+    }{\hfill}{0.50}{
+      \begin{center}
+        \includegraphics[width=0.44\textwidth]{pics/ex_1.png}
+      \end{center}
+    }
+
+    Write a scripts that creates a file containing the first 3 rows of
+    \code{file\_1}, the 2nd and 3rd lines of \code{file\_2} and the last 3
+    lines of \code{file\_3} and displays this file on the screen.
+
+    Use pipes and redirection where needed.
+  \end{center}
+\end{frame}
+
 
 \begin{frame}
   \begin{center}
@@ -173,6 +220,31 @@
 
 \begin{frame}
   \begin{center}
+    \frametitle{Exercise II - grep}
+
+    \sidebyside{0.35}{
+      Create the following file:
+    }{\hfill}{0.60}{
+      \begin{center}
+        \includegraphics[width=0.80\textwidth]{pics/ex_2.png}
+      \end{center}
+    }
+
+    \vspace{4mm}
+
+    Create a script which filters out commented lines (starting with
+    \code{\#}), selects all lines where the index is 2, then selects only who
+    sells tamarindos. Use redirection and/or piping.
+
+    \vspace{4mm}
+
+    \focus{Hint}: the line begins with the index. Watch case.
+    %grep -v '#' test | grep '^2 ' | grep -i 'tamarindo'
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \begin{center}
     \frametitle{Row Operations III - sed}
 
     \code{sed} (stream editor) operates on files as groups of lines:\\
@@ -225,6 +297,33 @@
 
 \begin{frame}
   \begin{center}
+    \frametitle{Exercise III - sed}
+
+    \sidebyside{0.35}{
+      Create the following file:
+    }{\hfill}{0.60}{
+      \begin{center}
+        \includegraphics[width=0.70\textwidth]{pics/ex_3.png}
+      \end{center}
+    }
+
+    Create a script which:
+
+    \begin{itemize}
+      \item Replaces corrupted lines (lines containing \code{XXX}) with
+        \code{\#CORRUPTED}
+      \item Removes commented lines (beginning with \code{\#}) from the file
+      \item Shows on screen the last two lines of the file replacing \code{,}
+        with \code{.} (\focus{do not apply this last modification to the file})
+    \end{itemize}
+
+    \focus{Hint:} the use of \code{sed -i} and pipes is suggested. A copy of
+    the original file is also handy to have at all times.
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \begin{center}
     \frametitle{Column Operations I - cut and paste}
 
     Datafiles can also be seen as an ensemble of \focus{columns} (fields)
@@ -257,7 +356,152 @@
         \includegraphics[width=0.75\textwidth]{pics/paste.png}
       \end{center}
     }
+  \end{center}
+\end{frame}
 
+\begin{frame}
+  \begin{center}
+    \frametitle{Column Operations II - sort}
+
+    \sidebyside{0.62}{
+      \code{sort <options> <file>}:\\
+      \focus{sorts a file according to the given criteria}
+
+      \vspace{4mm}
+
+      \begin{itemize}
+        \item \code{-k}: specify an index column\\
+          (order following this column, default: 1)
+        \item \code{-n}: numbers sorted according to value\\
+        \item \code{-g}: like \code{-n}, more general formats\\
+          (e.g., scientific notation)
+        \item \code{-h}: like \code{-n}, human-readable formats\\
+          (e.g., \code{4K, 8M})
+        \item \code{-r}: reverses sort order (descending)
+        \item \code{-u}: eliminates repeated lines
+      \end{itemize}
+    }{\hfill}{0.34}{
+      \begin{center}
+        \includegraphics[width=0.90\textwidth]{pics/sort.png}
+      \end{center}
+    }
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \begin{center}
+    \frametitle{Exercise IV - cut, paste, sort}
+
+    \sidebyside{0.35}{
+      Create the following files:
+    }{\hfill}{0.60}{
+      \begin{center}
+        \includegraphics[width=0.70\textwidth]{pics/ex_4.png}
+      \end{center}
+    }
+
+    Write a script which:
+
+    \begin{itemize}
+      \item Pastes the two files together
+      \item Sorts the output according to the 3rd column
+      \item Prints out the 2nd column of the line\\
+        with the highest value of the 3rd column
+    \end{itemize}
+
+    \focus{Hint}: Remember the options of \code{sort} (\code{-g} in
+    particular).\\
+    Remember \code{head/tail}.
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \begin{center}
+    \frametitle{Column Operations III - awk}
+
+    awk is a (simple) programming language for text operations\\
+    mostly used to work on files as sets of columns
+
+    An awk program can be structured in 3 blocks:
+    \code{BEGIN \{ 1 \} \{ 2 \} END \{ 3 \}}
+
+    \normalsize
+    \begin{itemize}
+      \item \focus{Initial instructions} (1) are executed only once,\\
+        before starting to read the file.
+      \item \focus{Line instructions} (2) are executed on each line.
+      \item \focus{Final instructions} (3) are executed once the file has been read.
+    \end{itemize}
+
+    For very simple scripts, you can usually omit blocks (1), (3) and keywords\\
+    In block (2) you can access properties and columns of each line
+
+    Powerful tools available, like \focus{if...then...else}\\
+    We will not see them here (\focus{stackoverflow} is always there though)
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \begin{center}
+    \frametitle{Column Operations IV - awk basics}
+
+    \sidebyside{0.50}{
+      \code{print} writes to standard output:\\
+      use \code{""} for strings
+
+      \vspace{4mm}
+
+      Special variables:
+      \begin{itemize}
+        \item \code{NR} is the current line
+        \item \code{NF} is the number of fields\\
+          of the current line
+      \end{itemize}
+    }{\hfill}{0.45}{
+      \begin{center}
+        \includegraphics[width=0.75\textwidth]{pics/awk-1.png}
+      \end{center}
+    }
+
+    \sidebyside{0.50}{
+      Access fields via \code{\$<field\_number>}
+
+      \begin{itemize}
+        \item \code{\$0} is the entire line
+        \item \code{\$NF} is the last field
+      \end{itemize}
+
+      \vspace{4mm}
+
+      Fields can be manipulated\\
+      as strings or floating-point numbers
+      (file remains untouched)
+    }{\hfill}{0.45}{
+      \begin{center}
+        \includegraphics[width=1.00\textwidth]{pics/awk-2.png}
+      \end{center}
+    }
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \begin{center}
+    \frametitle{Exercise V - awk}
+
+    \sidebyside{0.35}{
+      Create the following file:
+    }{\hfill}{0.60}{
+      \begin{center}
+        \includegraphics[width=0.70\textwidth]{pics/ex_5.png}
+      \end{center}
+    }
+
+    Write a script which writes to a new file the row number, the difference
+    and the squared difference of columns 1 and 2 of the starting file
+    (neglecting the label row).
+
+    In awk you can perform operations between columns, with the usual operators
+    (\code{+, -, *, /, ()}).
   \end{center}
 \end{frame}
 

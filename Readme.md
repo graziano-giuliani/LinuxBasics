@@ -11,10 +11,10 @@ Linux basics lesson course for ICTP Diploma students
 * [ls (-l)][ok]
 * [touch][ok]
 * [rm (-r, -i, -v)][ok]
-* [exercises][ok]
+* [mkdir, touch, rm exercises][ok]
 * [cp, mv][ok]
-* find
-* exercises on cp, mv, find
+* [find][ok]
+* [exercises on cp, mv, find][ok]
 
 ## Programming/advanced editors
 * What is a program/programming

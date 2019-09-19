@@ -310,7 +310,7 @@
 
 
 \begin{frame}[c]
-  \frametitle{Commands I: Pathfinding}
+  \frametitle{Commands I - Pathfinding}
   Let us try to run the basic programs to navigate the Filesystem:
   \begin{center}
     \vspace{2pt}
@@ -337,7 +337,7 @@
 
 \begin{frame}[c]
   \begin{center}
-    \frametitle{Commands II: Moving around}
+    \frametitle{Commands II - Moving around}
 
     \code{ls <directory>}: list the files in the given directory\\
     no argument: list current directory
@@ -369,7 +369,7 @@
 
 \begin{frame}[c]
   \begin{center}
-    \frametitle{Commands III: Creating and removing}
+    \frametitle{Commands III - Creating and removing}
     \code{mkdir <directories>}: create new directories
     \vspace{-4mm}
 
@@ -398,9 +398,23 @@
 
 \begin{frame}[c]
   \begin{center}
-    \frametitle{Commands IV: Moving and copying files}
+    \frametitle{Exercise I - mkdir, rm}
+    Using the commands you know, create these directories and files,\\
+    and then remove them all (\focus{after showing us}):
 
-    \code{cp <old\_path> <new\_path>}: \focus{copy} a file to another location
+    \begin{center}
+      \includegraphics[width=0.80\textwidth]{pics/exercise_1.eps}
+    \end{center}
+  \end{center}
+\end{frame}
+
+
+\begin{frame}
+  \begin{center}
+    \frametitle{Commands IV - Moving and copying files}
+
+    \code{cp <old\_path> <new\_path>}: \focus{copy} a file to another location\\
+    \code{cp -r}: copy entire directories
     \vspace{-3mm}
 
     \begin{center}
@@ -417,19 +431,58 @@
     \code{<new\_path>} is overwritten, old content is lost\\
     Suggestion: use \code{cp -i}
 
-    \code{mv}: same syntax, file is \focus{moved} (old file deleted)
+    \code{mv}: same syntax, target \focus{moved} (old file/directory deleted)
   \end{center}
 \end{frame}
 
 
-\begin{frame}[c]
+\begin{frame}
   \begin{center}
-    \frametitle{Exercise I}
-    Using the commands you know, create these directories and files:
+    \frametitle{Commands V - Finding and listing files}
+
+    \code{find} \focus{recursively searches files in a directory}\\
+    \code{find <directory> <options>}
+
+    \vspace{3mm}
+
+    Many options, we will see the basic ones:
+
+    \vspace{3mm}
+
+    \sidebyside{0.52}{
+      \begin{itemize}
+        \item \code{-name}:\\
+          specify file name (no paths here)
+        \item \code{-path}:\\
+          specify (part of) the file path
+        \item \code{-delete}:\\
+          deletes the files found
+      \end{itemize}
+    }{\hfill}{0.45}{
+      \begin{center}
+        \includegraphics[width=1.00\textwidth]{pics/find.png}
+      \end{center}
+    }
+
+    \vspace{3mm}
+
+    In the above commands, you can use \focus{wildcards}:\\
+    \code{*} can replace any character (more in the future)
+  \end{center}
+\end{frame}
+
+
+\begin{frame}
+  \begin{center}
+    \frametitle{Exercise II - cp, mv, find}
+    Using the commands you know, create these directories and files,\\
+    copying and moving files as shown:
 
     \begin{center}
-      \includegraphics[width=0.80\textwidth]{pics/exercise_1.eps}
+      \includegraphics[width=0.77\textwidth]{pics/ex_2.eps}
     \end{center}
+
+    Then, using \code{find}, show the location of all \code{.tex} files
   \end{center}
 \end{frame}
 

@@ -156,7 +156,7 @@
         \item \normalsize{A compiler parses source files and create
            binary object files:} \\
           \footnotesize{
-          \code{gfortran -o -Wall -pedantic myprog myprog.f90}
+          \code{gfortran -o myprog myprog.f90}
           }
         \item \normalsize{Objects are linked with other objects or
            libraries to create executables:} \\
@@ -170,6 +170,38 @@
       \end{itemize}
     \end{column}
   \end{columns}
+\end{frame}
+
+
+\begin{frame}[label=compiler]{Compiler flags}
+  The compiler is a program and accepts command line arguments
+  \begin{itemize}
+    \item \code{-g}
+    \begin{itemize}
+      \item include debugging information
+    \end{itemize}
+    \item \code{-Wall}
+    \begin{itemize}
+      \item Enables commonly used warning options pertaining to usage
+        recommend avoiding and that are easy to avoid
+    \end{itemize}
+    \item \code{-pedantic}
+    \begin{itemize}
+      \item check program for Fortran 95 standard conformance
+    \end{itemize}
+    \item \code{-fbacktrace}
+    \begin{itemize}
+      \item print the whole trace of the error
+    \end{itemize}
+    \item \code{-fcheck=all}
+    \begin{itemize}
+      \item perform all available run-time checks
+    \end{itemize}
+    \item \code{-Ofast}
+    \begin{itemize}
+      \item Optimize for fast execution time
+    \end{itemize}
+  \end{itemize}
 \end{frame}
 
 

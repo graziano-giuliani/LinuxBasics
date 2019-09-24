@@ -16,20 +16,16 @@ Linux basics lesson course for ICTP Diploma students
 * [find][ok]
 * [exercises on cp, mv, find][ok]
 
-## Programming/advanced editors
-* What is a program/programming
-* Compiling
-* chmod (ua, +/-, rwx (search for dirs))
-* Brief introduction to makefiles
-* Brief introduction to vim (insert mode, saving/quitting, moving, visual/block, macros?)
+## Programming/advanced editors/General stuff
+* reorganization
+* [permissions & chmod (ua, +/-, rwx (search for dirs))][ok]
+* [What is a program/programming][ok]
+* [Brief introduction to vim (insert mode, saving/quitting, moving, visual/block, macros?)][ok]
+* [Compiling][ok]
+* brief introduction to makefiles
 * [Creating a bash script (opening handle) + how to execute it][ok]
-
-## Generally useful stuff
-* Create an archive (tar -cvzf, -xvzf)
-* ssh/scp into a cluster
-* Dealing with processes: ./..., ./... &, ps, top (P,M), kill, pkill
-* Use your /scratch folder, know how much disk space left
-* General practices of using clusters (slurm...)
+* dealing with processes: ./..., ./... &, ps, top (P,M), kill, pkill
+* ssh/scp, general practices of using clusters (slurm...)
 
 ## Text file manipulation
 * [stackoverflow][ok]
@@ -51,3 +47,7 @@ Linux basics lesson course for ICTP Diploma students
 * Variables: you can cat them, assignment, accessing their values ($, ${})
 * read (-p), echo
 * Integrating shell commands: touching a file given by the user + date
+
+## More stuff, maybe put it somewhere
+* wc
+* create an archive (tar -cvzf, -xvzf)

@@ -31,6 +31,54 @@
 
 \begin{frame}
   \begin{center}
+    \frametitle{Check permissions}
+
+    \sidebyside{0.44}{
+      \centering
+      See permissions: \code{ls -l}
+    }{\hfill}{0.52}{
+      \begin{center}
+        \includegraphics[width=1.00\textwidth]{pics/ls-l.png}
+      \end{center}
+    }
+
+    First 3 chars: \focus{read} (\code{r}), \focus{write} (\code{w}), \focus{execute} (\code{x}) permissions \focus{for user}\\
+    Second 3 chars: read/write/execute \focus{for group}\\
+    Last 3 chars: read/write/execute \focus{for all users}
+
+    Useful if the system does not leave you remove a file
+  \end{center}
+\end{frame}
+
+
+\begin{frame}
+  \begin{center}
+    \frametitle{Changing permissions: \code{chmod}}
+
+    \sidebyside{0.42}{
+      Change permissions: \code{chmod}
+
+      \code{chmod <who><+/-><what> <file>}
+
+      \begin{itemize}
+        \item \code{<who>}:\\
+          \code{u} (user),\\
+          \code{g} (group),\\
+          \code{a} (everybody)
+        \item \code{<+/->}: \code{+} to add, \code{-} to remove
+        \item \code{what}: \code{r,w,x} as above
+      \end{itemize}
+    }{\hfill}{0.48}{
+      \begin{center}
+        \includegraphics[width=0.90\textwidth]{pics/chmod.png}
+      \end{center}
+    }
+  \end{center}
+\end{frame}
+
+
+\begin{frame}
+  \begin{center}
     \frametitle{Basic shell scripting}
 
     As said before, you can \focus{recycle} commands you use more than once:\\

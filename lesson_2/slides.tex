@@ -51,6 +51,174 @@
 \end{frame}
 
 
+\begin{frame}[label=textedit]{Text editing}
+  \begin{center}
+  Pick your choice !
+  \end{center}
+  \begin{columns}[T]
+    \begin{column}{.55\textwidth}
+      \begin{itemize}
+        \item Local file: every desktop environment has a text editor
+        \begin{itemize}
+          \item GNOME : gedit, geany
+          \item KDE (Plasma) : kwrite
+          \item Xfce : mousepad \\
+            \dots
+        \end{itemize}
+        \item Text console: religious wars !
+        \begin{itemize}
+          \item vi(m) : Unix pure and true !
+          \item emacs : I love GNU !
+          \item nano  : I hate both of the above \\
+            \dots
+        \end{itemize}
+      \end{itemize}
+    \end{column}
+    \hfill
+    \begin{column}{.45\textwidth}
+      \vspace{10pt}
+      \includegraphics[scale=0.1]{pics/manuscript.jpg}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+
+\begin{frame}[label=vim1]{Unix vi - 1}
+  Starts by: \code{vim filetoedit.ext}
+  \begin{columns}[T]
+    \begin{column}{.83\textwidth}
+      \begin{itemize}
+        \item Modes
+        \begin{itemize}
+           \item \textbf{command mode}: Editor starts in command mode.
+              Cursor movement, text deletion, pasting is possible.
+              Can close/open files, save and quit editor.
+           \item \textbf{insertion mode}: Begins upon entering an insertion
+              or change command.
+        \end{itemize}
+        \item The [ESC] key returns the editor to command mode.
+        \item Commands are executed by pressing the return key.
+        \item To quit:
+        \begin{itemize}
+           \item Saving the file: \code{:x}
+           \item Without saving the file: \code{:q!}
+        \end{itemize}
+      \end{itemize}
+    \end{column}
+    \hfill
+    \begin{column}{.25\textwidth}
+      \includegraphics[scale=0.08]{pics/vim.png}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+
+\begin{frame}[label=vim2]{Unix vi - 2}
+  \begin{columns}[T]
+    \begin{column}{.83\textwidth}
+      \begin{itemize}
+        \item To enter insert mode:
+        \begin{itemize}
+           \item \code{i} insert in the current position
+           \item \code{I} insert at line beginning
+           \item \code{a} append after character
+           \item \code{A} append at end of the line
+           \item \code{r} overwrite one character
+           \item \code{R} enter replace mode
+           \item \code{o} new line inserted below
+           \item \code{O} new line inserted above
+        \end{itemize}
+        \item Move around in command mode:
+        \begin{itemize}
+          \item \code{h,j,k,l} or arrows in insert mode: left-down-up-right
+          \item \code{w,e,b} next/previous word beginning or end
+          \item \code{(,)} next/previous sentence 
+          \item \code{\{,\}} next/previous paragraph 
+          \item \code{0,\$} beginning/end of line
+          \item \code{gg,G} beginning/end of file
+        \end{itemize}
+      \end{itemize}
+    \end{column}
+    \hfill
+    \begin{column}{.25\textwidth}
+      \includegraphics[scale=0.08]{pics/vim.png}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+
+\begin{frame}[label=vim3]{Unix vi - 3}
+  \begin{columns}[T]
+    \begin{column}{.83\textwidth}
+      \begin{itemize}
+        \item change text
+        \begin{itemize}
+          \item \code{C} change to the end of line
+          \item \code{Ncw} change N words
+        \end{itemize}
+        \item Delete text
+        \begin{itemize}
+           \item \code{xX} delete character to right/left
+           \item \code{D} delete to the end of the line
+           \item \code{dd,:d} delete the whole line
+           \item \code{Ndd} delete N lines
+           \item \code{Ndw} delete N words
+        \end{itemize}
+        \item Copy text
+        \begin{itemize}
+          \item \code{yy,:y} copy the line
+          \item \code{Nyy} copy N lines
+        \end{itemize}
+        \item Paste text
+        \begin{itemize}
+          \item \code{pP} paste the line(s) after/before current
+        \end{itemize}
+      \end{itemize}
+    \end{column}
+    \hfill
+    \begin{column}{.25\textwidth}
+      \includegraphics[scale=0.08]{pics/vim.png}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+
+\begin{frame}[label=vim4]{Unix vi - 4}
+  \begin{columns}[T]
+    \begin{column}{.83\textwidth}
+      \begin{itemize}
+        \item Search
+        \begin{itemize}
+          \item \code{/string} Search string ahead
+          \item \code{?string} Search string backward
+          \item \code{n,N} Next item ahead/backward
+        \end{itemize}
+        \item Substitute
+        \begin{itemize}
+           \item \code{:s/pattern/string/} substitute pattern with string
+           \item \code{:s!/path/subst!/new/path/!} for a file path
+           \item \code{:s/pattern/string/g} all occurences in line
+           \item \code{:M,N s/pattern/string/g} all in lines M to N
+           \item \code{:1,\$ s/pattern/string/g} all occurences in file
+        \end{itemize}
+        \item Undo, redo, join, capitalize
+        \begin{itemize}
+          \item \code{.} Repeat last change
+          \item \code{u,U} undo the last/all changes in line
+          \item \code{Ctrl+r} Redo the change
+          \item \code{J} Join with next line
+          \item \code{\~} change case
+        \end{itemize}
+      \end{itemize}
+    \end{column}
+    \hfill
+    \begin{column}{.25\textwidth}
+      \includegraphics[scale=0.08]{pics/vim.png}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+
 \begin{frame}[label=pipelining]{Writing your own program - 1}
   Use the building blocs of existing programs and create a complex
   \textcolor{red}{\textbf{pipeline}} of stages to reach the desired processing

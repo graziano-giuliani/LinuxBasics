@@ -121,7 +121,7 @@
         resources
       \item User programs are task controlled interactively or through batch job
         submission system by physical user concurrently accessing system
-        resources through multi tasking access to the CPU(s).
+        resources through multi tasking sharing the CPU(s).
     \end{itemize}
     \end{column}
   \end{columns}
@@ -174,24 +174,25 @@
 \end{frame}
 
 
-\begin{frame}[label=shell]{The command shell}
+\begin{frame}[label=login]{Authentication}
   \begin{columns}[T]
-    \begin{column}{.43\textwidth}
+    \begin{column}{.23\textwidth}
       \begin{center}
-        \includegraphics[scale=0.4]{pics/vt100.png}
+        \includegraphics[scale=0.25]{pics/locks.png}
       \end{center}
     \end{column}
     \hfill
-    \begin{column}{.56\textwidth}
+    \begin{column}{.66\textwidth}
     \small{
-      The CLI is THE interface to a UNIX system. The standard login
-      procedure is used to reach a program called \focus{shell}:
+      The CLI is THE interface to a UNIX system. To reach the command
+      interpreter a standard procedure is used:
       \begin{itemize}
-        \item The user is authenticated by the system with a username/password
-          couple challenge by a login program.
-        \item The system unlock resources for the user and executes a
-          configured program called a shell.
-        \item The shell waits for the user command input showing up a prompt 
+        \item \textbf{Authentication}: The user is authenticated with
+          username/password challenge by a login program.
+        \item \textbf{Authorization}: The system creates an environment
+          by providing the set of system resources the user may access 
+        \item \textbf{Allocation}: The user access the resources by
+          runnig programs through the command interpreter.
       \end{itemize}
       }
     \end{column}
@@ -199,6 +200,30 @@
 \end{frame}
 
 
+\begin{frame}[label=shell]{The command shell}
+  \begin{columns}[T]
+    \begin{column}{.56\textwidth}
+    \small{
+      The SHELL is is the command interpreter:
+      \begin{itemize}
+        \item waits for the user command input showing up a prompt 
+        \item controls the user environment through variables
+        \item executes user commands managing the input, output
+                 and error streams
+      \end{itemize}
+      }
+    \end{column}
+    \hfill
+    \begin{column}{.43\textwidth}
+      \begin{center}
+        \includegraphics[scale=0.4]{pics/vt100.png}
+      \end{center}
+    \end{column}
+  \end{columns}
+  \begin{center}
+    There is not just a single shell program!
+  \end{center}
+\end{frame}
 
 \begin{frame}[label=program]{The Program}
   \begin{columns}[T]
@@ -210,7 +235,7 @@
       \small{
       A program running in the system has:
       \begin{itemize}
-        \item An executable file in binary format containing:
+        \item An executable file containing:
         \begin{itemize}
           \item The instruction for the processor
           \item The data to be processed
@@ -226,7 +251,7 @@
 \end{frame}
 
 
-\begin{frame}[label=program]{Running a program}
+\begin{frame}[label=running]{Running a program}
   \begin{columns}[T]
     \begin{column}{.33\textwidth}
       \includegraphics[scale=0.99]{pics/bad_arguments.jpg}
@@ -302,6 +327,41 @@
         \item tmp stands for temporary and is where scratch files are placed
         \item etc stands for etcetera and is where configuration files are
         \item home is where user files are placed
+      \end{itemize}
+    }
+    \end{column}
+  \end{columns}
+\end{frame}
+
+
+\begin{frame}[label=permission]{File permissions}
+  \begin{columns}[T]
+    \begin{column}{.11\textwidth}
+      \includegraphics[scale=0.15]{pics/Timbro.jpg}
+    \end{column}
+    \hfill
+    \begin{column}{.89\textwidth}
+      \small{
+      There are three basic attributes for plain file permissions:
+      \begin{itemize}
+         \item read
+         \item write
+         \item execute
+      \end{itemize}
+      They mean what you would expect. There are three classes of users:
+      \begin{itemize}
+         \item owner
+         \item group
+         \item other
+      \end{itemize}
+      For each of the three classes you have three possible attributes
+      to set. \\
+      \vspace{10pt}
+      For directories:
+      \begin{itemize}
+         \item read : you can list the content
+         \item write : you can create/remove files inside
+         \item execute : you can access it and its content
       \end{itemize}
     }
     \end{column}
@@ -455,6 +515,8 @@
           specify file name (no paths here)
         \item \code{-path}:\\
           specify (part of) the file path
+        \item \code{-printf \%\{format\}}:\\
+          print details of the items found
         \item \code{-delete}:\\
           deletes the files found
       \end{itemize}

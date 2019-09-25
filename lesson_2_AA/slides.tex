@@ -148,4 +148,73 @@
   \end{center}
 \end{frame}
 
+\begin{frame}
+  \begin{center}
+    \frametitle{Executing scripts and programs}
+
+    \sidebyside{0.45}{
+      \centering
+      \code{./<executable>}\\
+      \focus{launches an executable}
+    }{\hfill}{0.50}{
+      \begin{center}
+        \includegraphics[width=0.80\textwidth]{pics/execute.png}
+      \end{center}
+    }
+
+   \sidebyside{0.48}{
+      \centering
+      \code{./<executable> \&}\\
+      executes \focus{in the background}\\
+      (the shell is free during execution)
+    }{\hfill}{0.50}{
+      \begin{center}
+        \includegraphics[width=0.80\textwidth]{pics/background.png}
+      \end{center}
+    }
+  \end{center}
+\end{frame}
+
+
+\begin{frame}
+  \begin{center}
+    \frametitle{Checking and killing processes}
+
+    \sidebyside{0.47}{
+      \centering
+      \code{ps}\\
+      \focus{shows running processes}
+
+      \vspace{4mm}
+
+      Processes are identified by a code (\focus{PID})
+
+      \vspace{4mm}
+
+      \code{kill <PID>} or \code{pkill <name>} \focus{stop processes}
+    }{\hfill}{0.50}{
+      \begin{center}
+        \includegraphics[width=0.70\textwidth]{pics/ps.png}
+      \end{center}
+    }
+
+    \vspace{4mm}
+
+    \sidebyside{0.44}{
+      \centering
+      \code{top} \focus{gives more info}\\
+      (e.g., CPU and RAM usage)
+
+      \vspace{3mm}
+
+      Press \code{P} to sort by CPU usage,\\
+      \code{M} to sort by RAM usage
+    }{\hfill}{0.54}{
+      \begin{center}
+        \includegraphics[width=1.00\textwidth]{pics/top.png}
+      \end{center}
+    }
+  \end{center}
+\end{frame}
+
 \end{document}

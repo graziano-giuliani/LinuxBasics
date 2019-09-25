@@ -17,14 +17,13 @@ Linux basics lesson course for ICTP Diploma students
 * [exercises on cp, mv, find][ok]
 
 ## Programming/advanced editors/General stuff
-* reorganization
 * [permissions & chmod (ua, +/-, rwx (search for dirs))][ok]
 * [What is a program/programming][ok]
 * [Brief introduction to vim (insert mode, saving/quitting, moving, visual/block, macros?)][ok]
 * [Compiling][ok]
 * brief introduction to makefiles
 * [Creating a bash script (opening handle) + how to execute it][ok]
-* dealing with processes: ./..., ./... &, ps, top (P,M), kill, pkill
+* [dealing with processes: ./..., ./... &, ps, top (P,M), kill, pkill][ok]
 * ssh/scp, general practices of using clusters (slurm...)
 
 ## Text file manipulation

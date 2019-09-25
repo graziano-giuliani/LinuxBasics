@@ -29,6 +29,41 @@
 
 \begin{document}
 
+\begin{frame}[label=permission]{File permissions}
+  \begin{columns}[T]
+    \begin{column}{.11\textwidth}
+      \includegraphics[scale=0.15]{pics/Timbro.jpg}
+    \end{column}
+    \hfill
+    \begin{column}{.89\textwidth}
+      \small{
+      There are three basic attributes for plain file permissions:
+      \begin{itemize}
+         \item read
+         \item write
+         \item execute
+      \end{itemize}
+      They mean what you would expect. There are three classes of users:
+      \begin{itemize}
+         \item owner
+         \item group
+         \item other
+      \end{itemize}
+      For each of the three classes you have three possible attributes
+      to set. \\
+      \vspace{10pt}
+      For directories:
+      \begin{itemize}
+         \item read : you can list the content
+         \item write : you can create/remove files inside
+         \item execute : you can access it and its content
+      \end{itemize}
+    }
+    \end{column}
+  \end{columns}
+\end{frame}
+
+
 \begin{frame}
   \begin{center}
     \frametitle{Check permissions}

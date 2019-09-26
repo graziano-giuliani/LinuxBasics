@@ -24,7 +24,7 @@ Linux basics lesson course for ICTP Diploma students
 * brief introduction to makefiles
 * [Creating a bash script (opening handle) + how to execute it][ok]
 * [dealing with processes: ./..., ./... &, ps, top (P,M), kill, pkill][ok]
-* ssh/scp, general practices of using clusters (slurm...)
+* [ssh/scp, general practices of using clusters (slurm...)][ok]
 
 ## Text file manipulation
 * [stackoverflow][ok]

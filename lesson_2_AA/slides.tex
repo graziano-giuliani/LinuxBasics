@@ -217,4 +217,44 @@
   \end{center}
 \end{frame}
 
+\begin{frame}
+  \begin{center}
+    \frametitle{Accessing remote computers}
+
+    \sidebyside{0.50}{
+      \centering
+
+      \code{ssh}: \focus{access a remote computer}\\
+      (e.g., to use a CPU cluster)\\
+
+      \vspace{4mm}
+
+      \code{ssh <user>@<remote machine>}
+
+      \vspace{4mm}
+
+      \code{scp} allows file transfer
+    }{\hfill}{0.45}{
+      \begin{center}
+        \includegraphics[width=1.00\textwidth]{pics/supercomputer.jpg}
+      \end{center}
+    }
+
+    \vspace{3mm}
+
+    Clusters usually handle long calculations with a \focus{workload manager}:\\
+    \code{slurm} is one of the most popular
+
+    \vspace{3mm}
+
+    You will have finite disk space and CPU time:\\
+    \focus{remember your limits}
+
+    \vspace{3mm}
+
+    Don't take too many CPUs:\\
+    \focus{be mindful of others}
+  \end{center}
+\end{frame}
+
 \end{document}

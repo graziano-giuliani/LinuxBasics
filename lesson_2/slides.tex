@@ -77,7 +77,7 @@
     \hfill
     \begin{column}{.45\textwidth}
       \vspace{10pt}
-%      \includegraphics[scale=0.1]{pics/manuscript.jpg}
+       \includegraphics[scale=0.1]{pics/manuscript.jpg}
     \end{column}
   \end{columns}
 \end{frame}
@@ -369,6 +369,86 @@
     \begin{itemize}
       \item Optimize for fast execution time
     \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}[label=makefile]{Make program}
+  The traditional way to manage a project code is the \code{make} program
+  \begin{columns}[T]
+    \begin{column}{.23\textwidth}
+      \vspace{30pt}
+      \includegraphics[scale=0.25]{pics/GM.jpg}
+    \end{column}
+    \hfill
+    \begin{column}{.76\textwidth}
+      \begin{itemize}
+        \item \code{[Mm]akefile}
+        \begin{itemize}
+          \item For each directory in a project, you provide a Makefile.
+          \item The makefile contains:
+          \begin{itemize}
+             \item \textbf{Targets} : things you can ask to be made
+             \item \textbf{Dependencies} : order of things to be made
+             \item \textbf{Variables} : useful to store options
+             \item \textbf{Conditionals} : select how to do on variable value
+          \end{itemize}
+          \item A hyerarchy of Makefiles can be built
+          \item For very complex projects Makefiles can be generated through
+             other tools
+          \item Newer projects use different build helpers, but you can count
+             on make be present on UNIX.
+        \end{itemize}
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+
+\begin{frame}[label=exercise1]{Exercise 1}
+  \begin{itemize}
+    \item Change directory into code. \\
+       \code{\$ > cd code} \\
+       \code{\$ > ls} \\
+       \code{examplestart.f90  goodstart.f90  Makefile}
+    \item Use vim to examine the Makefile \\
+       \code{\$ > vim Makefile}
+    \item Type make
+    \item Execute the examplestart program \\
+       \code{\$ > ./examplestart}
+    \item What does it mean?
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}[label=exercise2]{Exercise 2}
+  \begin{itemize}
+    \item Edit the Makefile, comment the FLAGS line, uncomment following
+       \code{\# FCFLAGS = -O2} \\
+       \code{FCFLAGS = -Wall -pedantic}
+    \item Make the program again
+    \item Edit examplestart.f90 and modify it to fix warnings
+    \item Execute the examplestart program \\
+       \code{\$ > ./examplestart}
+    \item What does it mean?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[label=exercise3]{Exercise 3}
+  \begin{itemize}
+    \item Edit the Makefile, comment the FLAGS line, uncomment following \\
+       \code{\# FCFLAGS = -O2} \\
+       \code{\# FCFLAGS = -Wall -pedantic}a \\
+       \code{FCFLAGS = -Wall -pedantic -fcheck=all -fbacktrace -g -O0}
+    \item Make the program again
+    \item Execute the examplestart program \\
+       \code{\$ > ./examplestart}
+    \item Edit examplestart.f90 and modify it to fix errors
+    \item Execute the examplestart program \\
+       \code{\$ > ./examplestart}
+    \item Compare with proposed \textit{best} program: \\
+       \code{\$ > diff -Naurb examplestart.f90 goodstart.f90}
+    \item Diffs?
   \end{itemize}
 \end{frame}
 

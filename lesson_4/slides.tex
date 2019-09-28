@@ -1,0 +1,34 @@
+\documentclass[unknownkeysallowed, 10pt, a4 paper, handout]{beamer}
+
+% Custom beamer theme
+\usepackage{../style/beamerthemeCustom}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}   %FOR TITLEPAGE
+
+\usepackage{changepage}       % adjustwidth
+
+\setlength\parskip{0.3cm}
+
+\definecolor{darkgreen}{RGB}{0,100,0}
+\newcommand{\green}[1]{\textbf{\textcolor{darkgreen}{#1}}}
+\newcommand{\red}[1]{\textbf{\textcolor{red}{#1}}}
+
+\newcommand{\focus}[1]{\textbf{\textcolor{red}{#1}}}
+\newcommand{\ra}{$\longrightarrow$ }
+\newcommand{\lra}{$\longleftrightarrow$ }
+
+\newcommand{\code}[1]{\colorbox{black}{\color{green}\texttt{#1}}}
+
+% Command to create two side-by-side minipages
+\newcommand{\sidebyside}[5]{
+  \begin{minipage}{#1\textwidth}
+    #2
+  \end{minipage} #3 \begin{minipage}{#4\textwidth}
+    #5
+  \end{minipage}
+}
+
+\begin{document}
+
+\begin{frame}
+\end{frame}
+\end{document}

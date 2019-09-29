@@ -6,10 +6,10 @@ Linux basics lesson course for ICTP Diploma students
 ## Linux Basics
 * [What is Linux & the terminal][ok]
 * [Filesystem: folders (/home, /tmp, /usr, /inc...)][ok]
-* [mkdir][ok]
 * [cd (., .., /, -, ~)][ok]
 * [ls (-l)][ok]
 * [touch][ok]
+* [mkdir][ok]
 * [rm (-r, -i, -v)][ok]
 * [mkdir, touch, rm exercises][ok]
 * [cp, mv][ok]

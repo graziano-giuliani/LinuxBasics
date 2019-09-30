@@ -31,6 +31,26 @@
 
 \begin{frame}
   \begin{center}
+
+    \definecolor{myblue}{RGB}{51,51,179}
+    \setbeamercolor{block body}{use=structure,fg=white,bg=myblue!20!myblue}
+
+    \begin{block}{}
+      \Large
+      \centering
+      Linux Basics III:\\
+      Text file manipulation
+    \end{block}
+
+    \vspace{6mm}
+    \large
+    \textsc{Adriano Angelone, Graziano Giuliani} \\
+
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \begin{center}
     \frametitle{Text manipulation}
     We are scientists: we deal in \focus{datafiles}
 
@@ -143,6 +163,43 @@
   \end{center}
 \end{frame}
 
+
+\begin{frame}
+  \begin{center}
+    \frametitle{Interlude II: basic shell scripting}
+
+    As said before, you can \focus{recycle} commands you use more than once:\\
+    \focus{write once, use more than once}
+
+    \sidebyside{0.50}{
+      You can create \focus{scripts}:\\
+      files containing instructions\\
+      which you launch to perform tasks
+    }{\hfill}{0.45}{
+      \begin{center}
+        \includegraphics[width=0.70\textwidth]{pics/script_1.png}
+      \end{center}
+    }
+
+    \begin{itemize}
+      \item The first line tells the shell which \focus{interpreter} to use\\
+        (i.e. which scripting language, we use \code{bash})
+      \item The rest is \focus{instructions} (this here prints 'hello')
+    \end{itemize}
+
+    \sidebyside{0.50}{
+      Scripts can be made \focus{executable}\\
+      (remember \code{chmod}?)\\
+      and launched from the command line:\\
+      \code{./<script>}
+    }{\hfill}{0.45}{
+      \begin{center}
+        \includegraphics[width=0.80\textwidth]{pics/script_2.png}
+      \end{center}
+    }
+  \end{center}
+\end{frame}
+
 \begin{frame}
   \begin{center}
     \frametitle{Exercise I - cat, tail, head}
@@ -190,7 +247,7 @@
 
 \begin{frame}
   \begin{center}
-    \frametitle{Interlude II - Regular Expressions Basics}
+    \frametitle{Interlude III - Regular Expressions Basics}
 
     Regular expressions (regexps) are \focus{templates} that lines can match\\
     They can use special characters and \focus{wildcards}:

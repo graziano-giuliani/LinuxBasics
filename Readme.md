@@ -17,20 +17,20 @@ Linux basics lesson course for ICTP Diploma students
 * [exercises on cp, mv, find][ok]
 
 ## Programming/advanced editors/General stuff
-* [permissions & chmod (ua, +/-, rwx (search for dirs))][ok]
-* [What is a program/programming][ok]
 * [Brief introduction to vim (insert mode, saving/quitting, moving, visual/block, macros?)][ok]
+* [What is a program/programming][ok]
 * [Compiling][ok]
-* brief introduction to makefiles
-* [Creating a bash script (opening handle) + how to execute it][ok]
+* [brief introduction to makefiles][ok]
+* [permissions & chmod (ua, +/-, rwx (search for dirs))][ok]
 * [dealing with processes: ./..., ./... &, ps, top (P,M), kill, pkill][ok]
 * [ssh/scp, general practices of using clusters (slurm...)][ok]
 
 ## Text file manipulation
 * [stackoverflow][ok]
 * [cat, tail, head][ok]
-* [cat, tail, head exercises][ok]
 * [piping and redirection][ok]
+* [Creating a bash script (opening handle) + how to execute it][ok]
+* [cat, tail, head exercises][ok]
 * [grep][ok]
 * [grep exercises][ok]
 * [regexp][ok]
@@ -38,7 +38,7 @@ Linux basics lesson course for ICTP Diploma students
 * [sed exercises][ok]
 * [cut, paste][ok]
 * [sort][ok]
-* [cut, paste, sort exercises ?][ok]
+* [cut, paste, sort exercises][ok]
 * [elements of awk (print only a field, manipulate a field, add row numbers)][ok]
 * [awk exercises][ok]
 

@@ -87,7 +87,6 @@
       \item Variables
       \item Conditionals
       \item Loops
-      \item Arithmetic operations
     \end{itemize}
   \end{center}
 \end{frame}
@@ -95,7 +94,7 @@
 
 \begin{frame}
   \begin{center}
-    \frametitle{Variables}
+    \frametitle{Variables I}
 
     Variables contain data\\
     they have a label (\focus{name}) and a \focus{content}
@@ -112,11 +111,13 @@
 
 \begin{frame}
   \begin{center}
-    \frametitle{How to use variables}
+    \frametitle{Variables II}
 
     Variables are initialized when you use them the first time:\\
     \focus{you can call non-existing variables}, usually trouble\\
     (unless you put \code{set -u} in your script)
+
+    \vspace{5mm}
 
     \sidebyside{0.50}{
       \centering
@@ -133,13 +134,34 @@
       \end{center}
     }
 
+    \vspace{5mm}
+
     Usually it's good to use \code{"\$<variable name>"}\\
     to avoid problems if variable contains spaces
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \begin{center}
+    \frametitle{Variables III}
+
+    \sidebyside{0.50}{
+      \focus{(Simple) printing}: \code{echo}\\
+
+      \focus{Reading} from standard input: \code{read}
+      \code{read -p}: \focus{write prompt}
+    }{\hfill}{0.45}{
+      \begin{center}
+        \includegraphics[width=1.00\textwidth]{pics/echoread.png}
+      \end{center}
+    }
+
+    \vspace{6mm}
 
     \sidebyside{0.50}{
       \centering
-      Easy to join\\
-      variable values and strings
+      Easy to make variable values\\
+      interact with strings
 
       \vspace{2mm}
 
@@ -148,6 +170,171 @@
     }{\hfill}{0.45}{
       \begin{center}
         \includegraphics[width=0.70\textwidth]{pics/variables_2.png}
+      \end{center}
+    }
+  \end{center}
+\end{frame}
+
+
+\begin{frame}
+  \begin{center}
+    \frametitle{Variables IV}
+
+    \sidebyside{0.40}{
+      \centering
+      \focus{Command substitution}:
+      \code{<variable>=\$(<command>)}\\
+      outputs command in variable
+    }{\hfill}{0.56}{
+      \begin{center}
+        \includegraphics[width=0.90\textwidth]{pics/substitution.png}
+      \end{center}
+    }
+
+    Some variables are defined system-wide by default: e.g.,
+
+    \vspace{-2mm}
+
+    \begin{itemize}
+      \item \code{HOME}: path to your home folder
+      \item \code{PATH}: where commands will be searched for if no path specified
+    \end{itemize}
+
+    \vspace{-3mm}
+
+    \begin{center}
+      \includegraphics[width=1.00\textwidth]{pics/environment.png}
+    \end{center}
+
+    \sidebyside{0.50}{
+      Script arguments are variables:
+      \begin{itemize}
+        \item \code{\$0}: script name
+        \item \code{\$1-...}: arguments
+        \item \code{\$@}: all arguments
+        \item \code{\$\#}: argument number\\
+          (+1, \code{\$0} counts)
+      \end{itemize}
+    }{\hfill}{0.43}{
+      \begin{center}
+        \includegraphics[width=0.90\textwidth]{pics/arguments.png}
+      \end{center}
+    }
+  \end{center}
+\end{frame}
+
+
+\begin{frame}
+  \begin{center}
+    \frametitle{Conditionals I}
+
+    \focus{Basic structure:}
+    \code{if <test> ; then <action 1> ; else <action 2> ; fi}
+
+    \vspace{2mm}
+
+    \focus{Several types of conditions} can be tested,\\
+    slightly different syntax
+
+    \vspace{2mm}
+
+    \sidebyside{0.48}{
+      \centering
+      First type of condition:\\
+      \focus{test command output}
+
+      \vspace{3mm}
+  
+      Write command in condition\\
+      without parentheses
+
+      \vspace{3mm}
+  
+      If return code $= 0$\\
+      (usually, success)\\
+      triggers \code{then},\\
+      \code{else} otherwise
+    }{\hfill}{0.47}{
+      \begin{center}
+        \includegraphics[width=1.00\textwidth]{pics/conditional_1.png}
+      \end{center}
+    }
+  \end{center}
+\end{frame}
+
+
+\begin{frame}
+  \begin{center}
+    \frametitle{Conditionals II}
+
+    \sidebyside{0.58}{
+      \centering
+      Second type of condition:\\
+      \focus{primary expressions}
+
+      \vspace{2mm}
+
+      \begin{itemize}
+        \item \code{[ -f <file> ]}: file exists\\
+        \item \code{[ -d <directory> ]}: dir exists\\
+        \item \code{[<string1> ==/!= <string2>]}
+        \item \code{[<int1> <operator> <int2>]}
+
+        \vspace{1mm}
+
+        \code{<operator>} can be:
+        \begin{itemize}
+          \item \code{-eq/ne}: equal/not equal
+          \item \code{-lt/le}: less/less or equal
+          \item \code{-gt/ge}: greater/greater or equal
+        \end{itemize}
+      \end{itemize}
+
+      \focus{Conditions within} \code{[...]}\\
+      \code{[... -a ...]} is AND,\\
+      \code{[... -o ...]} is OR,\\
+      \code{[! ...]} is NOT
+    }{\hfill}{0.40}{
+      \begin{center}
+        \includegraphics[width=0.68\textwidth]{pics/conditional_2.png}
+      \end{center}
+    }
+  \end{center}
+\end{frame}
+
+
+\begin{frame}
+  \begin{center}
+    \frametitle{Iteration and loops}
+
+    \focus{Perform actions several times}:
+    \code{for <variable> in <range> ; do <action> ; done}
+
+    \sidebyside{0.50}{
+      \centering
+      \code{<variable>} usually\\
+      created on the spot
+
+      \vspace{5mm}
+
+      \code{<range>} can be:
+      \begin{itemize}
+        \item A given sequence (no commas)\\
+        \item Matches to a regexp
+      \end{itemize}
+
+      \vspace{5mm}
+
+      \code{<action>} can use \code{<variable>}
+
+      \vspace{5mm}
+
+      \focus{Example}:\\
+      cycle over command-line arguments:\\
+      \code{for arg in "\$@" ; ...}
+    }{\hfill}{0.45}{
+      \begin{center}
+        \includegraphics[width=1.00\textwidth]{pics/for.png}
       \end{center}
     }
   \end{center}

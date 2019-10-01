@@ -43,10 +43,16 @@ Linux basics lesson course for ICTP Diploma students
 * [awk exercises][ok]
 
 ## Basic bash scripting
-* Variables: you can cat them, assignment, accessing their values ($, ${})
+* [Variables][ok]
+* Conditionals
+* Loops
+* Arithmetic operations
+* Command line arguments
 * read (-p), echo
 * Integrating shell commands: touching a file given by the user + date
+* ave
 
 ## More stuff, maybe put it somewhere
 * wc
+* aliasing
 * create an archive (tar -cvzf, -xvzf)

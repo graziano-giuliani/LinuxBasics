@@ -340,4 +340,112 @@
   \end{center}
 \end{frame}
 
+\begin{frame}
+	\begin{center}
+		\frametitle{Exercise: file processing}
+
+		This will be a long exercise:\\
+		\focus{complex programs are done in steps}\\
+		(start simple, then add complexity)
+
+		\vspace{3mm}
+	
+		We have an external program, \code{binaver}, to average a column of a file:\\
+		\code{binaver -r<rows> -c<columns> -k<column to average> <file>}\\
+		Requires information about the files, only accepts one at a time
+
+		\vspace{3mm}
+
+		We will write a script (\focus{wrapper}) which:
+
+		\begin{itemize}
+			\item Counts automatically rows and columns
+			\item Excludes commented lines
+			\item Checks the integrity of the file
+			\item Applies \code{binaver} to multiple files
+		\end{itemize}
+	\end{center}
+\end{frame}
+
+\begin{frame}
+	\begin{center}
+		\frametitle{Step I: counting rows}
+
+		Rows can be counted with the \code{wc -l <file>} command:\\
+		the command however outputs \code{<line number> <file>}
+
+		\vspace{8mm}
+
+		\focus{Task 1}:\\
+		Write a script which assigns to a variable only the row number of a file\\
+		(hint: use command substitution and a pipeline with \code{awk} or \code{cut})
+
+		Assume the file to be the first command line argument\\
+		(remember how do you access it)
+	\end{center}
+\end{frame}
+
+\begin{frame}
+	\begin{center}
+		\frametitle{Step II: counting columns}
+
+		\focus{Task 2}:\\
+		Extend the previous script, assigning to a variable\\
+		the number of columns of the same file\\
+		(hint: one way uses \code{awk}, its internal variables, and \code{sort})\\
+		For now, assume that all rows have the same number of columns
+
+		\vspace{8mm}
+
+		\focus{Task 3}:\\
+		Modify the script so that it proceeds only if all rows\\
+		have the same number of columns\\
+		(hint: if you did it as suggested before,\\
+		you could use the previous bit of the script here)\\
+		This checks the \focus{integrity} of the file
+
+	\end{center}
+\end{frame}
+
+
+\begin{frame}
+	\begin{center}
+		\frametitle{Step III: comments and finalization}
+
+		\focus{Task 4}:\\
+		Modify all parts of the previous script to exclude commented lines\\
+		(starting with \code{\#})\\
+		(hint: you can use \code{grep})
+
+		\vspace{4mm}
+
+		\focus{Task 5}:\\
+		Ask the user which column he wants to perform the average on\\
+		(hint: \code{read -p})
+
+		\vspace{4mm}
+
+		\focus{Task 6}:\\
+		Complete the script, applying \code{binaver} to \code{\$1} with the known info
+	\end{center}
+\end{frame}
+
+
+\begin{frame}
+	\begin{center}
+		\frametitle{Step IV: robustness, multiple files}
+
+		\focus{Task 7}:\\
+		Extend the script to accept multiple files and act on all of them\\
+		(hint: loop over arguments, \code{binaver} takes one at a time)
+
+		\vspace{8mm}
+
+		\focus{Task 8}:\\
+		Increase robustness: skip a file if it doesn't exist\\
+		(hint: use conditionals, the \code{else} branch can be empty)
+	\end{center}
+\end{frame}
+
+
 \end{document}

@@ -4,7 +4,8 @@
 \usepackage{../style/beamerthemeCustom}
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}   %FOR TITLEPAGE
 
-\usepackage{changepage}       % adjustwidth
+\usepackage{changepage}     % adjustwidth
+\usepackage{booktabs}       % \toprule, \midrule and \bottomrule
 
 \setlength\parskip{0.3cm}
 
@@ -23,68 +24,95 @@
   \end{minipage}
 }
 
+\title[Linux Basic]{ICTP DP Linux Basic Course}
+\subtitle{ESP Students - First Semester}
+\author[Graziano Giuliani]{Graziano Giuliani \\ \focus{ggiulian@ictp.it}}
+\institute[ICTP]{The Abdus Salam International Centre for Theoretical Physics}
+\date[\today]{ICTP Diploma Program \\ \today}
+
 \begin{document}
 
 \begin{frame}
-  \begin{center}
-
-    \definecolor{myblue}{RGB}{51,51,179}
-    \setbeamercolor{block body}{use=structure,fg=white,bg=myblue!20!myblue}
-
-    \begin{block}{}
-      \Large
-      \centering
-      Linux Basics I:\\
-      What is Linux, the filesystem
-    \end{block}
-
-    \vspace{6mm}
-    \large
-    \textsc{Adriano Angelone, Graziano Giuliani} \\
-
-  \end{center}
+  \titlepage
 \end{frame}
 
 
-\begin{frame}[label=outline]{Course Outline}
+\begin{frame}[label=outline]
+  \frametitle{Course Outline \footnotemark}
+  \framesubtitle{Daily program}
   \begin{itemize}
-    \item \focus{UNIX/Linux Basics}
-    \item Intermediate shell commands
+    \item \focus{UNIX/Linux}
+      \begin{enumerate}
+        \item The Shell Command Line
+        \item Basic command line programs
+        \item Basic file editing
+      \end{enumerate}
+    \item Intermediate command line commands
     \item Editing and compiling source code
-    \item Text file manipulation
-    \item Basic shell scripting
+    \item Text file manipulation and shell scripting
   \end{itemize}
 
   \vspace{6mm}
 
-  \centering
-  Download slides and exercise files with the command\\
-  \code{git clone https://github.com/AA24KK/LinuxBasics.git}\\
-  \vspace{1mm}
-  or download a ZIP archive at
-  \vspace{1mm}
-  \code{https://github.com/AA24KK/LinuxBasics/archive/master.zip}
+  Slides: \\ \code{http://tinyurl.com/2jsvfbd6}
+  \vspace{4mm} \\
+  or the \LaTeX \ source on GitHub: \\
+  \code{https://github.com/graziano-giuliani/LinuxBasics}
 
-  \vspace{2mm}
-
-  Adriano: \focus{aangelon@ictp.it}, Room 263, ICTP\\
-  Graziano: \focus{ggiulian@ictp.it}
+  \footnotetext[1]{Course created in 2019 with Adriano Angelone, now LPTMC-FR}
 
 \end{frame}
 
 
-\begin{frame}[label=pdp11]{The Origin of the OS}
-  \begin{center}
-    \includegraphics[scale=3.5]{pics/pdp11.jpg}
-  \end{center}
-  \begin{flushright}
-    \tiny{By Peter Hamer - Ken Thompson (sitting) and Dennis Ritchie at
-    PDP-11 Magnus Manske, CC BY-SA 2.0}
-  \end{flushright}
+\begin{frame}[label=pdp11]
+  \frametitle{The origin of UNIX}
+  \framesubtitle{Operating System}
+  \begin{columns}
+    \begin{column}{0.50\textwidth}
+      \begin{itemize}
+        \item Hardware
+      \begin{itemize}
+        \item CPU, GPU, Motherboard, Cabling, Power
+        \end{itemize}
+        \item User
+      \begin{itemize}
+        \item Keyboard, Mouse, Monitor, etc
+        \end{itemize}
+        \item Software
+      \begin{itemize}
+        \item Application, Operating system
+        \end{itemize}
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.50\textwidth}
+      \begin{center}
+        \includegraphics[scale=0.15]{pics/os.png}
+      \end{center}
+    \end{column}
+  \end{columns}
+  \begin{columns}
+    \begin{column}{0.25\textwidth}
+      \begin{center}
+        \includegraphics[scale=1.15]{pics/pdp11.jpg} \\
+      \end{center}
+    \end{column}
+    \begin{column}{0.75\textwidth}
+      \begin{itemize}
+            \item 1969 - Multi-Tasking Multi-User Unix AT\&T
+        \item 1991 - Free Unix OS for Intel X86 (Linux)
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \begin{flushleft}
+    \tiny{By Peter Hamer: Ken Thompson (sitting) and Dennis Ritchie \\
+          at PDP-11 Magnus Manske, CC BY-SA 2.0}
+  \end{flushleft}
 \end{frame}
 
 
 \begin{frame}[label=unix]{UNIX Philosophy}
+  \frametitle{The UNIX Philosophy}
+  \framesubtitle{Why UNIX is such a good idea}
   \begin{enumerate}
     \item Make each program do one thing well. %To do a new job, build
       % afresh rather than complicate old programs by adding new "features".
@@ -114,50 +142,61 @@
 \end{frame}
 
 
-\begin{frame}[label=os]{The Linux OS - UNIX free}
+\begin{frame}[label=os]
+  \frametitle{The Linux Revolution}
+  \framesubtitle{Why a free OS is a good idea}
   \begin{center}
     \includegraphics[scale=0.5]{pics/linux-first-announcement-email.png}
   \end{center}
 \end{frame}
 
 
-\begin{frame}[label=gnu]{The Free Software Movement}
-  Free Software is not just Open Source or Gratis % Latin : as a kindness
+\begin{frame}[label=gnu]
+  \frametitle{The Free Software Movement}
+  \framesubtitle{Free Software as in Freedom}
   \begin{columns}[T]
-    \begin{column}{.65\textwidth}
-      \begin{itemize}
-        \item The freedom to run the program as you wish, for any purpose.
-        \item The freedom to study how the program works, and change it so it
-          does your computing as you wish
-        \item The freedom to redistribute copies so you can help others
-        \item The freedom to distribute copies of your modified versions
-          to others
-      \end{itemize}
+    \begin{column}{.68\textwidth}
+      \begin{block}{The Freedom to}
+        \begin{itemize}
+          \item run the program as you wish, for any purpose
+          \item study how the program works, and change it as you wish
+          \item redistribute copies so you can help others
+          \item distribute copies of your modified versions to others
+        \end{itemize}
+      \end{block}
     \end{column}
     \hfill
     \begin{column}{.32\textwidth}
-      \includegraphics[scale=0.45]{pics/rms1.png}
+      \begin{flushright}
+        \includegraphics[scale=0.35]{pics/rms1.png} \\
+      \end{flushright}
     \end{column}
   \end{columns}
+  \begin{center}
+    \includegraphics[scale=0.25]{pics/GPL.png}
+  \end{center}
 \end{frame}
 
 
-\begin{frame}[label=architecture]{UNIX architecture}
+\begin{frame}[label=architecture]
+  \frametitle{Linux architecture}
+  \framesubtitle{Linux is the kernel and we do not hate it!}
   \begin{columns}[T]
     \begin{column}{.23\textwidth}
+      \vspace{7mm}
       \includegraphics[scale=0.5]{pics/UNIX-HATERS_Handbook_cover_ISBN_1-56884-203-1.png}
     \end{column}
     \begin{column}{.73\textwidth}
       \begin{itemize}
-      \item The kernel is a program, running in supervisor mode, that acts as a
-        program loader and supervisor for the user programs providing locking
-        and I/O services.
-      \item The system services or daemons are programs running on the system
-        and providing facilities that allow or enhance access to system
-        resources
-      \item User programs are task controlled interactively or through batch job
-        submission system by physical user concurrently accessing system
-        resources through multi tasking sharing the CPU(s).
+      \item The Linux kernel is a program that loads all the other programs and
+        supervise the resources allocated to each one of them, providing
+        locking and I/O services.
+      \item The system services \emph{(daemons)} are programs running on the
+        system and providing facilities that allow or enhance access to system
+        resources.
+      \item User programs are controlled interactively or through batch job
+        submission system by physical users concurrently accessing system
+        resources through a multi tasking sharing of the CPU(s).
     \end{itemize}
     \end{column}
   \end{columns}
@@ -186,19 +225,20 @@
 \begin{frame}[c]
   \begin{center}
     \frametitle{The Command Line}
-
-    \sidebyside{0.54}{
-      \focus{Graphical User Interfaces (GUI)}:\\
-      comfortable, sometimes lack flexibility
-    }{\hfill}{0.41}{
-      \includegraphics[width=\textwidth]{pics/gui.png}
-    }
+    \framesubtitle{The old terminal}
 
     \sidebyside{0.54}{
       \focus{Command Line Interface (CLI)}:\\
-      powerful, requires knowledge
+             programmable, steep(-ish) learning curve
     }{\hfill}{0.41}{
       \includegraphics[width=\textwidth]{pics/cli.png}
+    }
+
+    \sidebyside{0.54}{
+      \focus{Graphical User Interfaces (GUI)}:\\
+      intuitive, difficult to program
+    }{\hfill}{0.41}{
+      \includegraphics[width=\textwidth]{pics/gui.png}
     }
 
     \vspace{-2mm}
@@ -210,7 +250,11 @@
 \end{frame}
 
 
-\begin{frame}[label=login]{Authentication}
+\begin{frame}[label=login]
+  \frametitle{Authentication}
+  \framesubtitle{Multi-User}
+  To support multiple users, Linux require authentication before
+  authorizing the user programs to allocate system resources.
   \begin{columns}[T]
     \begin{column}{.23\textwidth}
       \begin{center}
@@ -219,16 +263,15 @@
     \end{column}
     \hfill
     \begin{column}{.66\textwidth}
+    \vspace{5mm}
     \small{
-      The CLI is THE interface to a UNIX system. To reach the command
-      interpreter a standard procedure is used:
       \begin{itemize}
         \item \textbf{Authentication}: The user is authenticated with
           username/password challenge by a login program.
         \item \textbf{Authorization}: The system creates an environment
           by providing the set of system resources the user may access 
         \item \textbf{Allocation}: The user access the resources by
-          running programs through the command interpreter.
+          running programs through a command interpreter.
       \end{itemize}
       }
     \end{column}
@@ -236,11 +279,15 @@
 \end{frame}
 
 
-\begin{frame}[label=shell]{The command shell}
+\begin{frame}[label=shell]
+  \frametitle{The command shell}
+  \framesubtitle{How it works}
+  The SHELL is a text based command interpreter
   \begin{columns}[T]
-    \begin{column}{.56\textwidth}
+    \begin{column}{.60\textwidth}
+    \begin{center}
+    \begin{block}
     \small{
-      The SHELL is is the command interpreter:
       \begin{itemize}
         \item waits for the user command input showing up a prompt 
         \item controls the user environment through variables
@@ -248,9 +295,11 @@
                  and error streams
       \end{itemize}
       }
+    \end{block}
+    \end{center}
     \end{column}
     \hfill
-    \begin{column}{.43\textwidth}
+    \begin{column}{.40\textwidth}
       \begin{center}
         \includegraphics[scale=0.4]{pics/vt100.png}
       \end{center}
@@ -261,295 +310,307 @@
   \end{center}
 \end{frame}
 
-\begin{frame}[label=program]{The Program}
+\begin{frame}[label=program]
+  \frametitle{Linux Program}
+  \framesubtitle{Running a program in the CLI}
+  The User must type in a command line at the CLI prompt
+  \vspace{5mm} \\
   \begin{columns}[T]
-    \begin{column}{.23\textwidth}
-      \includegraphics[scale=0.15]{pics/running.jpg}
+    \begin{column}{.39\textwidth}
+      \includegraphics[scale=0.13]{pics/running.jpg}
     \end{column}
-    \hfill
-    \begin{column}{.73\textwidth}
-      \small{
-      A program running in the system has:
-      \begin{itemize}
-        \item An executable file containing:
+    \begin{column}{.61\textwidth}
+      A typical UNIX command line contains:
+      \begin{block}{}
         \begin{itemize}
-          \item The instruction for the processor
-          \item The data to be processed
+          \item The name of the program executable
+          \item The options modifying the execution
+            \begin{itemize}
+              \item short format: -f
+              \item long format: -\ -\ a\_longer\_string
+            \end{itemize}
+          \item The argument or list of arguments
         \end{itemize}
-        \item The User credentials to access the system resources
-        \item An extendable set of system resources (CPU, Memory, Storage)
-        \item The capability to load system shared executable procedures
-          in the form of routines and functions in libraries.
-      \end{itemize}
-    }
+      \end{block}
+      \begin{alertblock}{}
+        Options and arguments may have convenient defaults!
+      \end{alertblock}
     \end{column}
   \end{columns}
-\end{frame}
-
-
-\begin{frame}[label=running]{Running a program}
-  \begin{columns}[T]
-    \begin{column}{.33\textwidth}
-      \includegraphics[scale=0.99]{pics/bad_arguments.jpg}
-    \end{column}
-    \hfill
-    \begin{column}{.63\textwidth}
-      \small{
-      To run a program in the shell you must know in advance:
-      \begin{itemize}
-        \item The program path to the executable in the file system or the
-          program name if it is in a system path
-        \item The options that can modify its behavior to fit your requests
-        \item The type and number of arguments the program expects to
-          execute
-      \end{itemize}
-    }
-    \end{column}
-  \end{columns}
-  As an example, these are valid syntaxes to run a program:
-  \begin{center}
+  As an example, these are valid syntax for command lines:
+  \vspace{3mm} \\
   \code{ls -l Documents} \\
-  \code{cp theorem.tex Documents}
-  \end{center}
-  \begin{center}
-    \Large{What is a file path in UNIX ?}
-  \end{center}
+  \code{cp --force theorem.tex Documents}
 \end{frame}
 
 
 \begin{frame}[c]
-  \begin{center}
-    \frametitle{Files, directories, exploring the filesystem}
+  \begin{block}{}
+    \frametitle{Files and directories}
+    \framesubtitle{Exploring the filesystem}
 
-    \focus{Files contain information, directories contain files}
+    \focus{Directories contain files, files contain information}
+    \vspace{3mm} \\
 
-    From the terminal, you \focus{navigate} the filesystem,\\
-    exploring directories and opening files
-    \vspace{-3mm}
-
+    \code{/} is the filesystem root directory
+    \vspace{-3mm} \\
     \begin{center}
       \includegraphics[width=0.90\textwidth]{pics/filesystem.eps}
     \end{center}
-    \vspace{-3mm}
 
-    Files and directories have a \focus{path} in the filesystem\\
-    (for instance, \code{/home/docs/c.txt})
-
-    Directories in a path are separated by \code{/}\\
-    directory names can end in \code{/}, files can have an extension
-	  (e.g., \code{.txt})
-
-  \end{center}
+    Directories in a path are separated by \code{/}
+    \vspace{3mm} \\
+    Files and directories have a \focus{full path} in the filesystem: \\
+    \code{/home/docs/c.txt} \hspace{4mm}FQP: Fully Qualified Path
+  \end{block}
 \end{frame}
 
 
-\begin{frame}[label=filesystem]{The file system}
+\begin{frame}[label=filesystem]
+  \frametitle{The file system}
+  \framesubtitle{Filesystem Hierarchy Standard (FHS)}
+  All files and directories appear under the root directory \code{/},
+  even if they are stored on different physical or virtual devices.
   \begin{columns}[T]
     \begin{column}{.23\textwidth}
-      \includegraphics[scale=0.29]{pics/fs.png}
+      \includegraphics[scale=0.23]{pics/fs.png}
     \end{column}
     \hfill
     \begin{column}{.73\textwidth}
       \small{
-      The Filesystem Hierarchy Standard (FHS) defines the directory
-      structure and directory contents in Linux:
       \begin{itemize}
-        \item The filesistem root is the "/" directory
-        \item All files and directories appear under the root directory /,
-          even if they are stored on different physical or virtual devices.
-        \item bin stands for binaries and contains system executables
-        \item lib stands for libraries and contains shared or static pieces of
+	\item \code{bin} : binaries, contains system executables
+        \item \code{lib} : libraries, contains shared or static pieces of
           code which are used by running executables or to create executables
-        \item tmp stands for temporary and is where scratch files are placed
-        \item etc stands for etcetera and is where configuration files are
-        \item home is where user files are placed
+        \item \code{tmp} : system or user temporary files
+        \item \code{etc} : configuration files
+	\item \code{home} : user files (one directory per user)
       \end{itemize}
     }
+    \begin{alertblock}{Home directory}
+      \code{.} : the current directory\\
+      \code{..} : the parent of the current directory\\
+      \code{/home/\{user\}} is the default CWD
+    \end{alertblock}
     \end{column}
   \end{columns}
 \end{frame}
 
 
 \begin{frame}[c]
-  \frametitle{Commands I - Pathfinding}
+  \frametitle{Commands}
+  \framesubtitle{Pathfinding}
+
   Let us try to run the basic programs to navigate the Filesystem:
-  \begin{center}
-    \vspace{2pt}
+  \begin{exampleblock}{Print the current directory FQP}
+    \code{pwd}
+  \end{exampleblock}
 
-    \code{pwd}: print the current directory path
-    \vspace{-4mm}
-
+  \code{pwd} prints the \focus{fully qualified path} of the current directory
+  \begin{exampleblock}{}
     \begin{center}
-      \includegraphics[width=0.40\textwidth]{pics/pwd.png}
+    \includegraphics[width=0.40\textwidth]{pics/pwd.png}
     \end{center}
-    \vspace{4mm}
+  \end{exampleblock}
 
-    \code{pwd} prints the \focus{global} path\\
-    (path with respect to the \focus{root directory})\\
-    Example: \code{/home/documents/text/a.txt}
-    \vspace{4mm}
+  In commands, you use by default the \focus{relative path} respect to
+  the \focus{CWD}: \\
+  \code{a.txt} without a path is a file in the current working directory
 
-    In commands, you can mostly use the \focus{relative path}\\
-    (path with respect to the \focus{current folder})\\
-    Example: \code{text/a.txt} if I am in \code{/home/documents/}
-  \end{center}
+  \begin{alertblock}{Have you noticed?}
+    \code{pwd} does not require options or arguments\\
+    \code{CWD} stands for Current Working Directory
+  \end{alertblock}{}
 \end{frame}
 
 
 \begin{frame}[c]
-  \begin{center}
-    \frametitle{Commands II - Moving around}
+  \frametitle{Commands}
+  \framesubtitle{Moving around}
 
-    \code{ls <directory>}: list the files in the given directory\\
-    no argument: list current directory
-    \vspace{-2mm}
+  \begin{exampleblock}{List a file or the files in a directory}
+    \code{ls \{directory or file\}} \\
+    \includegraphics[scale=0.20]{pics/ls.png}
+  \end{exampleblock}
 
-    \begin{center}
-      \includegraphics[width=0.40\textwidth]{pics/ls.png}
-    \end{center}
+  \begin{exampleblock}{Change the working directory}
+    \code{cd \{directory\}} \\
+    \includegraphics[scale=0.20]{pics/cd.png}
+  \end{exampleblock}
 
-    \code{cd <directory>}: move to another directory\\
-    no argument: move to your home directory
-    \vspace{-2mm}
+  \begin{alertblock}{Have you noticed? Default arguments and options!}
+     \code{ls} without arguments list the content of the \focus{CWD}\\    
+     \code{cd} without arguments change the CWD to the user home directory
+  \end{alertblock}
 
-    \begin{center}
-      \includegraphics[width=0.40\textwidth]{pics/cd.png}
-    \end{center}
+\end{frame}
 
-    \vspace{-4mm}
 
-    \begin{itemize}
-      \item \code{cd \~} brings you to your home directory
-      \item \code{.} is your current directory
-      \item \code{..} is the \textit{parent} directory (the directory containing the current one)
-      \item \code{cd -} brings you to the previously visited directory
+\begin{frame}[c]
+  \frametitle{Commands}
+  \framesubtitle{Creating new filesystem objects}
+
+  \begin{exampleblock}{Create new directories}
+    \code{mkdir <directories>}\\
+    \includegraphics[scale=0.20]{pics/mkdir.png}
+  \end{exampleblock}
+
+  \begin{exampleblock}{Create new (empty) text files}
+    \code{touch <filenames>}\\
+    \includegraphics[scale=0.20]{pics/touch.png}
+  \end{exampleblock}
+
+  \begin{alertblock}{Have you noticed?}
+    A plural is specified above. Guess what it means?
+  \end{alertblock}
+\end{frame}
+
+\begin{frame}[c]
+  \frametitle{Commands}
+  \framesubtitle{Removing existing filesystem objects}
+
+  \begin{exampleblock}{removes files and directories}
+    \code{rm <filenames>}\\
+    \code{rm -r <directories>} \\
+    \includegraphics[scale=0.20]{pics/rm.png}
+  \end{exampleblock}
+
+  \begin{alertblock}{ATTENTION!}
+    The remove operation cannot be undone. There is no Trash directory.\\
+    Be careful, especially in using the recursive \code{-r} option!!!
+  \end{alertblock}
+\end{frame}
+
+
+\begin{frame}[c]
+  \frametitle{Manual}
+  \framesubtitle{What are all the possible options?}
+
+  \begin{exampleblock}{Reading the manual pages}
+    In CLI mode, you can access the manual page for each command in text
+    format. \\
+    \code{man <command>}
+  \end{exampleblock}
+
+  \begin{alertblock}{ATTENTION!}
+    The formatting of the manual page on the text window is a complex
+    operation and depends on the available lines/rows of the terminal.
+    To be compatible with old terminals, the best window size ifor the
+    man program is at \focus{80rows x 24 lines}. 
+  \end{alertblock}
+\end{frame}
+
+
+\begin{frame}[c]
+  \frametitle{Exercise I}
+  \framesubtitle{cd, mkdir, touch, rm}
+  \begin{block}{}
+    Using the commands we have seen, create the below directories and files,\\
+    and then remove them all (\focus{after carefully checking}):
+    \includegraphics[scale=0.17]{pics/exercise_1.eps}
+  \end{block}
+  \begin{alertblock}{How to check?}
+    \code{ictp-install tree}\\
+    \code{tree home}
+  \end{alertblock}
+\end{frame}
+
+
+\begin{frame}[c]
+  \frametitle{Solution to Exercise I}
+  \begin{block}{Creation part}
+  \small{
+  \code{cd} \\
+  \code{mkdir -p home/exercise\_1/documents} \\
+  \code{mkdir -p home/exercise\_1/templates/\{latex,more\_stuff\}} \\
+  \code{cd home/exercise\_1/documents} \\
+  \code{touch letter.txt grant\_request.txt nobel\_speech.txt} \\
+  \code{cd ../templates} \\
+  \code{touch latex/slides.tex sample\_document.txt} \\
+  \code{cd}
+  }
+  \end{block}
+  \begin{block}{Removal part}
+  \small{
+  \code{cd} \\
+  \code{rm -r home}
+  }
+  \end{block}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Commands}
+  \framesubtitle{Moving and copying files}
+
+  \begin{exampleblock}{Copy an object to another location}
+  \code{cp <old\_path> <new\_path>} \\
+  \includegraphics[scale=0.20]{pics/cp_1.png}
+  \includegraphics[scale=0.20]{pics/cp_2.png}
+  \end{exampleblock}
+
+  \begin{alertblock}{Attention! \code{<new\_path>} is overwritten and lost!}
+  Suggestion: use \code{cp -i}\\
+  \code{cp -r}: copy entire directories
+  \end{alertblock}
+
+  \begin{exampleblock}{Move an object to another location}
+  \code{mv <old\_path> <new\_path>}\\
+  Same syntax as \code{cp}, \code{old\_path} is removed after copy.
+  \end{exampleblock}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Commands}
+  \framesubtitle{Finding and listing files}
+
+  \begin{exampleblock}{Recursively searches files in a directory}
+  \code{find <directory> <options>}
+  \end{exampleblock}
+
+  \sidebyside{0.52}{
+     \begin{itemize}
+      \item \code{-name}:\\
+        specify file name (no paths here)
+      \item \code{-path}:\\
+        specify (part of) the file path
+      \item \code{-printf \%\{format\}}:\\
+        print details of the items found
+      \item \code{-delete}:\\
+        deletes the files found
     \end{itemize}
-  \end{center}
-\end{frame}
-
-
-\begin{frame}[c]
-  \begin{center}
-    \frametitle{Commands III - Creating and removing}
-    \code{mkdir <directories>}: create new directories
-    \vspace{-4mm}
-
+  }{\hfill}{0.45}{
     \begin{center}
-      \includegraphics[width=0.53\textwidth]{pics/mkdir.png}
+      \includegraphics[width=1.00\textwidth]{pics/find.png}
     \end{center}
+  }
 
-    \code{touch <filenames>}: create new (empty) text files
-    \vspace{-4mm}
-
-    \begin{center}
-      \includegraphics[width=0.53\textwidth]{pics/touch.png}
-    \end{center}
-
-    \code{rm <filenames>}: removes files\\
-    \code{rm -r <directories>}: removes directories
-    \vspace{-4.5mm}
-
-    \begin{center}
-      \includegraphics[width=0.53\textwidth]{pics/rm.png}
-    \end{center}
-    \vspace{-2mm}
-  \end{center}
-\end{frame}
-
-
-\begin{frame}[c]
-  \begin{center}
-    \frametitle{Exercise I - mkdir, rm}
-    Using the commands you know, create these directories and files,\\
-    and then remove them all (\focus{after showing us}):
-
-    \begin{center}
-      \includegraphics[width=0.80\textwidth]{pics/exercise_1.eps}
-    \end{center}
-  \end{center}
+  \begin{alertblock}{You can use wildcards}
+  \code{*} can replace any character (more in the future)
+  \end{alertblock}
 \end{frame}
 
 
 \begin{frame}
-  \begin{center}
-    \frametitle{Commands IV - Moving and copying files}
-
-    \code{cp <old\_path> <new\_path>}: \focus{copy} a file to another location\\
-    \code{cp -r}: copy entire directories
-    \vspace{-3mm}
-
-    \begin{center}
-      \includegraphics[width=0.50\textwidth]{pics/cp_1.png}
-    \end{center}
-
-    Paths can be relative, the copy can have a different name\\
-    \vspace{-1mm}
-
-    \begin{center}
-      \includegraphics[width=0.50\textwidth]{pics/cp_2.png}
-    \end{center}
-
-    \code{<new\_path>} is overwritten, old content is lost\\
-    Suggestion: use \code{cp -i}
-
-    \code{mv}: same syntax, target \focus{moved} (old file/directory deleted)
-  \end{center}
-\end{frame}
-
-
-\begin{frame}
-  \begin{center}
-    \frametitle{Commands V - Finding and listing files}
-
-    \code{find} \focus{recursively searches files in a directory}\\
-    \code{find <directory> <options>}
-
-    \vspace{3mm}
-
-    Many options, we will see the basic ones:
-
-    \vspace{3mm}
-
-    \sidebyside{0.52}{
-      \begin{itemize}
-        \item \code{-name}:\\
-          specify file name (no paths here)
-        \item \code{-path}:\\
-          specify (part of) the file path
-        \item \code{-printf \%\{format\}}:\\
-          print details of the items found
-        \item \code{-delete}:\\
-          deletes the files found
-      \end{itemize}
-    }{\hfill}{0.45}{
-      \begin{center}
-        \includegraphics[width=1.00\textwidth]{pics/find.png}
-      \end{center}
-    }
-
-    \vspace{3mm}
-
-    In the above commands, you can use \focus{wildcards}:\\
-    \code{*} can replace any character (more in the future)
-  \end{center}
-\end{frame}
-
-
-\begin{frame}
-  \begin{center}
-    \frametitle{Exercise II - cp, mv, find}
+  \frametitle{Exercise II}
+  \framesubtitle{cp, mv, find}
+  \begin{block}{}
     Using the commands you know, create these directories and files,\\
     copying and moving files as shown:
 
     \begin{center}
-      \includegraphics[width=0.77\textwidth]{pics/ex_2.eps}
+      \includegraphics[scale=0.15]{pics/ex_2.eps}
     \end{center}
 
     Then, using \code{find}, show the location of all \code{.tex} files
-  \end{center}
+  \end{block}
+  \begin{alertblock}{}
+    Be careful with the order of the operations!
+  \end{alertblock}
 \end{frame}
 
 
 \end{document}
 
-%vim: tabstop=8 expandtab shiftwidth=2 softtabstop=2 spell spelllang=en_uk
+%vim: tabstop=8 expandtab shiftwidth=2 softtabstop=2 spell spelllang=en_GB

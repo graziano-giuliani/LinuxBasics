@@ -8,6 +8,7 @@
 % See the file doc/licenses/LICENSE for more details.
 
 % Modified by AA on 2016-05-04
+% Modified by GG on 2022-08-08
 
 \mode<presentation>
 
@@ -17,15 +18,19 @@
 \DeclareOptionBeamer{secheader}{\beamer@secheadertrue}
 \ProcessOptionsBeamer
 
+\usetheme{Madrid}
 \usecolortheme{whale}
 \usecolortheme{orchid}
 \useinnertheme[shadow]{rounded}
 \useoutertheme{default}
+\usefonttheme{default}
+\usepackage{palatino}
+\usepackage[default]{opensans}
 
 \setbeamertemplate{navigation symbols}{}        % Removes the navigation symbols
 
-\definecolor{blue1}{RGB}{0,0,99}
-\setbeamercolor{palette primary}{bg=blue1, fg=white}
+%\definecolor{blue1}{RGB}{0,0,99}
+%\setbeamercolor{palette primary}{bg=blue1, fg=white}
 
 \ifbeamer@secheader\else\setbeamertemplate{headline}[default]\fi
 

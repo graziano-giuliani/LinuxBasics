@@ -150,8 +150,7 @@
   \begin{verbatim}
   #!/bin/bash
 
-  ls -al | grep \${USER} | tr -s ' ' | \
-         cut -d " " -f 5 > $1
+  ls -al | grep ${USER} | tr -s ' ' | cut -d " " -f 5 > $1
   \end{verbatim}
 \end{frame}
 
@@ -222,7 +221,7 @@
   \begin{itemize}
     \item Do not use a sledgehammer to crack walnuts
     \item Select the language keeping in mind the problem to solve
-    \item Alway start from the siplest solution
+    \item Always start from the simplest solution
     \item Invest in learning a new tool only if needed
     \item Consider the problem at hand and split it in simple tasks
     \item Use the best possible tool for each task

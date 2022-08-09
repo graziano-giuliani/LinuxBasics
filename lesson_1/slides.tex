@@ -203,25 +203,6 @@
 \end{frame}
 
 
-%\begin{frame}[label=file]{Everything is a file (descriptor)}
-%  All input/output resources such as documents, directories, hard-drives,
-%  screens, keyboards, printers and even some inter-process and network
-%  communications are simple streams of bytes exposed through the
-%  filesystem name space.
-%  \begin{itemize}
-%    \item There are a number of file types.
-%    \item When a file is opened, a file descriptor is created. The file path
-%      becoming the addressing system and the file descriptor being the byte
-%      stream I/O interface.
-%    \item Different methods are used to create file descriptors for things
-%      like anonymous pipes and network sockets.
-%    \item Pseudo and virtual filesystems exists which exposes information
-%      about processes and other system information in a hierarchical file-like
-%      structure.
-%  \end{itemize}
-%\end{frame}
-
-
 \begin{frame}[c]
   \begin{center}
     \frametitle{The Command Line}
@@ -399,7 +380,7 @@
 
 \begin{frame}[c]
   \frametitle{Commands}
-  \framesubtitle{Pathfinding}
+  \framesubtitle{Path finding}
 
   Let us try to run the basic programs to navigate the Filesystem:
   \begin{exampleblock}{Print the current directory FQP}
@@ -495,7 +476,7 @@
   \begin{alertblock}{ATTENTION!}
     The formatting of the manual page on the text window is a complex
     operation and depends on the available lines/rows of the terminal.
-    To be compatible with old terminals, the best window size ifor the
+    To be compatible with old terminals, the best window size for the
     man program is at \focus{80rows x 24 lines}. 
   \end{alertblock}
 \end{frame}

@@ -5,6 +5,7 @@
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}   %FOR TITLEPAGE
 
 \usepackage{changepage}       % adjustwidth
+\usepackage{upquote}
 
 \setlength\parskip{0.3cm}
 
@@ -13,6 +14,7 @@
 \newcommand{\red}[1]{\textbf{\textcolor{red}{#1}}}
 
 \newcommand{\focus}[1]{\textbf{\textcolor{red}{#1}}}
+\newcommand{\expire}[1]{\textbf{\textcolor{green}{#1}}}
 \newcommand{\ra}{$\longrightarrow$ }
 \newcommand{\lra}{$\longleftrightarrow$ }
 
@@ -27,74 +29,70 @@
   \end{minipage}
 }
 
+\title[Linux Programming]{ICTP DP Linux Basic Course - Text Files}
+\subtitle{ESP Students - First Semester}
+\author[Graziano Giuliani]{Graziano Giuliani \\ \focus{ggiulian@ictp.it}}
+\institute[ICTP]{The Abdus Salam International Centre for Theoretical Physics}
+\date[\today]{ICTP Diploma Program \\ \today}
+
 \begin{document}
 
 \begin{frame}
-  \begin{center}
-
-    \definecolor{myblue}{RGB}{51,51,179}
-    \setbeamercolor{block body}{use=structure,fg=white,bg=myblue!20!myblue}
-
-    \begin{block}{}
-      \Large
-      \centering
-      Linux Basics III:\\
-      Text file manipulation
-    \end{block}
-
-    \vspace{6mm}
-    \large
-    \textsc{Adriano Angelone, Graziano Giuliani} \\
-
-  \end{center}
+  \titlepage
 \end{frame}
 
-\begin{frame}[label=outline]{Course Outline}
+
+\begin{frame}[label=outline]
+  \frametitle{Course Outline \footnotemark}
+  \framesubtitle{Daily program}
   \begin{itemize}
-    \item UNIX/Linux Basics
-    \item Intermediate shell commands
-    \item Editing and compiling source code
+    \item \expire{UNIX/Linux}
+    \item \expire{Programming on Linux}
     \item \focus{Text file manipulation}
+      \begin{enumerate}
+        \item Row based operation
+        \item Column based operation
+        \item \code{awk}
+      \end{enumerate}
     \item Basic shell scripting
   \end{itemize}
 
   \vspace{6mm}
 
-  \centering
-  Download slides and exercise files with the command\\
-  \code{git clone https://github.com/AA24KK/LinuxBasics.git}\\
-  \vspace{1mm}
-  or download a ZIP archive at
-  \vspace{1mm}
-  \code{https://github.com/AA24KK/LinuxBasics/archive/master.zip}
+  Slides: \\ \code{http://tinyurl.com/2jsvfbd6}
+  \vspace{4mm} \\
+  or the \LaTeX \ source on GitHub: \\
+  \code{https://github.com/graziano-giuliani/LinuxBasics}
 
-  \vspace{2mm}
-
-  Adriano: \focus{aangelon@ictp.it}, Room 263, ICTP\\
-  Graziano: \focus{ggiulian@ictp.it}
+  \footnotetext[1]{Course created in 2019 with Adriano Angelone, now LPTMC-FR}
 
 \end{frame}
 
+
 \begin{frame}
+  \frametitle{Text manipulation}
+  \framesubtitle{Data files are commonly text files}
+  We are scientists: we deal in \focus{datafiles}
+
   \begin{center}
-    \frametitle{Text manipulation}
-    We are scientists: we deal in \focus{datafiles}
-
-    \begin{center}
-      \includegraphics[width=0.55\textwidth]{pics/datafile.png}
-    \end{center}
-
-    Shell commands allow us to manipulate them as \focus{text files}:\\
-    great versatility and relatively simple, sometimes requires attention
-
-    You see files as a bunch of \focus{rows} or \focus{columns}:\\
-    different commands for different tasks
+    \includegraphics[scale=0.15]{pics/datafile.png}
   \end{center}
+
+  \begin{block}{}
+    Shell commands allow us to manipulate them as \focus{text files}:\\
+    \begin{center}
+    great versatility and relatively simple, sometimes requires attention
+    \end{center}
+    You see files as a bunch of \focus{rows} or \focus{columns}:\\
+    \begin{center}
+    different commands for different tasks
+    \end{center}
+  \end{block}
 \end{frame}
 
 \begin{frame}
   \begin{center}
-    Before we go, remember:\\
+    Before we start, remember:\\
     \focus{nobody knows everything (except the internet)}
 
     \focus{Stackoverflow} and \focus{Google} will help you, use them
@@ -105,9 +103,12 @@
   \end{center}
 \end{frame}
 
-\begin{frame}[label=manual]{Manual Pages}
-  All basic UNIX commands come with a manual page. The manual page can
-  be accessed through the \code{man} program.
+\begin{frame}[label=manual]
+  \frametitle{Manual Pages}
+  \framesubtitle{Online help}
+  We have seen in lesson 1 that all basic UNIX commands come with a manual
+  page. The manual page can be accessed through the \code{man} program.
+  \begin{block}{}
   \begin{itemize}
      \item \code{man} is the system manual pager program. You provide
        as argument the name of a program, utility or function.
@@ -116,30 +117,40 @@
      \item The manual page is shown using a pager program after being
        formatted for the particular terminal output.
   \end{itemize}
-  Example:
-  \begin{center}
+  \end{block}
+  \begin{exampleblock}{Example}
     \code{man cat}
-  \end{center}
+  \end{exampleblock}
 \end{frame}
 
 \begin{frame}
-  \begin{center}
-    \frametitle{Row Operations I - Listing}
+  \frametitle{Row Operations}
+  \framesubtitle{Display file on screen}
 
+  \begin{exampleblock}{Create example file}
+      Open a text \code{example\_file} and write five lines with
+      numbers \texttt{10,20,30,40,50} one per line.
+  \end{exampleblock}
+  \begin{block}{\code{cat <files>}: displays entire files}
     \sidebyside{0.53}{
-      \code{cat <files>}: displays entire files
       \begin{itemize}
-        \item \code{-n}: numbers lines
+        \item \code{-n}: add line numbers
       \end{itemize}
     }{\hfill}{0.44}{
       \begin{center}
         \includegraphics[width=0.50\textwidth]{pics/cat.png}
       \end{center}
     }
+  \end{block}
+\end{frame}
 
+
+\begin{frame}
+  \frametitle{Row Operations}
+  \framesubtitle{Partial display}
+
+  \begin{block}{\code{tail <files>}: displays 10 last line of a file}
     \sidebyside{0.53}{
-      \code{tail <file>}: \focus{last} 10 lines of the file
-      \vspace{-4mm}
         \begin{itemize}
           \item \code{-n <num>}: last \code{<num>} lines
           \item \code{-n +<num>}: after line \code{<num>}
@@ -149,10 +160,10 @@
           \includegraphics[width=0.50\textwidth]{pics/tail.png}
         \end{center}
       }
+  \end{block}
 
+  \begin{block}{\code{head <files>}: displays 10 top line of a file}
     \sidebyside{0.53}{
-      \code{head <file>}: \focus{first} 10 lines of the file
-      \vspace{-4mm}
         \begin{itemize}
           \item \code{-n <num>}: first \code{<num>} lines
           \item \code{-n -<num>}: before line \code{<num>}
@@ -162,115 +173,74 @@
           \includegraphics[width=0.50\textwidth]{pics/head.png}
         \end{center}
       }
-
-      \vspace{4mm}
-
-      Useful on their own, can be combined with \focus{pipes}
-  \end{center}
+  \end{block}
 \end{frame}
 
 \begin{frame}
-  \begin{center}
-    \frametitle{Interlude I: Pipes and redirection}
+  \frametitle{Interlude}
+  \framesubtitle{Pipes and redirection}
 
-    \sidebyside{0.56}{
-      \focus{Piping}:\\
-      output of command \ra input to another
-    }{\hfill}{0.40}{
-      \begin{center}
-        \includegraphics[width=0.60\textwidth]{pics/pipe.jpg}
-      \end{center}
+  \sidebyside{0.56}{
+    \focus{Piping}: \code{|} \\
+    output of command serve as input to another
+  }{\hfill}{0.40}{
+    \begin{center}
+      \includegraphics[scale=0.2]{pics/pipe.jpg}
+    \end{center}
+  }
+
+  \begin{block}{}
+  \code{command\_1 <arguments> | command\_2 | ... | command\_N}
+  \end{block}
+
+  \begin{exampleblock}{Example: extract 3rd line of file}
+  \code{head -n 3 <file> | tail -n 1}
+  \end{exampleblock}
+
+  \sidebyside{0.68}{
+      \focus{Redirection}: \code{>}, \code{>>} \\
+    write the output of a command into a text file
+
+    \begin{exampleblock}{Use \code{>>} to append to existing file}
+    \code{command +options +arguments > file}
+    \end{exampleblock}
+  }{\hfill}{0.30}{
+    \begin{center}
+      \includegraphics[scale=0.18]{pics/redirection.png}
+    \end{center}
     }
-
-    \code{command\_1 <arguments> | command\_2 | ... | command\_N}\\
-    \vspace{2mm}
-
-    Example: extract 3rd line of file\\
-    \code{head -n 3 <file> | tail -n 1}
-
-    \vspace{6mm}
-
-    \sidebyside{0.58}{
-      \focus{Redirection}:\\
-      output of command \ra file
-      \vspace{4mm}
-
-      \code{command <options> <arguments> > <file>}\\
-      Use \code{>>} to append to existing file
-    }{\hspace{8mm}}{0.30}{
-      \begin{center}
-        \includegraphics[width=0.90\textwidth]{pics/redirection.png}
-      \end{center}
-    }
-
-  \end{center}
 \end{frame}
 
 
 \begin{frame}
-  \begin{center}
-    \frametitle{Interlude II: basic shell scripting}
+  \frametitle{Exercise I}
+  \framesubtitle{cat, tail, head}
 
-    As said before, you can \focus{recycle} commands you use more than once:\\
-    \focus{write once, use more than once}
+  \sidebyside{0.40}{
+    Create the following 3 files:
+  }{\hfill}{0.50}{
+    \begin{center}
+      \includegraphics[scale=0.23]{pics/ex_1.png}
+    \end{center}
+  }
 
-    \sidebyside{0.50}{
-      You can create \focus{scripts}:\\
-      files containing instructions\\
-      which you launch to perform tasks
-    }{\hfill}{0.45}{
-      \begin{center}
-        \includegraphics[width=0.70\textwidth]{pics/script_1.png}
-      \end{center}
-    }
-
-    \begin{itemize}
-      \item The first line tells the shell which \focus{interpreter} to use\\
-        (i.e. which scripting language, we use \code{bash})
-      \item The rest is \focus{instructions} (this here prints 'hello')
-    \end{itemize}
-
-    \sidebyside{0.50}{
-      Scripts can be made \focus{executable}\\
-      (remember \code{chmod}?)\\
-      and launched from the command line:\\
-      \code{./<script>}
-    }{\hfill}{0.45}{
-      \begin{center}
-        \includegraphics[width=0.80\textwidth]{pics/script_2.png}
-      \end{center}
-    }
-  \end{center}
-\end{frame}
-
-\begin{frame}
-  \begin{center}
-    \frametitle{Exercise I - cat, tail, head}
-
-    \sidebyside{0.40}{
-      Create the following 3 files:
-    }{\hfill}{0.50}{
-      \begin{center}
-        \includegraphics[width=0.44\textwidth]{pics/ex_1.png}
-      \end{center}
-    }
-
+  \begin{exampleblock}{Use pipes and redirection where needed.}
     Write a scripts that creates a file containing the first 3 rows of
     \code{file\_1}, the 2nd and 3rd lines of \code{file\_2} and the last 3
     lines of \code{file\_3} and displays this file on the screen.
-
-    Use pipes and redirection where needed.
-  \end{center}
+  \end{exampleblock}
 \end{frame}
 
 
 \begin{frame}
-  \begin{center}
-    \frametitle{Row Operations II - Matching and Filtering}
+  \frametitle{Row Operations}
+  \framesubtitle{Matching and Filtering}
 
-    \code{grep <content> <files>} filters lines based on their content
+  \begin{block}{filter lines based on their content}
+  \code{grep <content> <files>}
+  \end{block}
 
-    \sidebyside{0.59}{
+  \sidebyside{0.59}{
       \begin{itemize}
         \item \code{<content>} can be a part of the line
         \item Quoting (\code{'<content>'}) is advised
@@ -278,44 +248,46 @@
         \item \code{-i}: case-insensitive matching
         \item \code{-v}: prints non-matching lines
       \end{itemize}
-    }{\hfill}{0.38}{
-      \begin{center}
-        \includegraphics[width=1.00\textwidth]{pics/grep.png}
-      \end{center}
-    }
+  }{\hfill}{0.38}{
+    \begin{center}
+      \includegraphics[scale=0.20]{pics/grep.png}
+    \end{center}
+  }
 
-    More flexibility using \focus{regular expressions}
-  \end{center}
+  More flexibility using \focus{regular expressions}
 \end{frame}
 
-\begin{frame}
-  \begin{center}
-    \frametitle{Interlude III - Regular Expressions Basics}
+\begin{frame}[fragile=singleslide]
+  \frametitle{Interlude}
+  \framesubtitle{Regular Expressions: templates to match}
 
-    Regular expressions (regexps) are \focus{templates} that lines can match\\
-    They can use special characters and \focus{wildcards}:
-
+  \footnotesize{
+    \begin{exampleblock}{}
+    Special characters and \focus{wildcards}
     \begin{itemize}
       \item \code{.}: any single character
       \item \code{.*}: any number of characters
-      \item \code{\^}: beginning of the line
-      \item \code{\$}: end of the line
+      \item \code{\^}, \code{\$} : beginning and end of the line
       \item \code{[adf]}, \code{[a-z]}, \code{[A-Za-z]}: group of characters
     \end{itemize}
+  \end{exampleblock}
 
-    Example: \code{The quick brown fox jumped}
-    \vspace{-2mm}
-
+    \begin{exampleblock}{}
+    \code{The quick brown fox jumped}
     \begin{itemize}
       \item \code{.*quick.*} \green{matches}
       \item \code{The quick brown.*jumped.*} \green{matches}
       \item \code{The quick brown [foxape]* jumped .*} \green{matches}
       \item \code{\^{}quick.*} \red{doesn't match}
     \end{itemize}
+  \end{exampleblock}
 
-    Now you can do \code{grep <regexp> <files>}:
-    \code{grep '.*quick.*' <files>}
-  \end{center}
+  \begin{alertblock}{Check quoting}
+    \begin{verbatim}
+grep '.*quick.*' <files>
+    \end{verbatim}
+  \end{alertblock}
+  }
 \end{frame}
 
 \begin{frame}

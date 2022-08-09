@@ -5,10 +5,12 @@
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}   %FOR TITLEPAGE
 
 \usepackage{changepage}       % adjustwidth
+\usepackage{upquote}
 
 \setlength\parskip{0.3cm}
 
 \newcommand{\focus}[1]{\textbf{\textcolor{red}{#1}}}
+\newcommand{\expire}[1]{\textbf{\textcolor{green}{#1}}}
 \newcommand{\ra}{$\longrightarrow$ }
 \newcommand{\lra}{$\longleftrightarrow$ }
 
@@ -23,100 +25,66 @@
   \end{minipage}
 }
 
+\title[Linux Programming]{ICTP DP Linux Basic Course - Programming}
+\subtitle{ESP Students - First Semester}
+\author[Graziano Giuliani]{Graziano Giuliani \\ \focus{ggiulian@ictp.it}}
+\institute[ICTP]{The Abdus Salam International Centre for Theoretical Physics}
+\date[\today]{ICTP Diploma Program \\ \today}
+
 \begin{document}
 
 \begin{frame}
-  \begin{center}
-
-    \definecolor{myblue}{RGB}{51,51,179}
-    \setbeamercolor{block body}{use=structure,fg=white,bg=myblue!20!myblue}
-
-    \begin{block}{}
-      \Large
-      \centering
-      Linux Basics II:\\
-      Text editing and programming
-    \end{block}
-
-    \vspace{6mm}
-    \large
-    \textsc{Adriano Angelone, Graziano Giuliani} \\
-
-  \end{center}
+  \titlepage
 \end{frame}
 
-\begin{frame}[label=outline]{Course Outline}
+
+\begin{frame}[label=outline]
+  \frametitle{Course Outline \footnotemark}
+  \framesubtitle{Daily program}
   \begin{itemize}
-    \item UNIX/Linux Basics
-    \item \focus{Intermediate shell commands}
-    \item \focus{Editing and compiling source code}
+    \item \expire{UNIX/Linux}
+    \item \focus{Programming on Linux}
+      \begin{enumerate}
+        \item Programming Language
+        \item Compile using Fortran language
+        \item Python 1-2-3
+      \end{enumerate}
     \item Text file manipulation
     \item Basic shell scripting
   \end{itemize}
 
   \vspace{6mm}
 
-  \centering
-  Download slides and exercise files with the command\\
-  \code{git clone https://github.com/AA24KK/LinuxBasics.git}\\
-  \vspace{1mm}
-  or download a ZIP archive at
-  \vspace{1mm}
-  \code{https://github.com/AA24KK/LinuxBasics/archive/master.zip}
+  Slides: \\ \code{http://tinyurl.com/2jsvfbd6}
+  \vspace{4mm} \\
+  or the \LaTeX \ source on GitHub: \\
+  \code{https://github.com/graziano-giuliani/LinuxBasics}
 
-  \vspace{2mm}
-
-  Adriano: \focus{aangelon@ictp.it}, Room 263, ICTP\\
-  Graziano: \focus{ggiulian@ictp.it}
+  \footnotetext[1]{Course created in 2019 with Adriano Angelone, now LPTMC-FR}
 
 \end{frame}
 
 
-\begin{frame}[label=outline]{Science with the Computer}
-  You can do Science with a computer !
-  \begin{columns}[T]
-    \begin{column}{.53\textwidth}
-      \begin{itemize}
-        \item Text Editors and WYSIWYG programs for writing
-        \item Tools and libraries for data handling and visualization
-        \item Data acquisition and storage
-        \item Modelling and numerical algorithms
-      \end{itemize}
-    \end{column}
-    \hfill
-    \begin{column}{.45\textwidth}
-      \vspace{15pt}
-      \includegraphics[scale=0.2]{pics/20140924103021_DSC_6759_MHPC.jpg}
-    \end{column}
-  \end{columns}
-  It can get to such complexities that a whole new Science has emerged:
-  \begin{center}
-    \textcolor{red}{Computer Science} : 
-             study of computers and computational systems
-  \end{center}
-\end{frame}
-
-
-\begin{frame}[label=textedit]{Text editing}
-  \begin{center}
-  Pick your choice !
-  \end{center}
+\begin{frame}[label=textedit]
+  \frametitle{Computer Programming}
+  \framesubtitle{Let the computer do the hard work!}
   \begin{columns}[T]
     \begin{column}{.55\textwidth}
       \begin{itemize}
-        \item Local file: every desktop environment has a text editor
+        \item What is the computer good for?
         \begin{itemize}
-          \item GNOME : gedit, geany
-          \item KDE (Plasma) : kwrite
-          \item Xfce : mousepad \\
-            \dots
+          \item Work 24/7 if power available
+          \item Perform repetitive and boring task
+          \item Do large computation without error
+          \item Store reliably large amount of data
         \end{itemize}
-        \item Text console: religious wars !
+        \item How to make it work for you?
         \begin{itemize}
-          \item vi(m) : Unix pure and true !
-          \item emacs : I love GNU !
-          \item nano  : I hate both of the above \\
-            \dots
+          \item The computer thinks binary
+          \item Translation required
+          \item The computer translate
+          \item Exact grammar and syntax
+          \item No errors allowed
         \end{itemize}
       \end{itemize}
     \end{column}
@@ -129,145 +97,38 @@
 \end{frame}
 
 
-\begin{frame}[label=vim1]{Unix vi - 1}
-  Starts by: \code{vim filetoedit.ext}
+\begin{frame}[label=science]
+  \frametitle{Scientific Programming}
+  \framesubtitle{You can do Science with a computer!}
   \begin{columns}[T]
-    \begin{column}{.83\textwidth}
-      \begin{itemize}
-        \item Modes
+    \begin{column}{.53\textwidth}
+      \begin{block}{}
         \begin{itemize}
-           \item \textbf{command mode}: Editor starts in command mode.
-              Cursor movement, text deletion, pasting is possible.
-              Can close/open files, save and quit editor.
-           \item \textbf{insertion mode}: Begins upon entering an insertion
-              or change command.
+          \item Tools and libraries for data acquisition
+          \item Modelling and numerical algorithms
+          \item Data storage and visualization
         \end{itemize}
-        \item The [ESC] key returns the editor to command mode.
-        \item Commands are executed by pressing the return key.
-        \item To quit:
-        \begin{itemize}
-           \item Saving the file: \code{:x}
-           \item Without saving the file: \code{:q!}
-        \end{itemize}
-      \end{itemize}
+      \end{block}
     \end{column}
     \hfill
-    \begin{column}{.25\textwidth}
-      \includegraphics[scale=0.08]{pics/vim.png}
+    \begin{column}{.45\textwidth}
+      \vspace{15pt}
+      \includegraphics[scale=0.2]{pics/20140924103021_DSC_6759_MHPC.jpg}
     \end{column}
   \end{columns}
+  It can get to such complexities that a whole new Science has emerged:
+  \begin{center}
+    \focus{Computer Science} :
+             study of computers and computational systems
+  \end{center}
 \end{frame}
 
 
-\begin{frame}[label=vim2]{Unix vi - 2}
-  \begin{columns}[T]
-    \begin{column}{.83\textwidth}
-      \begin{itemize}
-        \item To enter insert mode:
-        \begin{itemize}
-           \item \code{i} insert in the current position
-           \item \code{I} insert at line beginning
-           \item \code{a} append after character
-           \item \code{A} append at end of the line
-           \item \code{r} overwrite one character
-           \item \code{R} enter replace mode
-           \item \code{o} new line inserted below
-           \item \code{O} new line inserted above
-        \end{itemize}
-        \item Move around in command mode:
-        \begin{itemize}
-          \item \code{h,j,k,l} or arrows in insert mode: left-down-up-right
-          \item \code{w,e,b} next/previous word beginning or end
-          \item \code{(,)} next/previous sentence 
-          \item \code{\{,\}} next/previous paragraph 
-          \item \code{0,\$} beginning/end of line
-          \item \code{gg,G} beginning/end of file
-        \end{itemize}
-      \end{itemize}
-    \end{column}
-    \hfill
-    \begin{column}{.25\textwidth}
-      \includegraphics[scale=0.08]{pics/vim.png}
-    \end{column}
-  \end{columns}
-\end{frame}
-
-
-\begin{frame}[label=vim3]{Unix vi - 3}
-  \begin{columns}[T]
-    \begin{column}{.83\textwidth}
-      \begin{itemize}
-        \item change text
-        \begin{itemize}
-          \item \code{C} change to the end of line
-          \item \code{Ncw} change N words
-        \end{itemize}
-        \item Delete text
-        \begin{itemize}
-           \item \code{xX} delete character to right/left
-           \item \code{D} delete to the end of the line
-           \item \code{dd,:d} delete the whole line
-           \item \code{Ndd} delete N lines
-           \item \code{Ndw} delete N words
-        \end{itemize}
-        \item Copy text
-        \begin{itemize}
-          \item \code{yy,:y} copy the line
-          \item \code{Nyy} copy N lines
-        \end{itemize}
-        \item Paste text
-        \begin{itemize}
-          \item \code{pP} paste the line(s) after/before current
-        \end{itemize}
-      \end{itemize}
-    \end{column}
-    \hfill
-    \begin{column}{.25\textwidth}
-      \includegraphics[scale=0.08]{pics/vim.png}
-    \end{column}
-  \end{columns}
-\end{frame}
-
-
-\begin{frame}[label=vim4]{Unix vi - 4}
-  \begin{columns}[T]
-    \begin{column}{.83\textwidth}
-      \begin{itemize}
-        \item Search
-        \begin{itemize}
-          \item \code{/string} Search string ahead
-          \item \code{?string} Search string backward
-          \item \code{n,N} Next item ahead/backward
-        \end{itemize}
-        \item Substitute
-        \begin{itemize}
-           \item \code{:s/pattern/string/} substitute pattern with string
-           \item \code{:s!/path/subst!/new/path/!} for a file path
-           \item \code{:s/pattern/string/g} all occurences in line
-           \item \code{:M,N s/pattern/string/g} all in lines M to N
-           \item \code{:1,\$ s/pattern/string/g} all occurences in file
-        \end{itemize}
-        \item Undo, redo, join, capitalize
-        \begin{itemize}
-          \item \code{.} Repeat last change
-          \item \code{u,U} undo the last/all changes in line
-          \item \code{Ctrl+r} Redo the change
-          \item \code{J} Join with next line
-          \item \code{\~} change case
-        \end{itemize}
-      \end{itemize}
-    \end{column}
-    \hfill
-    \begin{column}{.25\textwidth}
-      \includegraphics[scale=0.08]{pics/vim.png}
-    \end{column}
-  \end{columns}
-\end{frame}
-
-
-\begin{frame}[label=pipelining]{Writing your own program - 1}
+\begin{frame}[label=pipelining, fragile=singleslide]
+  \frametitle{Writing your own program}
+  \framesubtitle{The UNIX way}
   Use the building blocs of existing programs and create a complex
-  \textcolor{red}{\textbf{pipeline}} of stages to reach the desired processing
+  \focus{pipeline} of stages to reach the desired processing
   \begin{columns}[T]
     \begin{column}{.33\textwidth}
       \vspace{20pt}
@@ -278,23 +139,27 @@
       \begin{itemize}
         \item \textbf{Pros} : No programming in the general sense involved,
           just carefully examination of the input and output of existing
-          system programs to create the required processing. The REAL UNIX way
-          of using a computer.
+          system programs to create the required processing.
         \item \textbf{Cons} : Limited by the possible processing allowed by
           system programs, generally related to text file manipulation,
           non portable across different systems
       \end{itemize}
     \end{column}
   \end{columns}
-  Example:
-  \begin{center}
-    \code{ls -al | grep \${USER} | tr -s ' ' | cut -d " " -f 5 > sizes.txt}
-  \end{center}
+  Example Shell Scripting:
+  \begin{verbatim}
+  #!/bin/bash
+
+  ls -al | grep \${USER} | tr -s ' ' | \
+         cut -d " " -f 5 > $1
+  \end{verbatim}
 \end{frame}
 
 
-\begin{frame}[label=scripting]{Writing your own program - 2}
-  Use generic \textcolor{red}{\textbf{scripting language}} interpreters which
+\begin{frame}[label=scripting]
+  \frametitle{Writing your own program}
+  \framesubtitle{Interpreted languages}
+  Use generic \focus{scripting language} interpreters which
   can more flexibly allow runtime evaluation of a processing
   \begin{columns}[T]
     \begin{column}{.66\textwidth}
@@ -314,17 +179,18 @@
   \end{columns}
   Example:
   \begin{itemize}
-    \item Shell scripting
     \item Python language
+    \item Julia language
     \item R statistical language
   \end{itemize}
 \end{frame}
 
 
-\begin{frame}[label=compiled]{Writing your own program - 2}
-  Use a low level \textcolor{red}{\textbf{programming language}} which is
-  parsed by a program called \textit{compiler} to create a system binary
-  program
+\begin{frame}[label=compiled]
+  \frametitle{Writing your own program}
+  \framesubtitle{Compiled languages}
+  Use a low level \focus{programming language} which is parsed by a program
+  called \textit{compiler} to create a system binary program
   \begin{columns}[T]
     \begin{column}{.23\textwidth}
       \includegraphics[scale=0.35]{pics/225px-ISO_C++_Logo.png}
@@ -349,10 +215,25 @@
 \end{frame}
 
 
-\begin{frame}[label=Fortran]{Fortran program}
-  \begin{center}
-  \Large{Fortran source files are text files}
-  \end{center}
+\begin{frame}[label=whichone]
+  \frametitle{Writing your own program}
+  \framesubtitle{Which language is THE best}
+  There is no a \focus{win all} language.
+  \begin{itemize}
+    \item Do not use a sledgehammer to crack walnuts
+    \item Select the language keeping in mind the problem to solve
+    \item Alway start from the siplest solution
+    \item Invest in learning a new tool only if needed
+    \item Consider the problem at hand and split it in simple tasks
+    \item Use the best possible tool for each task
+    \item Identify performance bottlenecks and solve those
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}[label=Fortran, fragile=singleslide]
+  \frametitle{Fortran Language}
+  \framesubtitle{Programming like in the 1950}
   \begin{columns}[T]
     \begin{column}{.23\textwidth}
       \vspace{30pt}
@@ -361,25 +242,32 @@
     \hfill
     \begin{column}{.76\textwidth}
       \begin{itemize}
-        \item \normalsize{The User writes the source file:} \\
+        \item Fortran programs are witten as source text files: \\
           \footnotesize{
-          \code{program myprog} \\
-          \code{  print *, 'Hello world'} \\
-          \code{end program myprog}
+            \begin{verbatim}
+program count
+  integer :: i
+  do i = 1, 10
+    print *, i
+  end do
+end program count
+            \end{verbatim}
           }
-        \item \normalsize{A compiler parses source files and create
-           binary object files:} \\
+        \item \normalsize{A \focus{compiler program} parses source files and
+            create binary object files:} \\
           \footnotesize{
           \code{gfortran -o myprog myprog.f90}
           }
         \item \normalsize{Objects are linked with other objects or
            libraries to create executables:} \\
           \footnotesize{
-          \code{0000000 457f 464c 0102 0001 0000 0000 0000 0000} \\
-          \code{0000010 0003 003e 0001 0000 06f0 0000 0000 0000} \\
-          \code{0000020 0040 0000 0000 0000 1a78 0000 0000 0000} \\
-          \code{0000030 0000 0000 0040 0038 0009 0040 001d 001c} \\
-          \code{0000040 0006 0000 0004 0000 0040 0000 0000 0000}
+            \begin{verbatim}
+0000000 457f 464c 0102 0001 0000 0000 0000 0000
+0000010 0003 003e 0001 0000 06f0 0000 0000 0000
+0000020 0040 0000 0000 0000 1a78 0000 0000 0000
+0000030 0000 0000 0040 0038 0009 0040 001d 001c
+0000040 0006 0000 0004 0000 0040 0000 0000 0000
+            \end{verbatim}
           }
       \end{itemize}
     \end{column}
@@ -387,71 +275,136 @@
 \end{frame}
 
 
-\begin{frame}[label=compiler]{Compiler flags}
-  The compiler is a program and accepts command line arguments
+\begin{frame}[label=exercise1, fragile=singleslide]
+  \frametitle{Exercise}
+  \framesubtitle{Write and compile Fortran 'Hello World'}
   \begin{itemize}
-    \item \code{-g}
+    \item Create a text file \code{hello.f90} with the below content:
+      \footnotesize{
+      \begin{verbatim}
+program hello
+  implicit none
+  integer , parameter :: stdout = 6
+  character(len=*), parameter :: message = 'Helo World'
+  character(len=1), parameter :: mark = '!'
+  write(stdout,'(a,a)') message, mark
+end program hello
+      \end{verbatim}
+      }
+    \item Compile the program into an executable file: \\
+      \code{gfortran -o hello hello.f90}
+    \item Execute the executable file created: \\
+      \code{./hello}
+  \end{itemize}
+    \begin{alertblock}{Have you noticed?}
+      No error is allowed in the code: Fortran Language has very
+        strict syntax. But you can misspell the message! \\
+      Why we had to run the program with \code{./hello}?
+    \end{alertblock}
+\end{frame}
+
+
+\begin{frame}
+  \begin{center}
+    \frametitle{File Permissions}
+    \framesubtitle{How to check file permissions}
+
+    \sidebyside{0.44}{
+      \centering
+      See permissions: \code{ls -l}
+    }{\hfill}{0.52}{
+      \begin{center}
+        \includegraphics[width=1.00\textwidth]{pics/ls-l.png}
+      \end{center}
+    }
+    \begin{alertblock}{Check this}
+      What do you see running \code{ls -l} in the directory where you
+        have compiled the \code{hello} program and code? \\
+      Can you spot the executable files looking at the permission bits? \\
+      Try running \code{ls -al}. Can you tell which are the directories
+        from the permission bits?
+    \end{alertblock}
+
+  \end{center}
+\end{frame}
+
+\begin{frame}[label=executables]
+  \frametitle{Executable files}
+  \framesubtitle{System programs and user programs}
+  \begin{itemize}
+    \item An executable file is a file with execute permission bit on
+    \item The system programs (\code{ls}, \code{mkdir}, \code{cd},
+      \code{gfortran}, etc.) are files with execute permission bit set
+      that are stored in predefined directories (\code{/bin}, \code{/usr/bin},
+      \code{/usr/local/bin}) that are in the system \code{PATH} for
+      searching programs
+    \item User executable are not in the \code{PATH} and to run them the
+      path to reach the executable, absolute or relative, must be provided
+    \item \code{PATH} is an environment variable. More on those next days.
+  \end{itemize}
+  \begin{alertblock}{Check the system programs}
+      Try searching the program \code{ls}. \\
+      \code{ls -l /bin/ls} \\
+      Where is \code{cd}? And \code{gfortran}?
+   \end{alertblock}
+\end{frame}
+
+
+\begin{frame}[label=compiler]
+  \frametitle{Compiler flags}
+  \framesubtitle{Optional arguments for Fortran programming}
+  The compiler is a program and accepts command line arguments. Above we
+    have used the \code{-o} option to specify the name of the output.
+  \begin{block}{Useful gfortran options}
     \begin{itemize}
-      \item include debugging information
-    \end{itemize}
-    \item \code{-Wall}
-    \begin{itemize}
-      \item Enables commonly used warning options pertaining to usage
-        recommend avoiding and that are easy to avoid
-    \end{itemize}
-    \item \code{-pedantic}
-    \begin{itemize}
-      \item check program for Fortran 95 standard conformance
-    \end{itemize}
-    \item \code{-fbacktrace}
-    \begin{itemize}
-      \item print the whole trace of the error
-    \end{itemize}
-    \item \code{-fcheck=all}
-    \begin{itemize}
-      \item perform all available run-time checks
-    \end{itemize}
-    \item \code{-Ofast}
-    \begin{itemize}
-      \item Optimize for fast execution time
-    \end{itemize}
+        \item \code{-o program} output program name (default a.out)
+      \item \code{-Ofast} Optimize program for fast execution time
+      \item \code{-O0} Remove all optimization (for debugging)
+      \item \code{-g} include debugging information
+      \item \code{-Wall} Enables commonly used warning options pertaining to
+          usage recommend avoiding and that are easy to avoid
+      \item \code{-pedantic} check program for Fortran standard conformance
+      \item \code{-fcheck=all} perform all available run-time checks
+      \item \code{-fbacktrace} print the whole trace of the error
+  \end{itemize}
+  \end{block}
+\end{frame}
+
+
+\begin{frame}[label=exercise2, fragile=singleslide]
+  \frametitle{Exercise}
+  \framesubtitle{Debug a Fortran program}
+  \begin{itemize}
+    \item Create a text file \code{error.f90} with the below content:
+      \footnotesize{
+      \begin{verbatim}
+program error
+  implicit none
+  integer, parameter :: im = 2
+  integer, dimension(im,im) :: matrix
+  integer :: j
+  do j = 1 , 2*im
+    do i = 1 , 2*im
+      matrix(i,j) = i*j
+      print*, matrix(i,j)
+    end do
+  end do
+end program error
+      \end{verbatim}
+      }
+    \item Compile and correct the error
+    \item Run the program and check the runtime error
+    \item Compile in debug:
+        \code{-O0 -g -Wall -pedantic -fcheck=all -fbacktrace}
+    \item Run the program, check the error and correct the program
+    \item Recompile an optimized executable
   \end{itemize}
 \end{frame}
 
 
-\begin{frame}[label=makefile]{Make program}
-  The traditional way to manage a project code is the \code{make} program
-  \begin{columns}[T]
-    \begin{column}{.23\textwidth}
-      \vspace{30pt}
-      \includegraphics[scale=0.25]{pics/GM.jpg}
-    \end{column}
-    \hfill
-    \begin{column}{.76\textwidth}
-      \begin{itemize}
-        \item \code{[Mm]akefile}
-        \begin{itemize}
-          \item For each directory in a project, you provide a Makefile.
-          \item The makefile contains:
-          \begin{itemize}
-             \item \textbf{Targets} : things you can ask to be made
-             \item \textbf{Dependencies} : order of things to be made
-             \item \textbf{Variables} : useful to store options
-             \item \textbf{Conditionals} : select how to do on variable value
-          \end{itemize}
-          \item A hyerarchy of Makefiles can be built
-          \item For very complex projects Makefiles can be generated through
-             other tools
-          \item Newer projects use different build helpers, but you can count
-             on make be present on UNIX.
-        \end{itemize}
-      \end{itemize}
-    \end{column}
-  \end{columns}
-\end{frame}
-
-
-\begin{frame}[label=permission]{File permissions}
+\begin{frame}[label=permission]
+  \frametitle{File permissions}
+  \framesubtitle{RWX bits}
   \begin{columns}[T]
     \begin{column}{.11\textwidth}
       \includegraphics[scale=0.15]{pics/Timbro.jpg}
@@ -461,15 +414,15 @@
       \small{
       There are three basic attributes for plain file permissions:
       \begin{itemize}
-         \item read
-         \item write
-         \item execute
+        \item read \code{r}
+        \item write \code{w}
+        \item execute \code{x}
       \end{itemize}
       They mean what you would expect. There are three classes of users:
       \begin{itemize}
-         \item owner
-         \item group
-         \item other
+        \item owner \code{u}
+        \item group \code{g}
+        \item other \code{o}
       \end{itemize}
       For each of the three classes you have three possible attributes
       to set. \\
@@ -487,214 +440,150 @@
 
 
 \begin{frame}
+  \frametitle{File Permissions}
+  \framesubtitle{Changing file permissions using \code{chmod}}
+
+  \sidebyside{0.42}{
+    Change permissions: \code{chmod}
+
+    \code{chmod <who><+/-><what> <file>}
+
+    \begin{itemize}
+      \item \code{<who>}:\\
+        \code{u} (user),\\
+        \code{g} (group),\\
+        \code{o} (other),\\
+        \code{a} (everybody)
+      \item \code{<+/->}: \code{+} to add, \code{-} to remove
+      \item \code{what}: \code{r,w,x} as above
+    \end{itemize}
+  }{\hfill}{0.48}{
   \begin{center}
-    \frametitle{Check permissions}
-
-    \sidebyside{0.44}{
-      \centering
-      See permissions: \code{ls -l}
-    }{\hfill}{0.52}{
-      \begin{center}
-        \includegraphics[width=1.00\textwidth]{pics/ls-l.png}
-      \end{center}
-    }
-
-    \vspace{8mm}
-
-    First 3 chars: \focus{read} (\code{r}), \focus{write} (\code{w}), \focus{execute} (\code{x}) permissions \focus{for user}\\
-    Second 3 chars: read/write/execute \focus{for group}\\
-    Last 3 chars: read/write/execute \focus{for all users}
-
-    \vspace{8mm}
-
-    Useful if the system does not let you remove a file
+    \includegraphics[scale=0.23]{pics/chmod.png}
   \end{center}
+  }
+\end{frame}
+
+
+\begin{frame}[label=exercise3, fragile=singleslide]
+  \frametitle{Scripts and programs}
+  \framesubtitle{Creating a shell script executable}
+
+  Let us create an 'hello world' program in shell and execute it.
+  \begin{exampleblock}{Shell script}
+      Edit a text file \code{hello.sh} and write inside the following:
+\begin{verbatim}
+#!/bin/bash
+echo Hello world
+\end{verbatim}
+  \end{exampleblock}
+
+  \begin{alertblock}{}
+    Can you directly execute the script as we have done with \code{hello}? \\
+    Try \code{./hello.sh}
+  \end{alertblock}
+
+  \begin{exampleblock}{Use \code{chmod}}
+      \code{chmod u+x hello.sh}
+  \end{exampleblock}
+
+  \begin{alertblock}{}
+    Can you now execute the script?
+  \end{alertblock}
+\end{frame}
+
+
+\begin{frame}[label=scriptnotes]
+  \frametitle{Notes on the script}
+  \framesubtitle{Missing bits}
+  \begin{block}{sha-banging magic number}
+    The control sequence \code{\#!} at the script start is a so called
+      hash bang, or shabang or shebang. The purpose is to act as a magic
+      sequence. The program name that follows is the program that must
+      be called to execute what is following. \\
+      \code{\#!/bin/bash} \\
+      \code{\#!/usr/bin/env python3} \\
+      \code{\#!/usr/bin/perl}
+  \end{block}
+  \begin{block}{echo}
+    The program \code{echo} is \code{/bin/echo} and it is used to display
+      on the screen any provided line following the program name. \\
+    Look at the man page for it options.
+  \end{block}
 \end{frame}
 
 
 \begin{frame}
-  \begin{center}
-    \frametitle{Changing permissions: \code{chmod}}
+  \frametitle{Python language}
+  \framesubtitle{Running the python interpreter}
+  Python is an interpreted language. Any line of code goes through the
+    interpreter in a \focus{Read-Eval-Print Loop} or \focus{REPL}.
+  \begin{block}{Install the interpreter}
+    \code{ictp-install python3 ipython3 python3-ipython} \\
+    \code{ictp-install python3-numpy python3-matplotlib}
+  \end{block}
+  \begin{block}{Start the interpreter}
+    \code{ipython3}
+  \end{block}
+  \begin{block}{Test the interpreter}
+    \code{64*2}
+  \end{block}
+\end{frame}
 
-    \sidebyside{0.42}{
-      Change permissions: \code{chmod}
 
-      \code{chmod <who><+/-><what> <file>}
+\begin{frame}[fragile=singleslide]
+  \frametitle{Python language}
+  \framesubtitle{Quick and dirty csv plotting}
+  \begin{block}{Start the interpreter}
+    \code{ipython3}
+  \end{block}
+  \begin{exampleblock}{ }
+    Copy line by line the following:
+    \small{
+    \begin{verbatim}
+from datetime import datetime
+import numpy as np
+import matplotlib.pyplot as plt
 
-      \begin{itemize}
-        \item \code{<who>}:\\
-          \code{u} (user),\\
-          \code{g} (group),\\
-          \code{a} (everybody)
-        \item \code{<+/->}: \code{+} to add, \code{-} to remove
-        \item \code{what}: \code{r,w,x} as above
-      \end{itemize}
-    }{\hfill}{0.48}{
-      \begin{center}
-        \includegraphics[width=0.90\textwidth]{pics/chmod.png}
-      \end{center}
+my_data = np.genfromtxt('first.csv',delimiter=',',dtype=None)
+precip = np.fromiter((x[3] for x in my_data),float)
+dt = list(datetime(x[0],x[1],x[2]) for x in my_data)
+timeaxis = np.array(list(np.datetime64(x) for x in dt))
+plt.plot(timeaxis,precip)
+plt.gcf().autofmt_xdate()
+plt.show( )
+    \end{verbatim}
     }
-  \end{center}
+  \end{exampleblock}
 \end{frame}
 
-
-\begin{frame}
-  \begin{center}
-    \frametitle{Executing scripts and programs}
-
-    \sidebyside{0.45}{
-      \centering
-      \code{./<executable>}\\
-      \focus{launches an executable}
-    }{\hfill}{0.50}{
-      \begin{center}
-        \includegraphics[width=0.80\textwidth]{pics/execute.png}
-      \end{center}
+\begin{frame}[fragile=singleslide]
+  \frametitle{Python language}
+  \framesubtitle{From interactive to program}
+  \begin{exampleblock}{}
+    Write the following in the file \code{plot.py}
+    \small{
+    \begin{verbatim}
+#!/usr/bin/env python3
+from datetime import datetime
+import numpy as np
+import matplotlib.pyplot as plt
+my_data = np.genfromtxt('first.csv',delimiter=',',dtype=None)
+precip = np.fromiter((x[3] for x in my_data),float)
+dt = list(datetime(x[0],x[1],x[2]) for x in my_data)
+timeaxis = np.array(list(np.datetime64(x) for x in dt))
+plt.plot(timeaxis,precip)
+plt.gcf().autofmt_xdate()
+plt.show( )
+    \end{verbatim}
     }
+  \end{exampleblock}
 
-   \sidebyside{0.48}{
-      \centering
-      \code{./<executable> \&}\\
-      executes \focus{in the background}\\
-      (the shell is free during execution)
-    }{\hfill}{0.50}{
-      \begin{center}
-        \includegraphics[width=0.80\textwidth]{pics/background.png}
-      \end{center}
-    }
-  \end{center}
+  \begin{alertblock}{What is missing?}
+    There is still one passage missing to be able to run the program as
+      \code{./plot.py}. Can you tell me what is missing?
+  \end{alertblock}
 \end{frame}
-
-
-\begin{frame}
-  \begin{center}
-    \frametitle{Checking and killing processes}
-
-    \sidebyside{0.47}{
-      \centering
-      \code{ps}\\
-      \focus{shows running processes}
-
-      \vspace{4mm}
-
-      Processes are identified by a code (\focus{PID})
-
-      \vspace{4mm}
-
-      \code{kill <PID>} or \code{pkill <name>} \focus{stop processes}
-    }{\hfill}{0.50}{
-      \begin{center}
-        \includegraphics[width=0.70\textwidth]{pics/ps.png}
-      \end{center}
-    }
-
-    \vspace{4mm}
-
-    \sidebyside{0.44}{
-      \centering
-      \code{top} \focus{gives more info}\\
-      (e.g., CPU and RAM usage)
-
-      \vspace{3mm}
-
-      Press \code{P} to sort by CPU usage,\\
-      \code{M} to sort by RAM usage
-    }{\hfill}{0.54}{
-      \begin{center}
-        \includegraphics[width=1.00\textwidth]{pics/top.png}
-      \end{center}
-    }
-  \end{center}
-\end{frame}
-
-\begin{frame}
-  \begin{center}
-    \frametitle{Accessing remote computers}
-
-    \sidebyside{0.50}{
-      \centering
-
-      \code{ssh}: \focus{access a remote computer}\\
-      (e.g., to use a CPU cluster)\\
-
-      \vspace{4mm}
-
-      \code{ssh <user>@<remote machine>}
-
-      \vspace{4mm}
-
-      \code{scp} allows file transfer
-    }{\hfill}{0.45}{
-      \begin{center}
-        \includegraphics[width=1.00\textwidth]{pics/supercomputer.jpg}
-      \end{center}
-    }
-
-    \vspace{3mm}
-
-    Clusters usually handle long calculations with a \focus{workload manager}:\\
-    \code{slurm} is one of the most popular
-
-    \vspace{3mm}
-
-    You will have finite disk space and CPU time:\\
-    \focus{remember your limits}
-
-    \vspace{3mm}
-
-    Don't take too many CPUs:\\
-    \focus{be mindful of others}
-  \end{center}
-\end{frame}
-
-
-\begin{frame}[label=exercise1]{Exercise 1}
-  \begin{itemize}
-    \item Change directory into code. \\
-       \code{\$ > cd code} \\
-       \code{\$ > ls} \\
-       \code{examplestart.f90  goodstart.f90  Makefile}
-    \item Use vim to examine the Makefile \\
-       \code{\$ > vim Makefile}
-    \item Type make
-    \item Execute the examplestart program \\
-       \code{\$ > ./examplestart}
-    \item What does it mean?
-  \end{itemize}
-\end{frame}
-
-
-\begin{frame}[label=exercise2]{Exercise 2}
-  \begin{itemize}
-    \item Edit the Makefile, comment the FLAGS line, uncomment following
-       \code{\# FCFLAGS = -O2} \\
-       \code{FCFLAGS = -Wall -pedantic}
-    \item Make the program again
-    \item Edit examplestart.f90 and modify it to fix warnings
-    \item Execute the examplestart program \\
-       \code{\$ > ./examplestart}
-    \item What does it mean?
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[label=exercise3]{Exercise 3}
-  \begin{itemize}
-    \item Edit the Makefile, comment the FLAGS line, uncomment following \\
-       \code{\# FCFLAGS = -O2} \\
-       \code{\# FCFLAGS = -Wall -pedantic}a \\
-       \code{FCFLAGS = -Wall -pedantic -fcheck=all -fbacktrace -g -O0}
-    \item Make the program again
-    \item Execute the examplestart program \\
-       \code{\$ > ./examplestart}
-    \item Edit examplestart.f90 and modify it to fix errors
-    \item Execute the examplestart program \\
-       \code{\$ > ./examplestart}
-    \item Compare with proposed \textit{best} program: \\
-       \code{\$ > diff -Naurb examplestart.f90 goodstart.f90}
-    \item Diffs?
-  \end{itemize}
-\end{frame}
-
 
 \end{document}
 

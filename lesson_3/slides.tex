@@ -6,6 +6,8 @@
 
 \usepackage{changepage}       % adjustwidth
 \usepackage{upquote}
+\usepackage{color}
+\usepackage{fancyvrb}
 
 \setlength\parskip{0.3cm}
 
@@ -19,6 +21,9 @@
 \newcommand{\lra}{$\longleftrightarrow$ }
 
 \newcommand{\code}[1]{\colorbox{black}{\color{green}\texttt{#1}}}
+\newcommand{\codeine}[1]{
+\colorbox{black}{\color{green} \BUseVerbatim{#1} }
+}
 
 % Command to create two side-by-side minipages
 \newcommand{\sidebyside}[5]{
@@ -282,330 +287,353 @@
     \end{itemize}
   \end{exampleblock}
 
-  \begin{alertblock}{Check quoting}
-    \begin{verbatim}
+  \begin{SaveVerbatim}{myverb}
 grep '.*quick.*' <files>
-    \end{verbatim}
+  \end{SaveVerbatim}
+  \begin{alertblock}{Check quoting}
+    \codeine{myverb}
   \end{alertblock}
   }
 \end{frame}
 
-\begin{frame}
-  \begin{center}
-    \frametitle{Exercise II - grep}
+\begin{frame}[fragile=singleslide]
+  \frametitle{Exercise}
+  \framesubtitle{grep}
 
-    \sidebyside{0.35}{
-      Create the following file:
-    }{\hfill}{0.60}{
-      \begin{center}
-        \includegraphics[width=0.80\textwidth]{pics/ex_2.png}
-      \end{center}
-    }
+  \begin{block}{}
+    Create the following file:
+    \begin{verbatim}
+#Index Name Surname Product
+1 Robert Duvall Oranges
+2 Al Pacino Peaches
+#2 Marlon Brando Grapes
+2 Diane Keaton Tamarindos
+20 Robert DeNiro Cherries
+    \end{verbatim}
+  \end{block}
 
-    \vspace{6mm}
-
+  \begin{exampleblock}{}
     Create a script which filters out commented lines (starting with
     \code{\#}), selects all lines where the index is 2, then selects only who
     sells tamarindos. Use redirection and/or piping.
+  \end{exampleblock}
 
-    \vspace{6mm}
-
-    \focus{Hint}: the line begins with the index. Watch case.
+  \begin{alertblock}{Hint}
+    The line begins with the index. Watch case.
     %grep -v '#' test | grep '^2 ' | grep -i 'tamarindo'
-  \end{center}
+  \end{alertblock}
 \end{frame}
 
-\begin{frame}
-  \begin{center}
-    \frametitle{Row Operations III - sed}
+\begin{frame}[fragile=singleslide]
+  \frametitle{Row Operations}
+  \framesubtitle{sed}
 
-    \code{sed} (stream editor) operates on files as groups of lines:\\
-    \focus{finds lines matching regexps and acts on (or around) them}
+  \begin{block}{Stream EDitor}
+    \code{sed} operates on files as groups of lines:\\
+    finds lines matching regexps and acts on (or around) them
+  \end{block}
 
-    \sidebyside{0.60}{
-      \begin{itemize}
-        \item \code{sed '/<regexp>/a <text>'}\\
+  \begin{columns}
+    \begin{column}{0.70\textwidth}
+    \begin{itemize}
+        \begin{SaveVerbatim}{myverb}
+sed '/<regexp>/a <text>' <files>
+        \end{SaveVerbatim}
+        \item \codeine{myverb} \\
           adds \code{<text>} after matching lines
-        \item \code{sed '/<regexp>/i <text>'}\\
+        \begin{SaveVerbatim}{myverb}
+sed '/<regexp>/i <text>' <files>
+        \end{SaveVerbatim}
+      \item \codeine{myverb} \\
           adds \code{<text>} before matching lines
-        \item \code{sed '/<regexp>/c <text>'}\\
+        \begin{SaveVerbatim}{myverb}
+sed '/<regexp>/c <text>' <files>
+        \end{SaveVerbatim}
+      \item \codeine{myverb} \\
           replaces matching lines with \code{<text>}
-        \item \code{sed '/<regexp>/d'}\\
+        \begin{SaveVerbatim}{myverb}
+sed '/<regexp>/d' <files>
+        \end{SaveVerbatim}
+      \item \codeine{myverb} \\
           deletes all matching lines
       \end{itemize}
-    }{\hfill}{0.38}{
-      \begin{center}
-        \includegraphics[width=1.00\textwidth]{pics/sed-1.png}
-      \end{center}
-    }
-  \end{center}
+    \end{column}
+    \begin{column}{0.30\textwidth}
+      \includegraphics[scale=0.20]{pics/sed-1.png}
+    \end{column}
+  \end{columns}
 \end{frame}
 
-\begin{frame}
-  \begin{center}
-    \frametitle{Row Operations IV - More sed}
+\begin{frame}[fragile=singleslide]
+  \frametitle{Row Operations}
+  \framesubtitle{More sed}
 
-     \code{sed 's/<regexp>/<text>/g' <files>}\\
-     replaces \focus{all} occurrence of \code{<regexp>} with \code{<text>} in all lines
+  \begin{columns}
+    \begin{column}{0.70\textwidth}
+      \begin{itemize}
+        \begin{SaveVerbatim}{myverb}
+sed 's/<regexp>/<text>/g' <files>
+        \end{SaveVerbatim}
+        \item \codeine{myverb} \\
+          replaces \focus{all} occurrence of \code{<regexp>} with
+          \code{<text>} in all lines
+      \end{itemize}
+      \begin{exampleblock}{}
+        \begin{itemize}
+          \item Replacement and matching will break words
+          \item Matching is case-sensitive
+          \item All regexp tools available
+        \end{itemize}
+      \end{exampleblock}
+    \end{column}
+    \begin{column}{0.30\textwidth}
+      \includegraphics[scale=0.17]{pics/sed-2.png}
+    \end{column}
+  \end{columns}
 
-     \vspace{3mm}
-
-     \sidebyside{0.54}{
-       \begin{itemize}
-         \item Replacement and matching\\
-           will break words
-         \item Matching is case-sensitive
-         \item All regexp tools available
-         \item \code{sed -i} applies modifications\\
-           to the files: \focus{be careful!}
-       \end{itemize}
-     }{\hfill}{0.43}{
-       \begin{center}
-         \includegraphics[width=1.00\textwidth]{pics/sed-2.png}
-       \end{center}
-     }
-
-     \vspace{3mm}
-
-     Remember: \code{sed} can be used in pipes
-  \end{center}
+  \begin{alertblock}{Remember and be careful}
+    \begin{itemize}
+      \item \code{sed} can be used in pipes
+      \item \code{sed -i} applies modifications \focus{to the files}
+    \end{itemize}
+  \end{alertblock}
 \end{frame}
 
-\begin{frame}
-  \begin{center}
-    \frametitle{Exercise III - sed}
+\begin{frame}[fragile=singleslide]
+  \frametitle{Exercise}
+  \framesubtitle{sed}
 
-    \sidebyside{0.35}{
-      Create the following file:
-    }{\hfill}{0.60}{
-      \begin{center}
-        \includegraphics[width=0.70\textwidth]{pics/ex_3.png}
-      \end{center}
-    }
+  \begin{block}{Create the following file:}
+    \begin{verbatim}
+# Score Index Name
+0,100 #1 Lucas
+0,200 #2 Andrew
+#0,400 #3 Mary
+0,500 XXX XXX
+0,300 #5 Rose
+    \end{verbatim}
+  \end{block}
 
-    \vspace{2mm}
-
-    Create a script which:
-
+  \begin{exampleblock}{Create a script which:}
     \begin{itemize}
       \item Replaces corrupted lines (lines containing \code{XXX}) with
         \code{\#CORRUPTED}
       \item Removes commented lines (beginning with \code{\#}) from the file
       \item Shows on screen the last two lines of the file replacing \code{,}
-        with \code{.} (\focus{do not apply this last modification to the file})
+        with \code{.}
     \end{itemize}
+  \end{exampleblock}
 
-    \vspace{2mm}
+  \begin{alertblock}{Required}
+    Do not modify the original file!
+  \end{alertblock}
+\end{frame}
 
-    \focus{Hint:} the use of \code{sed -i} and pipes is suggested.\\
-    A copy of the original file is also handy to have at all times.
-  \end{center}
+\begin{frame}[fragile=singleslide]
+  \frametitle{Column Operations}
+  \framesubtitle{Using cut and paste on datafiles}
+
+  \begin{columns}
+    \small{
+    \begin{column}{0.55\textwidth}
+      \begin{block}{extract selected fields}
+        \code{cut <options> <file>}
+        \begin{itemize}
+          \item \code{-d}: specify field delimiter \\
+        \begin{SaveVerbatim}{myverb}
+' '
+        \end{SaveVerbatim}
+        \begin{SaveVerbatim}{myverb1}
+','
+        \end{SaveVerbatim}
+              (often \codeine{myverb} or \codeine{myverb1})
+          \item \code{-f}: specify the desired fields \\
+              (separate with \code{,})
+          \item \code{--complement}: print unselected fields
+        \end{itemize}
+      \end{block}
+    \end{column}
+    }
+    \begin{column}{0.45\textwidth}
+      \includegraphics[scale=0.25]{pics/cut.png}
+    \end{column}
+  \end{columns}
+
+  \begin{columns}
+    \small{
+    \begin{column}{0.55\textwidth}
+      \begin{block}{join lines in multiple files}
+        \code{paste <files>}
+        \begin{itemize}
+          \item \code{-d}: specify delimiter between files \\
+              default: \code{TAB} (not space!)
+        \end{itemize}
+      \end{block}
+    \end{column}
+    }
+    \begin{column}{0.45\textwidth}
+      \includegraphics[scale=0.27]{pics/paste.png}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 \begin{frame}
-  \begin{center}
-    \frametitle{Column Operations I - cut and paste}
+  \frametitle{Column Operations}
+  \framesubtitle{\code{sort} file content}
 
-    Datafiles can also be seen as an ensemble of \focus{columns} (fields)
-
-    \sidebyside{0.50}{
-      \code{cut <options> <file>}:\\
-      extract selected fields from file
-
-      \vspace{3mm}
-
-      \begin{itemize}
-        \item \code{-d}: specify field delimiter\\
-          (often \code{' '} or \code{','})
-        \item \code{-f}: specify the desired fields\\
-          (separate with \code{,})
-        \item \code{--complement}:\\
-          print unselected fields
-      \end{itemize}
-    }{\hfill}{0.46}{
-      \begin{center}
-        \includegraphics[width=1.00\textwidth]{pics/cut.png}
-      \end{center}
+  \begin{columns}
+    \small{
+    \begin{column}{0.65\textwidth}
+      \begin{block}{sort according to the given criteria}
+        \code{sort <options> <file>}
+        \begin{itemize}
+          \item \code{-f}: ignore case
+          \item \code{-k}: specify an index column\\
+            (order following this column, default: 1)
+          \item \code{-n}: numbers sorted according to value\\
+          \item \code{-g}: like \code{-n}, more general formats\\
+            (e.g., scientific notation)
+          \item \code{-h}: like \code{-n}, human-readable formats\\
+            (e.g., \code{4K, 8M})
+          \item \code{-r}: reverses sort order (descending)
+          \item \code{-u}: eliminates repeated lines
+        \end{itemize}
+      \end{block}
+    \end{column}
     }
-
-    \vspace{1mm}
-
-    \sidebyside{0.49}{
-      \code{paste <files>}:\\
-      join lines in multiple files
-
-      \begin{itemize}
-        \item \code{-d}:\\
-          specify delimiter between files\\
-          default: \code{TAB} (not space!)
-      \end{itemize}
-    }{\hfill}{0.48}{
-      \begin{center}
-        \includegraphics[width=1.00\textwidth]{pics/paste.png}
-      \end{center}
-    }
-  \end{center}
+    \begin{column}{0.35\textwidth}
+      \includegraphics[scale=0.22]{pics/sort.png}
+    \end{column}
+  \end{columns}
 \end{frame}
 
-\begin{frame}
-  \begin{center}
-    \frametitle{Column Operations II - sort}
+\begin{frame}[fragile=singleslide]
+  \frametitle{Exercise}
+  \framesubtitle{cut, paste, sort}
 
-    \sidebyside{0.62}{
-      \code{sort <options> <file>}:\\
-      \focus{sorts a file according to the given criteria}
+  \begin{block}{}
+    Create the following 2 files:
+    \begin{columns}
+      \begin{column}{0.50\textwidth}
+        \code{example\_file\_1.dat}
+        \begin{verbatim}
+1.0e-1 3.0e-1
+2.0e-1 4.0e-1
+        \end{verbatim}
+      \end{column}
+      \begin{column}{0.50\textwidth}
+        \code{example\_file\_2.dat}
+        \begin{verbatim}
+8.0e-1 5.0e-1
+7.0e-1 6.0e-1
+        \end{verbatim}
+      \end{column}
+    \end{columns}
+  \end{block}
 
-      \vspace{4mm}
-
-      \begin{itemize}
-        \item \code{-k}: specify an index column\\
-          (order following this column, default: 1)
-        \item \code{-n}: numbers sorted according to value\\
-        \item \code{-g}: like \code{-n}, more general formats\\
-          (e.g., scientific notation)
-        \item \code{-h}: like \code{-n}, human-readable formats\\
-          (e.g., \code{4K, 8M})
-        \item \code{-r}: reverses sort order (descending)
-        \item \code{-u}: eliminates repeated lines
-      \end{itemize}
-    }{\hfill}{0.34}{
-      \begin{center}
-        \includegraphics[width=0.90\textwidth]{pics/sort.png}
-      \end{center}
-    }
-  \end{center}
-\end{frame}
-
-\begin{frame}
-  \begin{center}
-    \frametitle{Exercise IV - cut, paste, sort}
-
-    \sidebyside{0.35}{
-      Create the following files:
-    }{\hfill}{0.60}{
-      \begin{center}
-        \includegraphics[width=0.70\textwidth]{pics/ex_4.png}
-      \end{center}
-    }
-
-    \vspace{3mm}
-
-    Write a script which:
-
+  \begin{exampleblock}{Write a script which:}
     \begin{itemize}
       \item Pastes the two files together
       \item Sorts the output according to the 3rd column
-      \item Prints out the 2nd column of the line\\
+      \item Prints out the 2nd column of the line
         with the highest value of the 3rd column
     \end{itemize}
-
-    \vspace{3mm}
-
-    \focus{Hint}: Remember the options of \code{sort} (\code{-g} in
-    particular).\\
+  \end{exampleblock}
+  \begin{alertblock}{Hint}
+    Remember the options of \code{sort} (\code{-g} in particular).\\
     Remember \code{head/tail}.
-  \end{center}
+  \end{alertblock}
 \end{frame}
 
 \begin{frame}
-  \begin{center}
-    \frametitle{Column Operations III - awk}
+  \frametitle{awk}
+  \framesubtitle{Pattern scanning and processing language}
 
-    awk is a (simple) programming language for text operations\\
-    mostly used to work on files as sets of columns
+  \begin{block}{}
+    awk is a programming language for text operations mostly used to work
+      on files as sets of columns
+  \end{block}
 
-    \vspace{1mm}
+  \begin{exampleblock}{\code{awk} program structure}
+    \code{BEGIN \{ 1 \} \{ 2 \} END \{ 3 \}} \\
+    \begin{enumerate}
+      \item \focus{Initial instructions} : before reading the file.
+      \item \focus{Line instructions} : on each line of the file.
+      \item \focus{Final instructions} : after the file has been read.
+    \end{enumerate}
+  \end{exampleblock}
 
-    An awk program can be structured in 3 blocks:
-    \code{BEGIN \{ 1 \} \{ 2 \} END \{ 3 \}}
-
-    \vspace{1mm}
-
-    \begin{itemize}
-      \item \focus{Initial instructions} (1) are executed only once,\\
-        before starting to read the file.
-      \item \focus{Line instructions} (2) are executed on each line.
-      \item \focus{Final instructions} (3) are executed once the file has been read.
-    \end{itemize}
-
-    \vspace{1mm}
-
-    Usually when launched in shell only block (2) is used:\\
+  \begin{alertblock}{Only block \code{\{ 2 \}} is required}
     \code{awk '\{ <commands> \}' <file>}
-
-    \vspace{2mm}
-
-    Powerful tools available, like \focus{if...then...else}\\
-    We will not see them here (\focus{stackoverflow} is always there though)
-  \end{center}
+  \end{alertblock}
+  \begin{alertblock}{Basic branching syntax can be used}
+    \code{if...then...else}
+  \end{alertblock}
 \end{frame}
 
+
 \begin{frame}
-  \begin{center}
-    \frametitle{Column Operations IV - awk basics}
+  \frametitle{awk}
+  \framesubtitle{Commands}
 
-    \sidebyside{0.50}{
-      \code{print} writes to standard output:\\
-      use \code{""} for strings
-
-      \vspace{4mm}
-
-      Special variables:
-      \begin{itemize}
-        \item \code{NR} is the current line
-        \item \code{NF} is the number of fields\\
+  \begin{block}{\code{print}}
+    \begin{columns}
+      \begin{column}{0.69\textwidth}
+        Writes to standard output: use \code{""} for strings \\
+        Special variables:
+        \begin{itemize}
+          \item \code{NR} is the current line
+          \item \code{NF} is the number of fields\\
           of the current line
-      \end{itemize}
-    }{\hfill}{0.45}{
-      \begin{center}
-        \includegraphics[width=0.75\textwidth]{pics/awk-1.png}
-      \end{center}
-    }
+        \end{itemize}
+      \end{column}
+      \begin{column}{0.31\textwidth}
+        \includegraphics[scale=0.23]{pics/awk-1.png}
+      \end{column}
+    \end{columns}
 
-    \sidebyside{0.50}{
-      Access fields via \code{\$<field\_number>}
-
-      \begin{itemize}
-        \item \code{\$0} is the entire line
-        \item \code{\$NF} is the last field
-      \end{itemize}
-
-      \vspace{4mm}
-
-      Fields can be manipulated\\
-      as strings or floating-point numbers
-      (file remains untouched)
-    }{\hfill}{0.45}{
-      \begin{center}
-        \includegraphics[width=1.00\textwidth]{pics/awk-2.png}
-      \end{center}
-    }
-  \end{center}
+    \begin{columns}
+      \begin{column}{0.60\textwidth}
+        Access fields via \code{\$<field\_number>}
+        \begin{itemize}
+          \item \code{\$0} is the entire line
+          \item \code{\$NF} is the last field
+        \end{itemize}
+      \end{column}
+      \begin{column}{0.40\textwidth}
+        \includegraphics[scale=0.22]{pics/awk-2.png}
+      \end{column}
+    \end{columns}
+  \end{block}
+  \begin{alertblock}{}
+    Fields can be manipulated as strings or floating-point numbers
+  \end{alertblock}
 \end{frame}
 
-\begin{frame}
-  \begin{center}
-    \frametitle{Exercise V - awk}
+\begin{frame}[fragile=singleslide]
+  \frametitle{Exercise}
+  \framesubtitle{awk}
 
-    \sidebyside{0.35}{
-      Create the following file:
-    }{\hfill}{0.60}{
-      \begin{center}
-        \includegraphics[width=0.70\textwidth]{pics/ex_5.png}
-      \end{center}
-    }
+  \begin{block}{Create the following file:}
+    \begin{verbatim}
+# a b
+0.1 1.1
+0.2 1.2
+0.3 1.3
+0.4 1.4
+    \end{verbatim}
+  \end{block}
 
-    \vspace{4mm}
-
+  \begin{exampleblock}{}
     Write a script which writes to a new file the row number, the difference
-    and the squared difference of columns 1 and 2 of the starting file
-    (neglecting the label row).
+      and the squared difference of columns 1 and 2 (in this order) of the
+      starting file (neglecting the label row).
+  \end{exampleblock}
 
-    \vspace{4mm}
-
+  \begin{alertblock}{Hint}
     In awk you can perform operations between columns,\\
     with the usual operators (\code{+, -, *, /, ()}).
-  \end{center}
+  \end{alertblock}
 \end{frame}
 
 \end{document}

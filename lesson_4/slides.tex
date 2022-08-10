@@ -5,6 +5,9 @@
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}   %FOR TITLEPAGE
 
 \usepackage{changepage}       % adjustwidth
+\usepackage{upquote}
+\usepackage{color}
+\usepackage{fancyvrb}
 
 \setlength\parskip{0.3cm}
 
@@ -13,10 +16,12 @@
 \newcommand{\red}[1]{\textbf{\textcolor{red}{#1}}}
 
 \newcommand{\focus}[1]{\textbf{\textcolor{red}{#1}}}
+\newcommand{\expire}[1]{\textbf{\textcolor{green}{#1}}}
 \newcommand{\ra}{$\longrightarrow$ }
 \newcommand{\lra}{$\longleftrightarrow$ }
 
 \newcommand{\code}[1]{\colorbox{black}{\color{green}\texttt{#1}}}
+\newcommand{\codeine}[1]{\colorbox{black}{\color{green}\BUseVerbatim{#1}}}
 
 % Command to create two side-by-side minipages
 \newcommand{\sidebyside}[5]{
@@ -27,460 +32,425 @@
   \end{minipage}
 }
 
+\title[Linux Programming]{ICTP DP Linux Basic Course - Shell Script}
+\subtitle{ESP Students - First Semester}
+\author[Graziano Giuliani]{Graziano Giuliani \\ \focus{ggiulian@ictp.it}}
+\institute[ICTP]{The Abdus Salam International Centre for Theoretical Physics}
+\date[\today]{ICTP Diploma Program \\ \today}
+
 \begin{document}
 
 \begin{frame}
-  \begin{center}
-
-    \definecolor{myblue}{RGB}{51,51,179}
-    \setbeamercolor{block body}{use=structure,fg=white,bg=myblue!20!myblue}
-
-    \begin{block}{}
-      \Large
-      \centering
-      Linux Basics IV:\\
-      Basic shell scripting
-    \end{block}
-
-    \vspace{6mm}
-    \large
-    \textsc{Adriano Angelone, Graziano Giuliani} \\
-
-  \end{center}
+  \titlepage
 \end{frame}
 
-\begin{frame}[label=outline]{Course Outline}
+
+\begin{frame}[label=outline]
+  \frametitle{Course Outline \footnotemark}
+  \framesubtitle{Daily program}
   \begin{itemize}
-    \item UNIX/Linux Basics
-    \item Intermediate shell commands
-    \item Editing and compiling source code
-    \item Text file manipulation
-    \item \focus{Basic shell scripting}
+    \item \expire{UNIX/Linux}
+    \item \expire{Programming on Linux}
+    \item \expire{Text file manipulation}
+    \item \focus{Basic BASH and Python}
+      \begin{enumerate}
+        \item BASH variables
+        \item BASH programming
+        \item Python programming
+      \end{enumerate}
   \end{itemize}
 
   \vspace{6mm}
 
-  \centering
-  Download slides and exercise files with the command\\
-  \code{git clone https://github.com/AA24KK/LinuxBasics.git}\\
-  \vspace{1mm}
-  or download a ZIP archive at
-  \vspace{1mm}
-  \code{https://github.com/AA24KK/LinuxBasics/archive/master.zip}
+  Slides: \\ \code{http://tinyurl.com/2jsvfbd6}
+  \vspace{4mm} \\
+  or the \LaTeX \ source on GitHub: \\
+  \code{https://github.com/graziano-giuliani/LinuxBasics}
 
-  \vspace{2mm}
-
-  Adriano: \focus{aangelon@ictp.it}, Room 263, ICTP\\
-  Graziano: \focus{ggiulian@ictp.it}
+  \footnotetext[1]{Course created in 2019 with Adriano Angelone, now LPTMC-FR}
 
 \end{frame}
 
+
 \begin{frame}
-  \begin{center}
-    \frametitle{Why shell scripting}
+  \frametitle{Shell Scripting}
+  \framesubtitle{From REPL to Programming Language}
 
-    Reuse multiple times the same command:\\
-    \focus{less work, less bugs}
-
-    What are the basics:
+  \begin{alertblock}{Why Shell Scripting}
+    Reusing multiple times the same command sequence? \\
+      Write the sequence in a script and create a new command.
+  \end{alertblock}
+  \begin{block}{Elements of a Programming Language}
     \begin{itemize}
-      \item Variables
-      \item Conditionals
-      \item Loops
+      \item \focus{Execution flow}: Entry point and return point
+      \item \focus{Input/Output}: Interaction
+      \item \focus{Variables}: Data representation and storage
+      \item \focus{Conditionals}: Branch execution on condition on variables
+      \item \focus{Loops}: Repeat code until condition on variables met
     \end{itemize}
-  \end{center}
+  \end{block}
+  \begin{exampleblock}{}
+    Bash shell is a complete programming language.
+  \end{exampleblock}
 \end{frame}
 
 
 \begin{frame}
-  \begin{center}
-    \frametitle{Variables I}
-
-    Variables contain data\\
-    they have a label (\focus{name}) and a \focus{content}
-
-    \begin{center}
-      \includegraphics[width=0.72\textwidth]{pics/jars.jpg}
-    \end{center}
-
-    In bash, variables \focus{have no type}:\\
-    \focus{everything is a string, with arithmetic sometimes possible}
-  \end{center}
-\end{frame}
-
-
-\begin{frame}
-  \begin{center}
-    \frametitle{Variables II}
-
-    Variables are initialized when you use them the first time:\\
-    \focus{you can call non-existing variables}, usually trouble\\
-    (unless you put \code{set -u} in your script)
-
-    \vspace{5mm}
-
-    \sidebyside{0.50}{
-      \centering
-      \focus{Assignment}: give a variable a value\\
-      \code{<variable name>=<value>}
-
-      \vspace{3mm}
-
-      \focus{Expansion}: access the value\\
-      \code{\$<variable name>}
-    }{\hfill}{0.45}{
-      \begin{center}
-        \includegraphics[width=0.70\textwidth]{pics/variables_1.png}
-      \end{center}
-    }
-
-    \vspace{5mm}
-
-    Usually it's good to use \code{"\$<variable name>"}\\
-    to avoid problems if variable contains spaces
-  \end{center}
-\end{frame}
-
-\begin{frame}
-  \begin{center}
-    \frametitle{Variables III}
-
-    \sidebyside{0.50}{
-      \focus{(Simple) printing}: \code{echo}\\
-
-      \focus{Reading} from standard input: \code{read}
-      \code{read -p}: \focus{write prompt}
-    }{\hfill}{0.45}{
-      \begin{center}
-        \includegraphics[width=1.00\textwidth]{pics/echoread.png}
-      \end{center}
-    }
-
-    \vspace{6mm}
-
-    \sidebyside{0.50}{
-      \centering
-      Easy to make variable values\\
-      interact with strings
-
-      \vspace{2mm}
-
-      Use \code{\$\{<variable name>\}}\\
-      to avoid expanding another variable
-    }{\hfill}{0.45}{
-      \begin{center}
-        \includegraphics[width=0.70\textwidth]{pics/variables_2.png}
-      \end{center}
-    }
-  \end{center}
-\end{frame}
-
-
-\begin{frame}
-  \begin{center}
-    \frametitle{Variables IV}
-
-    \sidebyside{0.40}{
-      \centering
-      \focus{Command substitution}:
-      \code{<variable>=\$(<command>)}\\
-      outputs command in variable
-    }{\hfill}{0.56}{
-      \begin{center}
-        \includegraphics[width=0.90\textwidth]{pics/substitution.png}
-      \end{center}
-    }
-
-    Some variables are defined system-wide by default: e.g.,
-
-    \vspace{-2mm}
-
+  \frametitle{Variables}
+  \framesubtitle{Name and Value}
+  \begin{block}{}
+    Variables contain data. They have a label (\focus{Name}) and a
+      content (\focus{Value}). \\
+      In bash, variables \focus{have no type}
     \begin{itemize}
-      \item \code{HOME}: path to your home folder
-      \item \code{PATH}: where commands will be searched for if no path specified
+      \item Everything is a string
+      \item Arithmetic sometimes possible on integer values
     \end{itemize}
+  \end{block}
 
-    \vspace{-3mm}
-
-    \begin{center}
-      \includegraphics[width=1.00\textwidth]{pics/environment.png}
-    \end{center}
-
-    \sidebyside{0.50}{
-      Script arguments are variables:
-      \begin{itemize}
-        \item \code{\$0}: script name
-        \item \code{\$1-...}: arguments
-        \item \code{\$@}: all arguments
-        \item \code{\$\#}: argument number\\
-          (\code{\$0} does not count)
-      \end{itemize}
-    }{\hfill}{0.43}{
-      \begin{center}
-        \includegraphics[width=0.90\textwidth]{pics/arguments.png}
-      \end{center}
-    }
+  \begin{center}
+    \includegraphics[width=0.72\textwidth]{pics/jars.jpg}
   \end{center}
 \end{frame}
 
 
-\begin{frame}
-  \begin{center}
-    \frametitle{Conditionals I}
+\begin{frame}[fragile=singleslide]
+  \frametitle{Variables}
+  \framesubtitle{Assign value to name and expand name into value}
 
-    \focus{Basic structure:}
+  \begin{exampleblock}{Assignment}
+    Use the \code{=} character between the variable name and its value content.
+    \begin{itemize}
+      \begin{SaveVerbatim}{myverb}
+name="value"
+      \end{SaveVerbatim}
+      \item \codeine{myverb}
+      \begin{SaveVerbatim}{myverb}
+message="A whole string"
+      \end{SaveVerbatim}
+      \item \codeine{myverb}
+      \begin{SaveVerbatim}{myverb}
+number=3
+      \end{SaveVerbatim}
+      \item \codeine{myverb}
+    \end{itemize}
+  \end{exampleblock}
+
+  \begin{exampleblock}{Expansion}
+    Prepend the \code{\$} character to the variable name.
+    \begin{itemize}
+      \begin{SaveVerbatim}{myverb}
+b=$number
+c=$b
+      \end{SaveVerbatim}
+      \item \codeine{myverb}
+      \begin{SaveVerbatim}{myverb}
+part1="Hello"
+part2="World"
+whole="${part1} ${part2}!"
+      \end{SaveVerbatim}
+      \item \codeine{myverb}
+    \end{itemize}
+  \end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+  \frametitle{Basic I/O}
+  \framesubtitle{echo, read and how to catch program output}
+
+  \small{
+  \begin{exampleblock}{print}
+    Use the \code{echo} command. \\
+    \begin{SaveVerbatim}{myverb}
+message="Welcome to my program!"
+result=42
+echo $message: The answer is $number
+    \end{SaveVerbatim}
+    \codeine{myverb}
+  \end{exampleblock}
+
+  \begin{exampleblock}{read}
+      Use the read command, eventually using the \code{-p} (prompt) option. \\
+    \begin{SaveVerbatim}{myverb}
+read -p "Please enter your name: " user_name
+read -p "Please enter your Age : " user_age
+echo ${user_name} age is ${user_age}.
+    \end{SaveVerbatim}
+    \codeine{myverb}
+  \end{exampleblock}
+
+  \begin{exampleblock}{Subshell}
+    Output from programs can be stored in variables:\\
+    \begin{SaveVerbatim}{myverb}
+listing=$(ls)
+echo $listing
+    \end{SaveVerbatim}
+    \codeine{myverb}
+  \end{exampleblock}
+  }
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Variables}
+  \framesubtitle{Shell environment variables}
+
+  Every shell has built-in variables assigned at startup. \\
+    Their names and values can be listed using the \code{env} command.
+  \begin{exampleblock}{Environment variables}
+    \begin{itemize}
+      \item \code{USER} : User name
+      \item \code{HOME} : User home folder path
+      \item \code{PATH} : Search path for user binary programs
+    \end{itemize}
+    To set an environment variable, use \code{export}: \\
+    \code{export LC\_ALL="C"}
+  \end{exampleblock}
+
+  \begin{alertblock}{}
+    Try the \code{env} program in your shell to see the environment variables.\\
+    \focus{Can you sort their values by name?} \\
+    Try changing the value of \code{LC\_ALL} to the value \code{"C"} and
+    run \code{ls}. \\
+    Set it back to the value \code{"en\_US.UTF-8"}. Run \code{ls} again. \\
+    \focus{Examine what changes.}
+  \end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+  \frametitle{Variables}
+  \framesubtitle{Command line arguments as variables in script}
+
+  \focus{Script arguments are variables}
+
+  \begin{exampleblock}{Scripts}
+    \begin{verbatim}
+#!/bin/bash
+echo "Script name = $0"
+echo "Number of arguments = $#"
+echo "First argument = $1"
+echo "Second argument = $2"
+echo "All arguments = $@"
+    \end{verbatim}
+  \end{exampleblock}
+
+  \begin{alertblock}{}
+    Create a simple script with the above content and run it: \\
+      \code{bash test\_script.sh a1 a2 a3 a4 a5} \\
+    Can you foretell the output?
+  \end{alertblock}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Conditionals}
+  \framesubtitle{Basic structure: test command success}
+
+  \begin{block}{}
     \code{if <test> ; then <action 1> ; else <action 2> ; fi}
+  \end{block}
 
-    \vspace{2mm}
-
-    \focus{Several types of conditions} can be tested,\\
-    slightly different syntax
-
-    \vspace{2mm}
-
-    \sidebyside{0.48}{
-      \centering
-      First type of condition:\\
-      \focus{test command output}
-
-      \vspace{3mm}
-  
-      Write command in condition\\
-      without parentheses
-
-      \vspace{3mm}
-  
-      If return code $= 0$\\
-      (usually, success)\\
-      triggers \code{then},\\
-      \code{else} otherwise
-    }{\hfill}{0.47}{
-      \begin{center}
-        \includegraphics[width=1.00\textwidth]{pics/conditional_1.png}
-      \end{center}
-    }
-  \end{center}
+  \begin{exampleblock}{Test command result output}
+    \begin{columns}
+      \begin{column}{0.60\textwidth}
+        \begin{center}
+          \includegraphics[width=0.8\textwidth]{pics/conditional_1.png}
+        \end{center}
+      \end{column}
+      \begin{column}{0.40\textwidth}
+          True is \code{0} \\
+          False is any value not \code{0}
+      \end{column}
+    \end{columns}
+  \end{exampleblock}
 \end{frame}
 
 
 \begin{frame}
-  \begin{center}
-    \frametitle{Conditionals II}
+  \frametitle{Conditionals}
+  \framesubtitle{test conditions on file and variables}
 
-    \sidebyside{0.58}{
-      \centering
-      Second type of condition:\\
-      \focus{primary expressions}
-
-      \vspace{2mm}
-
-      \begin{itemize}
-        \item \code{[ -f <file> ]}: file exists\\
-        \item \code{[ -d <directory> ]}: dir exists\\
-        \item \code{[<string1> ==/!= <string2>]}
-        \item \code{[<int1> <operator> <int2>]}
-
-        \vspace{1mm}
-
-        \code{<operator>} can be:
-        \begin{itemize}
-          \item \code{-eq/ne}: equal/not equal
-          \item \code{-lt/le}: less/less or equal
-          \item \code{-gt/ge}: greater/greater or equal
-        \end{itemize}
-      \end{itemize}
-
-      \focus{Conditions within} \code{[...]}\\
-      \code{[... -a ...]} is AND,\\
-      \code{[... -o ...]} is OR,\\
-      \code{[! ...]} is NOT
-    }{\hfill}{0.40}{
-      \begin{center}
-        \includegraphics[width=0.68\textwidth]{pics/conditional_2.png}
-      \end{center}
-    }
-  \end{center}
+  \begin{block}{}
+    \begin{columns}
+      \begin{column}{0.60\textwidth}
+        \small{
+          \begin{itemize}
+            \item \code{[ -f <file> ]}: file exists
+            \item \code{[ -d <directory> ]}: dir exists
+            \item \code{[<string1> ==/!= <string2>]}
+            \item \code{[<int1> <operator> <int2>]} \\
+            \code{<operator>} can be:
+            \begin{itemize}
+              \item \code{-eq/ne}: equal/not equal
+              \item \code{-lt/le}: less/less or equal
+              \item \code{-gt/ge}: greater/greater or equal
+            \end{itemize}
+          \end{itemize}
+          \begin{itemize}
+            \item \code{[... -a ...]} is AND
+            \item \code{[... -o ...]} is OR
+            \item \code{[! ...]} is NOT
+          \end{itemize}
+        }
+      \end{column}
+      \begin{column}{0.40\textwidth}
+        \includegraphics[scale=0.23]{pics/conditional_2.png}
+      \end{column}
+    \end{columns}
+  \end{block}
 \end{frame}
 
 
 \begin{frame}
-  \begin{center}
-    \frametitle{Iteration and loops}
+  \frametitle{Iteration}
+  \framesubtitle{Perform actions several times}
 
-    \focus{Perform actions several times}:
+  \begin{block}{}
     \code{for <variable> in <range> ; do <action> ; done}
+  \end{block}
 
-    \sidebyside{0.50}{
-      \centering
-      \code{<variable>} usually\\
-      created on the spot
-
-      \vspace{5mm}
-
-      \code{<range>} can be:
-      \begin{itemize}
-        \item A given sequence (no commas)\\
-        \item Matches to a regexp
-      \end{itemize}
-
-      \vspace{5mm}
-
-      \code{<action>} can use \code{<variable>}
-
-      \vspace{5mm}
-
-      \focus{Example}:\\
-      cycle over command-line arguments:\\
-      \code{for arg in "\$@" ; ...}
-    }{\hfill}{0.45}{
-      \begin{center}
-        \includegraphics[width=1.00\textwidth]{pics/for.png}
-      \end{center}
-    }
-  \end{center}
+  \begin{exampleblock}{}
+    \begin{columns}
+      \begin{column}{0.60\textwidth}
+        \begin{itemize}
+          \item \code{variable} is created for the loop and cannot be
+             reached outside of the loop. \\
+             \code{<action>} can use \code{<variable>}
+          \item \code{range} is a sequence or a regexp to be exapnded
+        \end{itemize}
+      \end{column}
+      \begin{column}{0.40\textwidth}
+        \includegraphics[width=0.90\textwidth]{pics/for.png}
+      \end{column}
+    \end{columns}
+  \end{exampleblock}
 \end{frame}
 
 \begin{frame}
-	\begin{center}
-		\frametitle{Exercise: file processing}
+  \frametitle{Exercise}
+  \framesubtitle{File processing}
 
-		This will be a long exercise:\\
-		\focus{complex programs are done in steps}\\
-		(start simple, then add complexity)
+  \begin{alertblock}{This will be a long exercise}
+    Complex programs are done in steps: start simple, then add complexity.
+   \end{alertblock}
 
-		\vspace{3mm}
 	
-		We have an external program, \code{binaver}, to average a column of a file:\\
-		\code{binaver -r<rows> -c<columns> -k<column to average> <file>}\\
-		Requires information about the files, only accepts one at a time
+  \begin{exampleblock}{}
+    Assume that we have an external program, \code{binaver}, to be used to
+    average data of a single targer column from a column based file. \\
+    It requires information about the file, its row and column total number,
+    and only accepts one file at a time. \\
+    The program can be run with the following syntax: \\
 
-		\vspace{3mm}
+    \code{binaver -r<rows> -c<columns> -k<target\_column> <file>}\\
 
-		We will write a script (\focus{wrapper}) which:
-
-		\begin{itemize}
-			\item Counts automatically rows and columns
-			\item Excludes commented lines
-			\item Checks the integrity of the file
-			\item Applies \code{binaver} to multiple files
-		\end{itemize}
-	\end{center}
-\end{frame}
-
-\begin{frame}
-	\begin{center}
-		\frametitle{Step I: counting rows}
-
-		Rows can be counted with the \code{wc -l <file>} command:\\
-		the command however outputs \code{<line number> <file>}
-
-		\vspace{8mm}
-
-		\focus{Task 1}:\\
-		Write a script which assigns to a variable only the row number of a file\\
-		(hint: use command substitution and a pipeline with \code{awk} or \code{cut})
-
-		Assume the file to be the first command line argument\\
-		(remember how you access it)
-	\end{center}
-\end{frame}
-
-\begin{frame}
-	\begin{center}
-		\frametitle{Step II: counting columns}
-
-		\focus{Task 2}:\\
-		Extend the previous script, assigning to a variable\\
-		the number of columns of the same file\\
-		(hint: one way uses \code{awk}, its internal variables, and \code{sort})\\
-		For now, assume that all rows have the same number of columns
-
-		\vspace{8mm}
-
-		\focus{Task 3}:\\
-		Modify the script so that it proceeds only if all rows\\
-		have the same number of columns\\
-		(hint: if you did it as suggested before,\\
-		you could use the previous bit of the script here)\\
-		This checks the \focus{integrity} of the file
-
-	\end{center}
-\end{frame}
-
-
-\begin{frame}
-	\begin{center}
-		\frametitle{Step III: comments and finalization}
-
-		\focus{Task 4}:\\
-		Modify all parts of the previous script to exclude commented lines\\
-		(starting with \code{\#})\\
-		(hint: you can use \code{grep})
-
-		\vspace{4mm}
-
-		\focus{Task 5}:\\
-		Ask the user which column he wants to perform the average on\\
-		(hint: \code{read -p})
-
-		\vspace{4mm}
-
-		\focus{Task 6}:\\
-		Complete the script, applying \code{binaver} to \code{\$1} with the known info
-	\end{center}
-\end{frame}
-
-
-\begin{frame}
-	\begin{center}
-		\frametitle{Step IV: robustness, multiple files}
-
-		\focus{Task 7}:\\
-		Extend the script to accept multiple files and act on all of them\\
-		(hint: loop over arguments, \code{binaver} takes one at a time)
-
-		\vspace{8mm}
-
-		\focus{Task 8}:\\
-		Increase robustness: skip a file if it doesn't exist\\
-		(hint: use conditionals, the \code{else} branch can be empty)
-
-		\vspace{8mm}
-
-    \focus{We're done!}
-	\end{center}
-\end{frame}
-
-
-\begin{frame}
-	\begin{center}
-		\frametitle{Final Notes}
-
-    A few pieces of advice:
-
-    \vspace{6mm}
+    We will write a script (\focus{wrapper}) which:
 
     \begin{itemize}
-      \item Sometimes it's worth settling for the easy and tedious solution.
-        However, try to check out if you can do things in a smarter way\\
-        and \focus{work less (!!!)}
-
-      \vspace{4mm}
-
-      \item You will remember the details in time. For now, \focus{rough is enough}:\\
-        ``\textit{I can do this with \code{tail}, but I don't remember the options}''\\
-        is ok, if you have internet access
-
-      \vspace{4mm}
-
-      \item Give \code{vim}/\code{emacs} and the shell a shot, it will pay you
-        back tenfold
+      \item Counts automatically rows and columns
+      \item Excludes commented lines
+      \item Checks the integrity of the file
+      \item Applies \code{binaver} to multiple files
     \end{itemize}
+  \end{exampleblock}
+\end{frame}
 
-    \vspace{6mm}
+\begin{frame}
+  \frametitle{Step}
+  \framesubtitle{Counting rows}
 
-    Good luck out there!
-	\end{center}
+  \begin{exampleblock}{Task 1}
+    Write a script which assigns to a variable the number of rows of a file.
+  \end{exampleblock}
+
+  \begin{block}{}
+    Rows can be counted with the \code{wc -l <file>} command, but
+    the command however outputs \code{<line number> <file>}\\
+    Rows can also be counted using \code{awk}
+  \end{block}
+
+  \begin{alertblock}{Hint}
+	Use command substitution and a pipeline with \code{awk} or 
+    \code{wc} and \code{cut}. \\
+    Assume the file to be the first command line argument and
+    remember how you access it.
+  \end{alertblock}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Step}
+  \framesubtitle{Counting columns}
+
+  \begin{exampleblock}{Task 2}
+    Extend the previous script, assigning to a variable the number of columns
+    of the same file.
+  \end{exampleblock}
+
+  \begin{alertblock}{Hint}
+    One way uses \code{awk}, its internal variables, and \code{sort}.\\
+    For now, assume that all rows have the same number of columns.
+  \end{alertblock}
+
+  \begin{exampleblock}{Task 3}
+    Modify the script so that it proceeds only if all rows
+    have the same number of columns
+  \end{exampleblock}
+
+  \begin{alertblock}{Hint}
+    If you did it as suggested before, you could use the previous bit of
+    the script here. This checks the \focus{integrity} of the file
+  \end{alertblock}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Step}
+  \framesubtitle{comments and finalization}
+
+  \begin{exampleblock}{Task 4}
+    Modify all parts of the previous script to exclude commented lines
+   (starting with \code{\#})
+  \end{exampleblock}
+
+  \begin{alertblock}{Hint}
+    You can use \code{grep}
+  \end{alertblock}
+
+  \begin{exampleblock}{Task 5}
+    Ask the user which column he wants to perform the average on
+  \end{exampleblock}
+
+  \begin{alertblock}{Hint}
+    \code{read -p}
+  \end{alertblock}
+
+  \begin{exampleblock}{Task 6}
+    Complete the script, applying \code{binaver} to \code{\$1} with the
+    known info
+  \end{exampleblock}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Step}
+  \framesubtitle{robustness, multiple files}
+
+  \begin{exampleblock}{Task 7}
+    Extend the script to accept multiple files and act on all of them
+  \end{exampleblock}
+
+  \begin{alertblock}{Hint}
+    Loop over arguments, \code{binaver} takes one at a time
+  \end{alertblock}
+
+  \begin{exampleblock}{Task 8}
+    Increase robustness: skip a file if it doesn't exist
+  \end{exampleblock}
+
+  \begin{alertblock}{Hint}
+    Use conditionals, the \code{else} branch can be empty
+  \end{alertblock}
 \end{frame}
 
 

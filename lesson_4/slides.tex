@@ -328,13 +328,12 @@ echo "All arguments = $@"
 
 \begin{frame}
   \frametitle{Exercise}
-  \framesubtitle{File processing}
+  \framesubtitle{Put it all together: File processing}
 
   \begin{alertblock}{This will be a long exercise}
     Complex programs are done in steps: start simple, then add complexity.
    \end{alertblock}
 
-	
   \begin{exampleblock}{}
     Assume that we have an external program, \code{binaver}, to be used to
     average data of a single targer column from a column based file. \\
@@ -370,11 +369,39 @@ echo "All arguments = $@"
   \end{block}
 
   \begin{alertblock}{Hint}
-	Use command substitution and a pipeline with \code{awk} or 
+    Use command substitution and a pipeline with \code{awk} or 
     \code{wc} and \code{cut}. \\
     Assume the file to be the first command line argument and
     remember how you access it.
   \end{alertblock}
+\end{frame}
+
+
+\begin{frame}[fragile=singleslide]
+  \frametitle{Solution}
+  \framesubtitle{Counting rows}
+
+  \begin{exampleblock}{Using \code{awk}}
+    \begin{verbatim}
+#!/bin/bash
+
+file=$1
+nrows=$(awk 'END{print NR}' $file)
+# Debug
+echo "File $file has $nrows lines"
+    \end{verbatim}
+  \end{exampleblock}
+
+  \begin{exampleblock}{Using \code{wc} and \code{cut}}
+    \begin{verbatim}
+#!/bin/bash
+
+file=$1
+nrows=$(wc -l $file | cut -d " " -f 1)
+# Debug
+echo "File $file has $nrows lines"
+    \end{verbatim}
+  \end{exampleblock}
 \end{frame}
 
 
@@ -404,9 +431,32 @@ echo "All arguments = $@"
 \end{frame}
 
 
+\begin{frame}[fragile=singleslide]
+  \frametitle{Solution}
+  \framesubtitle{Counting columns}
+
+  \begin{exampleblock}{Rows and columns both}
+    \begin{verbatim}
+#!/bin/bash
+
+file=$1
+nrows=$(awk 'END{print NR}' $file)
+ncols=$(awk '{print NF}' $file | sort -u)
+if [ $(echo $ncols | awk 'END{print NF}') -ne 1 ]
+then
+  echo "File lines do not have the same number of columns"
+  exit 1
+fi
+# Debug
+echo "File $file has $nrows lines and $ncols columns"
+    \end{verbatim}
+  \end{exampleblock}
+\end{frame}
+
+
 \begin{frame}
   \frametitle{Step}
-  \framesubtitle{comments and finalization}
+  \framesubtitle{Exclude comments and finalization}
 
   \begin{exampleblock}{Task 4}
     Modify all parts of the previous script to exclude commented lines
@@ -432,9 +482,33 @@ echo "All arguments = $@"
 \end{frame}
 
 
+\begin{frame}[fragile=singleslide]
+  \frametitle{Solution}
+  \framesubtitle{Exclude comments and finalization}
+
+  \begin{exampleblock}{Single file solution}
+    \begin{verbatim}
+#!/bin/bash
+
+file=$1
+nrows=$(grep -v "^#" $file | awk 'END{print NR}')
+ncols=$(grep -v "^#" $file | awk '{print NF}' | sort -u)
+if [ $(echo $ncols | awk 'END{print NF}') -ne 1 ]
+then
+  echo "File lines do not have the same number of columns"
+  exit 1
+fi
+read -p "Enter column to be processed (1-$ncols):" target
+# Debug
+echo "binaver -r$nrows -c$ncols -k$target $file"
+    \end{verbatim}
+  \end{exampleblock}
+\end{frame}
+
+
 \begin{frame}
   \frametitle{Step}
-  \framesubtitle{robustness, multiple files}
+  \framesubtitle{Multiple files, robustness}
 
   \begin{exampleblock}{Task 7}
     Extend the script to accept multiple files and act on all of them
@@ -453,5 +527,115 @@ echo "All arguments = $@"
   \end{alertblock}
 \end{frame}
 
+
+\begin{frame}[fragile=singleslide]
+  \frametitle{Solution}
+  \framesubtitle{Multiple files, robustness}
+
+  \begin{exampleblock}{Final complete solution}
+    \small{
+    \begin{verbatim}
+#!/bin/bash
+
+for file in $@
+do
+  if [ -f $file ]
+  then
+    nrows=$(grep -v "^#" $file | awk 'END{print NR}')
+    ncols=$(grep -v "^#" $file | awk '{print NF}' | sort -u)
+    if [ $(echo $ncols | awk 'END{print NF}') -eq 1 ]
+    then
+      echo "File $file fit for processing."
+      read -p "Enter column to be processed (1-$ncols):" target
+      # Debug
+      echo "binaver -r$nrows -c$ncols -k$target $file"
+    fi
+  fi
+done
+    \end{verbatim}
+    }
+  \end{exampleblock}
+\end{frame}
+
+
+\begin{frame}[fragile=singleslide]
+  \frametitle{Python}
+  \framesubtitle{Whet your appetite with example!}
+
+  \begin{exampleblock}{Read a dataset and plot}
+    We want to read a scientific dataset, stored on disk
+    in a scientific format data file, and plot the content.
+    \begin{itemize}
+       \item Access through community maintained API
+    \end{itemize}
+  \end{exampleblock}
+
+  \begin{alertblock}{Environment}
+    \verb|source /home/netapp-clima/users/ggiulian/m19.sh|
+  \end{alertblock}
+\end{frame}
+
+
+\begin{frame}[fragile=singleslide]
+  \frametitle{NetCDF Data format}
+  \framesubtitle{xarray: labelled multi-dimensional arrays}
+
+  \begin{exampleblock}{NetCDF Scientific data format}
+     Standard for the climate and forecast is the netCDF.
+    \begin{itemize}
+       \item Use the xarray package
+    \end{itemize}
+  \end{exampleblock}
+
+  \begin{exampleblock}{python code}
+    \small{
+    \begin{verbatim}
+#!/usr/bin/env python3
+
+from matplotlib import pyplot as plt
+import xarray as xr
+
+disk = "/home/esp-shared-a"
+datapath = "Observations/BERKELEYEARTH/Gridded"
+datafile = "Complete_TAVG_Daily_LatLong1_2010.nc"
+ncfile = xr.open_dataset(disk+'/'+datapath+'/'+datafile)
+ncfile.temperature
+data = ncfile.temperature[0,:,:]
+data.plot( )
+plt.show( )
+    \end{verbatim}
+  }
+  \end{exampleblock}
+\end{frame}
+
+
+\begin{frame}[fragile=singleslide]
+  \frametitle{Seismic Data format}
+  \framesubtitle{obspy : Python framework for processing seismological data}
+
+  \begin{exampleblock}{obspy}
+     Provide parsers for common file formats, clients to access data centers and
+     seismological signal processing routines which allow the manipulation of
+     seismological time series
+  \end{exampleblock}
+
+  \begin{exampleblock}{python code}
+    \small{
+    \begin{verbatim}
+#!/usr/bin/env python3
+
+from matplotlib import pyplot as plt
+import obspy
+
+site = "https://github.com/obspy/examples/raw/master"
+file = "IU_ULN_2015-07-18T02.mseed"
+data = obspy.read(site+'/'+file)
+data.plot( )
+plt.show( )
+    \end{verbatim}
+    }
+  \end{exampleblock}
+
+\end{frame}
 
 \end{document}

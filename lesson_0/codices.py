@@ -10,7 +10,11 @@ def binary_representation(fnum):
     pprint(a.json( ))
 
 if __name__ == "__main__":
-    a = sys.argv[1]
+    try:
+        a = sys.argv[1]
+    except:
+        print(sys.argv[0]+': Need at least an argument (string,int,float)')
+        sys.exit(1)
     try:
         if "." in a:
             f = float(a)

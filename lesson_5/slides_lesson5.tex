@@ -1,0 +1,71 @@
+\documentclass[unknownkeysallowed, 10pt, a4 paper, handout]{beamer}
+
+% Custom beamer theme
+\usepackage{../style/beamerthemeCustom}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}   %FOR TITLEPAGE
+
+\usepackage{changepage}       % adjustwidth
+\usepackage{upquote}
+\usepackage{color}
+\usepackage{fancyvrb}
+
+\setlength\parskip{0.3cm}
+
+\definecolor{darkgreen}{RGB}{0,100,0}
+\newcommand{\green}[1]{\textbf{\textcolor{darkgreen}{#1}}}
+\newcommand{\red}[1]{\textbf{\textcolor{red}{#1}}}
+
+\newcommand{\focus}[1]{\textbf{\textcolor{red}{#1}}}
+\newcommand{\expire}[1]{\textbf{\textcolor{green}{#1}}}
+\newcommand{\ra}{$\longrightarrow$ }
+\newcommand{\lra}{$\longleftrightarrow$ }
+
+\newcommand{\code}[1]{\colorbox{black}{\color{green}\texttt{#1}}}
+\newcommand{\codeine}[1]{\colorbox{black}{\color{green}\BUseVerbatim{#1}}}
+
+% Command to create two side-by-side minipages
+\newcommand{\sidebyside}[5]{
+  \begin{minipage}{#1\textwidth}
+    #2
+  \end{minipage} #3 \begin{minipage}{#4\textwidth}
+    #5
+  \end{minipage}
+}
+
+\title[Linux Programming]{ICTP DP Linux Basic Course - Shell Script}
+\subtitle{ESP Students - First Semester}
+\author[Graziano Giuliani]{Graziano Giuliani \\ \focus{ggiulian@ictp.it}}
+\institute[ICTP]{The Abdus Salam International Centre for Theoretical Physics}
+\date[\today]{ICTP Diploma Program \\ \today}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+
+\begin{frame}[label=outline]
+  \frametitle{Course Outline \footnotemark}
+  \framesubtitle{Daily program}
+  \begin{itemize}
+    \item \expire{UNIX/Linux}
+    \item \expire{Programming on Linux}
+    \item \expire{Text file manipulation}
+    \item \expire{Basic BASH and Python}
+    \item \focus{Basic Fortran}
+  \end{itemize}
+
+  \vspace{6mm}
+
+  Slides: \\ \code{http://tinyurl.com/2jsvfbd6}
+  \vspace{4mm} \\
+  or the \LaTeX \ source on GitHub: \\
+  \code{https://github.com/graziano-giuliani/LinuxBasics}
+
+  \footnotetext[1]{Course created in 2019 with Adriano Angelone, now LPTMC-FR}
+
+\end{frame}
+
+
+\end{document}

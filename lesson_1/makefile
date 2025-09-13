@@ -1,4 +1,4 @@
-PROJECT_NAME = slides
+PROJECT_NAME = slides_lesson1
 
 NOTEXFILES = $(filter-out $(PROJECT_NAME).tex,$(wildcard $(PROJECT_NAME).*))
 PICFILES = $(wildcard pics/.*)

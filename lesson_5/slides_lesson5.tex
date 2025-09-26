@@ -235,7 +235,7 @@ end program hello
   \begin{itemize}
     \item Create a text file \code{error.f90} with the below content:
       \footnotesize{
-      \begin{verbatim}
+\begin{verbatim}
 program error
   implicit none
   integer, parameter :: im = 2
@@ -248,7 +248,7 @@ program error
     end do
   end do
 end program error
-      \end{verbatim}
+\end{verbatim}
       }
     \item Compile and correct the error
     \item Run the program and check the runtime error
@@ -259,5 +259,29 @@ end program error
   \end{itemize}
 \end{frame}
 
+\begin{frame}[label=exercise_num, fragile=singleslide]
+  \frametitle{Program Example}
+  \framesubtitle{A numerical Exercise}
+  \begin{itemize}
+    \item Assignment from Numerical
+      \footnotesize
+{
+\begin{verbatim}
+ Write a program that solves the differential equation
+    dx/dt = -x using
+ 1) Euler method
+ 2) midpoint methods.
+ Create separate subroutines for the two methods.
+ Solve with initial conditions x(0.0) = 1.0 and dt=0.1,
+ N=100 and store the results in arrays tlist and xlist.
+ The program should create a file for each method with
+ the result in two columns: t and x(t).
+ Plot the result x versus t with your favorite plotting
+ program.
+ Submit the graphs and your code.
+\end{verbatim}
+}
+  \end{itemize}
+\end{frame}
 
 \end{document}
